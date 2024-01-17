@@ -1,249 +1,115 @@
-class Menu extends HTMLElement {
+class Title extends HTMLElement {
   constructor () {
     super()
+
     this.shadow = this.attachShadow({ mode: 'open' })
-    this.menuItems = []
+
+    // this.title = this.getAttribute('title')
   }
 
   connectedCallback () {
-    this.loadData().then(() => this.render())
-  }
-
-  async loadData () {
-    const url = `${import.meta.env.VITE_API_URL}/admin/menus/display/${this.getAttribute('menu')}`
-
-    try {
-      const response = await fetch(url, {
-        headers: {
-          Authorization: 'Bearer ' + sessionStorage.getItem('accessToken')
-        }
-      })
-
-      const data = await response.json()
-      this.menuItems = Object.values(data)
-    } catch (error) {
-      console.log(error)
-    }
+    this.render()
   }
 
   render () {
     this.shadow.innerHTML =
-        `
-        <style>
-            #menu-button{
-                cursor:pointer;
-                height: 2em;
-                margin-left: auto;
-                position: relative;
-                width: 2em;
-                z-index: 1200;
-            }
-            #menu-button button{
-                background: none;
-                border: none;
-                color: inherit;
-                cursor:pointer;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                outline: inherit;
-                padding: 0;
-            }
+            `
+      <style>
+      button {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+      }
+      .menu {
+        background-color: hsl(207, 85%, 69%);
+        height: 100vh;
+        transition: all 0.5s;
+        left: 0;
+        top: -100vh;
+        position: fixed;
+        width: 100%;
+        z-index: 1;
+      }
+      
+      .menu-active {
+        top: 0;
+      }
+      
+      
+      .menu-button {
+        position: relative;
+        z-index: 2;
+      }
+      
+      .menu-button svg {
+        width: 3rem;
+      }
+      
+      .menu-button .line {
+        fill: none;
+        stroke: hsl(0, 0%, 100%);
+        stroke-width: 6;
+        transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+          stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      .menu-button .top-line {
+        stroke-dasharray: 60 207;
+        stroke-width: 6;
+      }
+      
+      .menu-button .middle-line {
+        stroke-dasharray: 60 60;
+        stroke-width: 6;
+      }
+      
+      .menu-button .bottom-line {
+        stroke-dasharray: 60 207;
+        stroke-width: 6;
+      }
+      
+      .menu-button.active .top-line {
+        stroke-dasharray: 90 207;
+        stroke-dashoffset: -134;
+        stroke-width: 6;
+      }
+      
+      .menu-button.active .middle-line {
+        stroke-dasharray: 1 60;
+        stroke-dashoffset: -30;
+        stroke-width: 6;
+      }
+      
+      .menu-button.active .bottom-line {
+        stroke-dasharray: 90 207;
+        stroke-dashoffset: -134;
+        stroke-width: 6;
+      }
+      </style>
+      <div class="top-bar-menu">
+      <div class="menu">
 
-            #menu-button button:before, #menu-button button:after,
-            #menu-button span:before, #menu-button span:after{
-                background-color: hsl(0, 0%, 100%);
-                border-radius: 15px;
-                content: "";
-                display: block;
-                height: 0.2em;
-                opacity: 1;
-                position: absolute;
-                transition: ease-in-out all 0.15s;
-                width: 100%
-            }
+      </div>
+      <button class="menu-button">
+        <svg viewBox="0 0 100 100">
+          <path class="line top-line"
+            d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
+          <path class="line middle-line" d="M 20,50 H 80" />
+          <path class="line bottom-line"
+            d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
+        </svg>
+      </button>
+    </div>
+      `
 
-            span:before, span:after{
-                top: 50%;
-                transform: translateY(-50%);
-            }
+    const menuButton = this.shadow.querySelector('.menu-button')
+    const menu = this.shadow.querySelector('.menu')
 
-            #menu-button button:before{
-                top: 0.5em;
-            }
-
-            #menu-button button:after{
-                bottom: 0.5em;
-            }
-
-            #menu-button.active button:before, #menu-button.active button:after{
-                display: none;
-            }
-
-            #menu-button.active span:before{
-                background-color: hsl(207, 85%, 69%);
-                transform: rotate(45deg);
-            }
-
-            #menu-button.active span:after{
-                background-color: hsl(207, 85%, 69%);
-                transform: rotate(-45deg)
-            }
-
-            #menu{
-                background-color: hsl(0, 0%, 100%);
-                height: 100vh;
-                left: 0;
-                position: fixed;
-                transition: opacity 0.4s;
-                top: 0;
-                opacity: 0;
-                padding: 5%;
-                width: 100%;
-                z-index: -1;
-            }
-
-            #menu.active{
-                opacity: 1;
-                z-index: 1000;
-            }
-
-            nav {
-                display: flex;
-                align-items: center;
-                justify-content: left;
-            }
-              
-            nav ul {
-                list-style: none;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                flex-direction: column; 
-            }
-              
-            nav ul li {
-                position: relative;
-                width: max-content;
-            }
-              
-            nav ul li a {
-                display: block;
-                font-family: 'Roboto', sans-serif;
-                font-size: 1.5em;
-                padding: 0.5rem;
-                text-decoration: none;
-                color: hsl(207, 85%, 69%);
-            }
-
-            nav ul li a:hover {
-                color: hsl(19, 100%, 50%);
-            }
-
-            nav ul li .sub-menu {
-                display: none;
-            }
-            
-            nav ul li:hover .sub-menu {
-                display: block;
-            }
-              
-            nav ul li:hover > .sub-menu {
-                visibility: visible;
-                animation: slide-in 0.5s ease-in-out; /* animación de apertura */
-            }
-              
-            .sub-menu {
-                position: absolute;
-                top: 0;
-                left: 100%; 
-                visibility: hidden;
-                animation: slide-out 0.5s ease-in-out;
-            }
-        </style>
-
-        <div id="menu-button">
-            <button>
-                <span></span>
-            </button>
-        </div>
-
-        <div id="menu">
-            <nav>
-                <ul>
-              
-                </ul>
-            </nav>
-        </div>`
-
-    const menuList = this.shadow.querySelector('ul')
-
-    this.menuItems.forEach(menuItem => {
-      const li = document.createElement('li')
-      const link = document.createElement('a')
-
-      if (menuItem.localeSeo.url) 
-        link.setAttribute('href', `${menuItem.localeSeo.url}`)
-
-      if (menuItem.customUrl)
-        link.setAttribute('href', `${menuItem.customUrl}`)
-
-      link.textContent = menuItem.name
-
-      li.appendChild(link)
-
-      this.createSubMenu(menuItem, li)
-
-      menuList.appendChild(li)
-    })
-
-    this.shadow.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', (event) => {
-        event.preventDefault()
-
-        menuButton.classList.toggle('active')
-        menu.classList.toggle('active')
-        
-        document.dispatchEvent(new CustomEvent('newUrl', {
-          detail: {
-            url: link.getAttribute('href'),
-            title: link.textContent
-          }
-        }))
-      })
-    })
-
-    const menuButton = this.shadow.querySelector('#menu-button')
-    const menu = this.shadow.querySelector('#menu')
-
-    menuButton.addEventListener('click', (event) => {
+    menuButton?.addEventListener('click', () => {
       menuButton.classList.toggle('active')
-      menu.classList.toggle('active')
+      menu.classList.toggle('menu-active')
     })
-  }
-
-  createSubMenu (menuItem, li) {
-    if (menuItem.children) {
-      const subMenu = document.createElement('ul')
-      subMenu.classList.add('sub-menu')
-      li.append(subMenu)
-
-      Object.values(menuItem.children).forEach(subMenuItem => {
-        const subLi = document.createElement('li')
-        const subLink = document.createElement('a')
-
-        subLink.setAttribute('href', subMenuItem.customUrl)
-        subLink.textContent = subMenuItem.name
-
-        subLi.appendChild(subLink)
-        subMenu.appendChild(subLi)
-
-        this.createSubMenu(subMenuItem, subLi)
-      })
-
-      li.appendChild(subMenu)
-    }
   }
 }
 
-customElements.define('menu-component', Menu)
+customElements.define('title-menu', Title)
