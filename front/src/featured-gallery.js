@@ -21,11 +21,12 @@ class FeaturedGallery extends HTMLElement {
         platforms: ['windows', 'apple'],
         locale: {
           title: 'Minecraft'
+        },
+
+        image: {
+          url: 'http://localhost:5173/public/minecraft.webp',
+          alt: 'Minecraft'
         }
-        // image: {
-        //   url: 'http://localhost:5173/public/minecraft.webp',
-        //   alt: 'Minecraft'
-        // }
       },
       {
         id: 2,

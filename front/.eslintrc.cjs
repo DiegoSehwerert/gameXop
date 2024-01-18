@@ -7,6 +7,6 @@ module.exports = {
   globals: {
   },
   rules: {
-    // Aquí puedes añadir o sobrescribir reglas específicas
+    'no-unused-vars': 'warn'
   }
 }

@@ -25,61 +25,61 @@
 //         this.trackingMobilePosition()
 //       }
 
-//       // const data = {
-//       //   event: 'load',
-//       //   path: this.path,
-//       //   eventTime: this.startTime,
-//       //   screenHeigth: this.screenHeigth,
-//       //   pageHeigth: document.documentElement.scrollHeight,
-//       //   screenWidth: this.screenWidth,
-//       //   fingerprint: this.fingerprint
-//       // }
+//       const data = {
+//         event: 'load',
+//         path: this.path,
+//         eventTime: this.startTime,
+//         screenHeigth: this.screenHeigth,
+//         pageHeigth: document.documentElement.scrollHeight,
+//         screenWidth: this.screenWidth,
+//         fingerprint: this.fingerprint
+//       }
 
-//       // fetch(`${import.meta.env.VITE_import.meta.env.VITE_API_URL}user-trackings`, {
-//       //   method: 'POST',
-//       //   headers: {
-//       //     'Content-Type': 'application/json'
-//       //   },
-//       //   body: JSON.stringify({ data: data })
-//       // })
-//       // .then(response => response.json())
-//       // .then(data => console.log(data))
-//       // .catch((error) => console.error('Error:', error));
+//       fetch(`${import.meta.env.VITE_import.meta.env.VITE_API_URL}user-trackings`, {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({ data })
+//       })
+//         .then(response => response.json())
+//         .then(data => console.log(data))
+//         .catch((error) => console.error('Error:', error))
 //     })
 //   }
 
-//   // generateFingerprint = () => {
-//   //   this.fingerprint = getBrowserFingerprint()
+//   generateFingerprint = () => {
+//     this.fingerprint = getBrowserFingerprint()
 
-//   //   const userAgent = Bowser.parse(window.navigator.userAgent)
+//     const userAgent = Bowser.parse(window.navigator.userAgent)
 
-//   // const data = {
-//   //   fingerprint: this.fingerprint,
-//   //   browser: userAgent.browser.name,
-//   //   browserVersion: userAgent.browser.version,
-//   //   os: userAgent.os.name,
-//   //   osVersion: userAgent.os.version,
-//   //   screenHeigth: this.screenHeigth,
-//   //   screenWidth: this.screenWidth
-//   // }
+//     const data = {
+//       fingerprint: this.fingerprint,
+//       browser: userAgent.browser.name,
+//       browserVersion: userAgent.browser.version,
+//       os: userAgent.os.name,
+//       osVersion: userAgent.os.version,
+//       screenHeigth: this.screenHeigth,
+//       screenWidth: this.screenWidth
+//     }
 
-//   // fetch(`${import.meta.env.VITE_import.meta.env.VITE_API_URL}fingerprints`, {
-//   //   method: 'POST',
-//   //   headers: {
-//   //     'Content-Type': 'application/json'
-//   //   },
-//   //   body: JSON.stringify({ data: data })
-//   // })
-//   // .then(response => response.json())
-//   // .then(data => console.log(data))
-//   // .catch((error) => console.error('Error:', error));
+//     fetch(`${import.meta.env.VITE_import.meta.env.VITE_API_URL}fingerprints`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({ data })
+//     })
+//       .then(response => response.json())
+//       .then(data => console.log(data))
+//       .catch((error) => console.error('Error:', error))
 
-//   //   document.dispatchEvent(new CustomEvent('setFingerprint', {
-//   //     detail: {
-//   //       fingerprint: this.fingerprint
-//   //     }
-//   //   }))
-//   // }
+//     document.dispatchEvent(new CustomEvent('setFingerprint', {
+//       detail: {
+//         fingerprint: this.fingerprint
+//       }
+//     }))
+//   }
 
 //   hashCode (str) {
 //     let hash = 0

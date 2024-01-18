@@ -8,6 +8,6 @@ module.exports = {
     customElements: 'readonly' // Esto le dice a ESLint que `customElements` es una variable global de solo lectura
   },
   rules: {
-    // Aquí puedes añadir o sobrescribir reglas específicas
+    'no-unused-vars': 'warn'
   }
 }
