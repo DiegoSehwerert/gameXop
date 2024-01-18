@@ -306,7 +306,7 @@ class Tabs extends HTMLElement {
         tabClick.classList.add('active')
 
         tabContents.forEach(tabContent => {
-          if (tabClick.dataset.form == tabContent.dataset.form) {
+          if (tabClick.dataset.form === tabContent.dataset.form) {
             tabContent.classList.add('active')
           } else {
             tabContent.classList.remove('active')
