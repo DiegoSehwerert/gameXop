@@ -1,27 +1,26 @@
 module.exports = function (sequelize, DataTypes) {
-  const User = sequelize.define('User', {
+  const Price = sequelize.define('Price', {
     id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
+    productId: {
+      type: DataTypes.INTEGER,
+    },
+    taxId: {
+      type: DataTypes.INTEGER,
+    },
+    basePrice: {
+      type: DataTypes.DECIMAL
+    },
+    current: {
+      type: DataTypes.BOOLEAN
+    },
     createdAt: {
       type: DataTypes.DATE,
-      get () {
+      get() {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -29,7 +28,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get () {
+      get() {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
@@ -37,7 +36,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'users',
+    tableName: 'prices',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -52,9 +51,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  User.associate = function (models) {
+  Price.associate = function (models) {
 
   }
 
-  return User
+  return Price
 }

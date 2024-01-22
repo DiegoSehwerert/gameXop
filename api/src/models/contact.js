@@ -1,27 +1,33 @@
 module.exports = function (sequelize, DataTypes) {
-  const User = sequelize.define('User', {
+  const Contact = sequelize.define('Contact', {
     id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
+    fingerprintId: {
+      type: DataTypes.INTEGER,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    subject: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    message: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
     createdAt: {
       type: DataTypes.DATE,
-      get () {
+      get() {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -29,7 +35,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get () {
+      get() {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
@@ -37,7 +43,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'users',
+    tableName: 'contacts',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -52,9 +58,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  User.associate = function (models) {
+  Contact.associate = function (models) {
 
   }
 
-  return User
+  return Contact
 }

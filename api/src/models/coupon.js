@@ -1,27 +1,34 @@
 module.exports = function (sequelize, DataTypes) {
-  const User = sequelize.define('User', {
+  const Coupon = sequelize.define('Coupon', {
     id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    code: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    percentage: {
+      type: DataTypes.DECIMAL
+    },
+    multiplier: {
+      type: DataTypes.DECIMAL
+    },
+    startsAt: {
+      type: DataTypes.DATE
+    },
+    endsAt: {
+      type: DataTypes.DATE
+    },
     createdAt: {
       type: DataTypes.DATE,
-      get () {
+      get() {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -29,7 +36,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get () {
+      get() {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
@@ -37,7 +44,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'users',
+    tableName: 'coupons',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -52,9 +59,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  User.associate = function (models) {
+  Coupon.associate = function (models) {
 
   }
 
-  return User
+  return Coupon
 }

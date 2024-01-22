@@ -1,27 +1,22 @@
 module.exports = function (sequelize, DataTypes) {
-  const User = sequelize.define('User', {
+  const City = sequelize.define('City', {
     id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
+    countryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     createdAt: {
       type: DataTypes.DATE,
-      get () {
+      get() {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -29,7 +24,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get () {
+      get() {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
@@ -37,7 +32,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'users',
+    tableName: 'cities',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -52,9 +47,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
-  User.associate = function (models) {
+  City.associate = function (models) {
 
   }
 
-  return User
+  return City
 }
