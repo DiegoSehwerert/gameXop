@@ -1,57 +1,58 @@
 'use strict'
 
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('locale_seos', {
       id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
       },
       languageAlias: {
-        allowNull: false,
         type: Sequelize.STRING,
+        allowNull: false
       },
       url: {
-        allowNull: false,
-        type: Sequelize.STRING, 
+        type: Sequelize.STRING,
+        allowNull: false
       },
       title: {
-        allowNull: false,
-        type: Sequelize.STRING, 
+        type: Sequelize.STRING,
+        allowNull: false
       },
       description: {
-        type: Sequelize.STRING, 
+        type: Sequelize.STRING
       },
       redirection: {
-        defaultValue: 0,
-        type: Sequelize.BOOLEAN, 
+        type: Sequelize.BOOLEAN,
+        defaultValue: 0
       },
       menu: {
-        defaultValue: 1,
-        type: Sequelize.BOOLEAN, 
+        type: Sequelize.BOOLEAN,
+        defaultValue: 1
       },
       changeFrequency: {
-        type: Sequelize.STRING, 
+        type: Sequelize.STRING
       },
       priority: {
-        type: Sequelize.DECIMAL, 
+        type: Sequelize.DECIMAL
       },
       sitemap: {
-        defaultValue: 1,
-        type: Sequelize.BOOLEAN, 
+        type: Sequelize.BOOLEAN,
+        defaultValue: 1
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE,
+        allowNull: false
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE,
+        allowNull: false
       },
       deletedAt: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       }
     })
   },
