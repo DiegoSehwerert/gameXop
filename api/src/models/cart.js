@@ -69,6 +69,7 @@ module.exports = function (sequelize, DataTypes) {
   Cart.associate = function (models) {
     Cart.belongsTo(models.customer, { as: 'customer', foreignKey: 'customerId'})
     Cart.belongsTo(models.fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId'})
+    Cart.hasMany(models.Sale, { as: 'sales', foreignKey: 'cartId' })
   }
 
   return Cart

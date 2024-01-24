@@ -100,6 +100,8 @@ module.exports = function (sequelize, DataTypes) {
     Fingerprint.belongsTo(models.country, { as: 'country', foreignKey: 'countryId'})
     Fingerprint.belongsTo(models.city, { as: 'city', foreignKey: 'cityId'})
     Fingerprint.belongsTo(models.dialCode, { as: 'dialCode', foreignKey: 'dialCodeId'})
+
+    Fingerprint.belongsTo(models.ApiTracking, { as: 'apiTracking', foreignKey: 'apiTrackingId'})
   }
 
   return Fingerprint

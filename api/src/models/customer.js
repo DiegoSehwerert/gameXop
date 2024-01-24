@@ -116,6 +116,8 @@ module.exports = function (sequelize, DataTypes) {
     Customer.belongsTo(models.country, { as: 'country', foreignKey: 'countryId'})
     Customer.belongsTo(models.city, { as: 'city', foreignKey: 'cityId'})
     Customer.belongsTo(models.dialCode, { as: 'dialCode', foreignKey: 'dialCodeId'})
+
+    Customer.hasMany(models.ApiTracking, { as: 'ApiTrackings', foreignKey: 'apiTrackingId' })
   }
 
   return Customer

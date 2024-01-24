@@ -101,8 +101,8 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   ApiTracking.associate = function (models) {
-    ApiTracking.belongsTo(models.Customer, { as: 'Customer', foreignKey: 'CustomerId'})
-    ApiTracking.belongsTo(models.Fingerprint, { as: 'Fingerprint', foreignKey: 'FingerprintId'})
+    ApiTracking.belongsTo(models.customer, { as: 'customer', foreignKey: 'customerId'})
+    ApiTracking.belongsTo(models.fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId'})
   }
 
   return ApiTracking
