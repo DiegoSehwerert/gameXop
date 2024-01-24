@@ -37,7 +37,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'payment-methods',
+    tableName: 'payment_methods',
     timestamps: true,
     paranoid: true,
     indexes: [

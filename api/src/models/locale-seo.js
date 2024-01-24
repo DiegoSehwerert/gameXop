@@ -57,7 +57,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'locale-seos',
+    tableName: 'locale_seos',
     timestamps: true,
     paranoid: true,
     indexes: [

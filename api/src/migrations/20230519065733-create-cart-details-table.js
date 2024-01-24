@@ -113,6 +113,10 @@ module.exports = {
       name: 'cart_details_priceId_fk'
     })
 
+    await queryInterface.addIndex('cart_details', ['price_discountId'], {
+      name: 'cart_details_price_discountId_fk'
+    })
+
     await queryInterface.addIndex('cart_details', ['taxId'], {
       name: 'cart_details_taxId_fk'
     })

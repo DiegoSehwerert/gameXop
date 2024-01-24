@@ -60,12 +60,47 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'customer_trackings_customerId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'customerId' }
+        ]
+      },
+      {
+        name: 'customer_trackings_fingerprintId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'fingerprintId' }
+        ]
+      },
+      {
+        name: 'customer_trackings_localeSeoId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'localeSeoId' }
+        ]
+      },
+      {
+        name: 'customer_trackings_localeSeoSlugId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'localeSeoSlugId' }
+        ]
       }
     ]
   })
 
   CustomerTracking.associate = function (models) {
-
+    CustomerTracking.belongsTo(models.customer, { as: 'customer', foreignKey: 'customerId'})
+    CustomerTracking.belongsTo(models.fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId'})
+    CustomerTracking.belongsTo(models.localeSeo, { as: 'localeSeo', foreignKey: 'localeSeoId'})
+    CustomerTracking.belongsTo(models.localeSeoSlug, { as: 'localeSeoSlug', foreignKey: 'localeSeoSlugId'})
   }
 
   return CustomerTracking

@@ -23,8 +23,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false
     },
     value: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.TEXT,
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -54,6 +53,17 @@ module.exports = function (sequelize, DataTypes) {
         using: 'BTREE',
         fields: [
           { name: 'id' }
+        ]
+      },
+      {
+        name: 'locales_languageAlias_entity_entityId_key_index',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'languageAlias' },
+          { name: 'entity' },
+          { name: 'entityId' },
+          { name: 'key' }
         ]
       }
     ]

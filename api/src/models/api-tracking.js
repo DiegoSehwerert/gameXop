@@ -80,12 +80,29 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'api_trackings_customerId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'customerId' }
+        ]
+      },
+      {
+        name: 'api_trackings_fingerprintId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'fingerprintId' }
+        ]
       }
     ]
   })
 
   ApiTracking.associate = function (models) {
-
+    ApiTracking.belongsTo(models.Customer, { as: 'Customer', foreignKey: 'CustomerId'})
+    ApiTracking.belongsTo(models.Fingerprint, { as: 'Fingerprint', foreignKey: 'FingerprintId'})
   }
 
   return ApiTracking

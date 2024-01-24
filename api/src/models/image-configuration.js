@@ -42,7 +42,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'image-configuration',
+    tableName: 'image_configuration',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -52,6 +52,16 @@ module.exports = function (sequelize, DataTypes) {
         using: 'BTREE',
         fields: [
           { name: 'id' }
+        ]
+      },
+      {
+        name: 'image_configurations_entity_name_mediaQuery_index',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'entity' },
+          { name: 'name' },
+          { name: 'mediaQuery' },
         ]
       }
     ]

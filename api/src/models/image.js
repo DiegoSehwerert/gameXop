@@ -73,12 +73,31 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'images_imageConfigurationId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'imageConfigurationId' }
+        ]
+      },
+      {
+        name: 'images_entityId_entity_mediaQuery_index',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'entityId' },
+          { name: 'entity' },
+          { name: 'mediaQuery' },
+        ]
       }
     ]
   })
 
   Image.associate = function (models) {
-
+    Image.belongsTo(models.imageConfiguration, { as: 'imageConfiguration', foreignKey: 'imageConfigurationId'})
+    Image.belongsTo(models.entity, { as: 'entity', foreignKey: 'entityId'})
   }
 
   return Image

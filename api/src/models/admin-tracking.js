@@ -51,12 +51,29 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'admin_trackings_userId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'userId' }
+        ]
+      },
+      {
+        name: 'admin_trackings_entity_entityId_index',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'entity' },
+          { name: 'entityId' }
+        ]
       }
     ]
   })
 
   AdminTracking.associate = function (models) {
-
+    AdminTracking.belongsTo(models.User, { as: 'user', foreignKey: 'userId'})
   }
 
   return AdminTracking

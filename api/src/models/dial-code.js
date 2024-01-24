@@ -32,7 +32,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'dial-codes',
+    tableName: 'dial_codes',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -43,12 +43,20 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'dial_codes_countryId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'countryId' }
+        ]
       }
     ]
   })
 
   DialCode.associate = function (models) {
-
+    DialCode.belongsTo(models.country, { as: 'country', foreignKey: 'countryId'})
   }
 
   return DialCode

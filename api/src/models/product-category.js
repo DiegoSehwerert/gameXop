@@ -34,7 +34,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'product-categories',
+    tableName: 'product_categories',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -44,6 +44,22 @@ module.exports = function (sequelize, DataTypes) {
         using: 'BTREE',
         fields: [
           { name: 'id' }
+        ]
+      },
+      {
+        name: 'product_category_relations_productId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'productId' }
+        ]
+      },
+      {
+        name: 'product_category_relations_productCategoryId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'productCategoryId' }
         ]
       }
     ]

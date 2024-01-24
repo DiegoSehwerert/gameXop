@@ -82,12 +82,38 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'companies_countryId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'countryId' }
+        ]
+      },
+      {
+        name: 'companies_cityId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'cityId' }
+        ]
+      },
+      {
+        name: 'companies_dialCodeId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'dialCodeId' }
+        ]
       }
     ]
   })
 
   Company.associate = function (models) {
-
+    Company.belongsTo(models.country, { as: 'country', foreignKey: 'countryId'})
+    Company.belongsTo(models.city, { as: 'city', foreignKey: 'cityId'})
+    Company.belongsTo(models.dialCode, { as: 'dialCode', foreignKey: 'dialCodeId'})
   }
 
   return Company

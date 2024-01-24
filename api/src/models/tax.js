@@ -55,6 +55,14 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'taxes_countryId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'countryId' }
+        ]
       }
     ]
   })

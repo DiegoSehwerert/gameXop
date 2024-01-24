@@ -43,7 +43,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'price-discounts',
+    tableName: 'price_discounts',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -53,6 +53,14 @@ module.exports = function (sequelize, DataTypes) {
         using: 'BTREE',
         fields: [
           { name: 'id' }
+        ]
+      },
+      {
+        name: 'price_discounts_priceId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'priceId' }
         ]
       }
     ]

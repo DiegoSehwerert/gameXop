@@ -76,12 +76,46 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'customer_email_index',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'email' }
+        ]
+      },
+      {
+        name: 'customers_countryId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'countryId' }
+        ]
+      },
+      {
+        name: 'customers_cityId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'cityId' }
+        ]
+      },
+      {
+        name: 'customers_dialCodeId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'dialCodeId' }
+        ]
       }
     ]
   })
 
   Customer.associate = function (models) {
-
+    Customer.belongsTo(models.country, { as: 'country', foreignKey: 'countryId'})
+    Customer.belongsTo(models.city, { as: 'city', foreignKey: 'cityId'})
+    Customer.belongsTo(models.dialCode, { as: 'dialCode', foreignKey: 'dialCodeId'})
   }
 
   return Customer

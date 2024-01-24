@@ -54,6 +54,14 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'locale_seo_redirects_localeSeoId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'localeSeoId' }
+        ]
       }
     ]
   })

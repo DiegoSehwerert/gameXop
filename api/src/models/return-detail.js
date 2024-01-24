@@ -63,7 +63,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'return-details',
+    tableName: 'return_details',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -73,6 +73,54 @@ module.exports = function (sequelize, DataTypes) {
         using: 'BTREE',
         fields: [
           { name: 'id' }
+        ]
+      },
+      {
+        name: 'return_details_returnId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'returnId' }
+        ]
+      },
+      {
+        name: 'return_details_productId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'localeId' }
+        ]
+      },
+      {
+        name: 'return_details_localeId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'localeId' }
+        ]
+      },
+      {
+        name: 'return_details_priceId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'priceId' }
+        ]
+      },
+      {
+        name: 'return_details_taxId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'taxId' }
+        ]
+      },
+      {
+        name: 'return_details_priceDiscountId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'priceDiscountId' }
         ]
       }
     ]

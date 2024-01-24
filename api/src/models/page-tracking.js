@@ -71,6 +71,38 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'page_trackings_customerId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'customerId' }
+        ]
+      },
+      {
+        name: 'page_trackings_fingerprintId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'fingerprintId' }
+        ]
+      },
+      {
+        name: 'page_trackings_localeSeoId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'localeSeoId' }
+        ]
+      },
+      {
+        name: 'page_trackings_localeSeoSlugId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'localeSeoSlugId' }
+        ]
       }
     ]
   })

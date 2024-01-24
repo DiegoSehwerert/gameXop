@@ -46,12 +46,29 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'cart_customerId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'customerId' }
+        ]
+      },
+      {
+        name: 'cart_fingerprintId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'fingerprintId' }
+        ]
       }
     ]
   })
 
   Cart.associate = function (models) {
-
+    Cart.belongsTo(models.customer, { as: 'customer', foreignKey: 'customerId'})
+    Cart.belongsTo(models.fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId'})
   }
 
   return Cart

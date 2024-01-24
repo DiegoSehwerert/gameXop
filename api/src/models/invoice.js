@@ -54,12 +54,38 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'invoices_customerId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'customerId' }
+        ]
+      },
+      {
+        name: 'invoices_saleId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'saleId' }
+        ]
+      },
+      {
+        name: 'invoices_returnId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'returnId' }
+        ]
       }
     ]
   })
 
   Invoice.associate = function (models) {
-
+    Invoice.belongsTo(models.customer, { as: 'customer', foreignKey: 'customerId'})
+    Invoice.belongsTo(models.sale, { as: 'sale', foreignKey: 'saleId'})
+    Invoice.belongsTo(models.return, { as: 'return', foreignKey: 'returnId'})
   }
 
   return Invoice

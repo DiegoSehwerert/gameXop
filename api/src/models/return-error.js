@@ -43,7 +43,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'invoices',
+    tableName: 'return_errors',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -53,6 +53,30 @@ module.exports = function (sequelize, DataTypes) {
         using: 'BTREE',
         fields: [
           { name: 'id' }
+        ]
+      },
+      {
+        name: 'return_errors_customerId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'customerId' }
+        ]
+      },
+      {
+        name: 'return_errors_returnId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'returnId' }
+        ]
+      },
+      {
+        name: 'return_errors_paymentMethodId_fk',
+        unique: true,
+        using: 'BTREE',
+        fields: [
+          { name: 'paymentMethodId' }
         ]
       }
     ]
