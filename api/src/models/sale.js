@@ -108,7 +108,10 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Sale.associate = function (models) {
-
+    Sale.belongsTo(models.cart, { as: 'cart', foreignKey: 'cartId'})
+    Sale.belongsTo(models.customer, { as: 'customer', foreignKey: 'customerId'})
+    Sale.belongsTo(models.paymentMethod, { as: 'paymentMethod', foreignKey: 'paymentMethodId'})
+    Sale.belongsTo(models.coupon, { as: 'coupon', foreignKey: 'couponId'})
   }
 
   return Sale

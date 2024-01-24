@@ -70,7 +70,7 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Locale.associate = function (models) {
-
+    Locale.belongsTo(models.entity, { as: 'entity', foreignKey: 'entityId'})
   }
 
   return Locale

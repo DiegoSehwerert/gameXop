@@ -68,7 +68,7 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Tax.associate = function (models) {
-
+    Tax.belongsTo(models.country, { as: 'country', foreignKey: 'countryId'})
   }
 
   return Tax

@@ -81,7 +81,7 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   LocaleSeoSlug.associate = function (models) {
-
+    LocaleSeoSlug.belongsTo(models.localeSeo, { as: 'localeSeo', foreignKey: 'localeSeoId'})
   }
 
   return LocaleSeoSlug

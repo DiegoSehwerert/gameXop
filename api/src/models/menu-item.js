@@ -95,7 +95,9 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   MenuItem.associate = function (models) {
-
+    MenuItem.belongsTo(models.menu, { as: 'menu', foreignKey: 'menuId'})
+    MenuItem.belongsTo(models.localeSeo, { as: 'localeSeo', foreignKey: 'localeSeoId'})
+    MenuItem.belongsTo(models.localeSeoSlug, { as: 'localeSeoSlug', foreignKey: 'localeSeoSlugId'})
   }
 
   return MenuItem

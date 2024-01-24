@@ -127,7 +127,12 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   SaleDetail.associate = function (models) {
-
+    SaleDetail.belongsTo(models.sale, { as: 'sale', foreignKey: 'saleId'})
+    SaleDetail.belongsTo(models.product, { as: 'product', foreignKey: 'productId'})
+    SaleDetail.belongsTo(models.locale, { as: 'locale', foreignKey: 'localeId'})
+    SaleDetail.belongsTo(models.price, { as: 'price', foreignKey: 'priceId'})
+    SaleDetail.belongsTo(models.priceDiscount, { as: 'priceDiscount', foreignKey: 'priceDiscountId'})
+    SaleDetail.belongsTo(models.tax, { as: 'tax', foreignKey: 'taxId'})
   }
 
   return SaleDetail
