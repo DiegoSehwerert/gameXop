@@ -4,43 +4,68 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false
+      allowNull: false,
     },
     languageAlias: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the languageAlias.' },
+        is: { args: /^[A-Za-z0-9_]+$/, msg: 'Invalid characters in languageAlias.' },
+      },
     },
     entity: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the entity.' },
+        is: { args: /^[A-Za-z0-9_]+$/, msg: 'Invalid characters in entity.' },
+      },
     },
     entityId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the entityId.' },
+      },
     },
     key: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the key.' },
+        is: { args: /^[A-Za-z0-9_]+$/, msg: 'Invalid characters in key.' },
+      },
     },
     value: {
       type: DataTypes.TEXT,
     },
     createdAt: {
       type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the creation date.' },
+        isDate: { msg: 'Invalid date format for createdAt.' },
+      },
       get() {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null
-      }
+          : null;
+      },
     },
     updatedAt: {
       type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the update date.' },
+        isDate: { msg: 'Invalid date format for updatedAt.' },
+      },
       get() {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null
-      }
-    }
+          : null;
+      },
+    },
   }, {
     sequelize,
     tableName: 'locales',
@@ -52,8 +77,8 @@ module.exports = function (sequelize, DataTypes) {
         unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'id' }
-        ]
+          { name: 'id' },
+        ],
       },
       {
         name: 'locales_languageAlias_entity_entityId_key_index',
@@ -63,15 +88,17 @@ module.exports = function (sequelize, DataTypes) {
           { name: 'languageAlias' },
           { name: 'entity' },
           { name: 'entityId' },
-          { name: 'key' }
-        ]
-      }
-    ]
-  })
+          { name: 'key' },
+        ],
+      },
+    ],
+  });
 
   Locale.associate = function (models) {
-    Locale.belongsTo(models.entity, { as: 'entity', foreignKey: 'entityId'})
-  }
+    Locale.hasMany(models.locale, { as: 'CartDetail', foreignKey: 'localeId' });
+    Locale.hasMany(models.ReturnDetail, { as: 'ReturnDetail', foreignKey: 'localeId' });
+    Locale.belongsTo(models.SaleDetail, { as: 'SaleDetail', foreignKey: 'localeId' });
+  };
 
-  return Locale
-}
+  return Locale;
+};

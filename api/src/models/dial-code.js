@@ -9,10 +9,20 @@ module.exports = function (sequelize, DataTypes) {
     countryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please fill in the "Country" field.'
+        }
+      }
     },
     dialCode: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please fill in the "Dial Code" field.'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -57,6 +67,10 @@ module.exports = function (sequelize, DataTypes) {
 
   DialCode.associate = function (models) {
     DialCode.belongsTo(models.country, { as: 'country', foreignKey: 'countryId'})
+
+    DialCode.hasMany(models.Company, { as: 'Company', foreignKey: 'dialCodeId'})
+    DialCode.hasMany(models.Customer, { as: 'Customer', foreignKey: 'dialCodeId' })
+    DialCode.hasMany(models.Fingerprint, { as: 'Fingerprint', foreignKey: 'dialCodeId'})
   }
 
   return DialCode

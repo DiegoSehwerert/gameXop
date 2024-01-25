@@ -4,11 +4,14 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false
+      allowNull: false,
     },
     menuId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the menuId.' },
+      },
     },
     localeSeoId: {
       type: DataTypes.INTEGER,
@@ -17,42 +20,65 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
     },
     parent: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the name.' },
+        len: { args: [1, 255], msg: 'Name must be between 1 and 255 characters.' },
+      },
     },
     description: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        len: { args: [0, 255], msg: 'Description must be less than or equal to 255 characters.' },
+      },
     },
     customUrl: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        len: { args: [0, 255], msg: 'Custom URL must be less than or equal to 255 characters.' },
+      },
     },
     private: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the private status.' },
+      },
     },
     order: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
+      defaultValue: 0,
     },
     createdAt: {
       type: DataTypes.DATE,
-      get () {
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the creation date.' },
+        isDate: { msg: 'Invalid date format for createdAt.' },
+      },
+      get() {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null
-      }
+          : null;
+      },
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get () {
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the update date.' },
+        isDate: { msg: 'Invalid date format for updatedAt.' },
+      },
+      get() {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null
-      }
-    }
+          : null;
+      },
+    },
   }, {
     sequelize,
     tableName: 'menu_items',
@@ -64,41 +90,41 @@ module.exports = function (sequelize, DataTypes) {
         unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'id' }
-        ]
+          { name: 'id' },
+        ],
       },
       {
         name: 'menu_items_menuId_fk',
         unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'menuId' }
-        ]
+          { name: 'menuId' },
+        ],
       },
       {
         name: 'menu_items_localeSeoId_fk',
         unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'localeSeoId' }
-        ]
+          { name: 'localeSeoId' },
+        ],
       },
       {
         name: 'menu_items_localeSeoSlugId_fk',
         unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'localeSeoSlugId' }
-        ]
-      }
-    ]
-  })
+          { name: 'localeSeoSlugId' },
+        ],
+      },
+    ],
+  });
 
   MenuItem.associate = function (models) {
-    MenuItem.belongsTo(models.menu, { as: 'menu', foreignKey: 'menuId'})
-    MenuItem.belongsTo(models.localeSeo, { as: 'localeSeo', foreignKey: 'localeSeoId'})
-    MenuItem.belongsTo(models.localeSeoSlug, { as: 'localeSeoSlug', foreignKey: 'localeSeoSlugId'})
-  }
+    MenuItem.belongsTo(models.menu, { as: 'menu', foreignKey: 'menuId' });
+    MenuItem.belongsTo(models.localeSeo, { as: 'localeSeo', foreignKey: 'localeSeoId' });
+    MenuItem.belongsTo(models.localeSeoSlug, { as: 'localeSeoSlug', foreignKey: 'localeSeoSlugId' });
+  };
 
-  return MenuItem
-}
+  return MenuItem;
+};

@@ -4,31 +4,52 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false
+      allowNull: false,
     },
     localeSeoSlugId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the localeSeoSlugId.' },
+        isInt: { msg: 'LocaleSeoSlugId must be an integer.' }
+      }
     },
     languageAlias: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        is: { args: /^[A-Za-z0-9_]+$/, msg: 'Invalid characters in languageAlias.' }
+      }
     },
     oldUrl: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        is: { args: /^(\/[A-Za-z0-9_-]+)+$/, msg: 'Invalid characters in oldUrl.' }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
-      get () {
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the creation date.' },
+        isDate: { msg: 'Invalid date format for createdAt.' }
+      },
+      get() {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null
+          : null;
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get () {
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the update date.' },
+        isDate: { msg: 'Invalid date format for updatedAt.' }
+      },
+      get() {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null
+          : null;
       }
     }
   }, {
@@ -54,11 +75,11 @@ module.exports = function (sequelize, DataTypes) {
         ]
       }
     ]
-  })
+  });
 
   LocaleSeoSlugRedirect.associate = function (models) {
     LocaleSeoSlugRedirect.belongsTo(models.localeSeoSlug, { as: 'localeSeoSlug', foreignKey: 'localeSeoSlugId'})
   }
 
-  return LocaleSeoSlugRedirect
-}
+  return LocaleSeoSlugRedirect;
+};

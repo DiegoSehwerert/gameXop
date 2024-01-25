@@ -4,31 +4,61 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false
+      allowNull: false,
     },
     countryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        isInt: {
+          msg: 'Please provide a valid country ID.'
+        }
+      }
     },
     cityId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        isInt: {
+          msg: 'Please provide a valid city ID.'
+        }
+      }
     },
     dialCodeId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        isInt: {
+          msg: 'Please provide a valid dial code ID.'
+        }
+      }
     },
     fiscalName: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please provide a fiscal name.'
+        }
+      }
     },
     comercialName: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please provide a commercial name.'
+        }
+      }
     },
     vat: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please provide a VAT number.'
+        }
+      }
     },
     comercialAddress: {
       type: DataTypes.STRING,
@@ -36,29 +66,54 @@ module.exports = function (sequelize, DataTypes) {
     },
     fiscalAddress: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please provide a fiscal address.'
+        }
+      }
     },
     postalCode: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please provide a postal code.'
+        }
+      }
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
+      validate: {
+        isEmail: {
+          msg: 'Please provide a valid email address.'
+        }
+      }
     },
     web: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        isUrl: {
+          msg: 'Please provide a valid URL for the website.'
+        }
+      }
     },
     telephone: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        isNumeric: {
+          msg: 'Please provide a valid telephone number.'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
       get() {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null
+          : null;
       }
     },
     updatedAt: {
@@ -66,7 +121,7 @@ module.exports = function (sequelize, DataTypes) {
       get() {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null
+          : null;
       }
     }
   }, {
@@ -108,13 +163,13 @@ module.exports = function (sequelize, DataTypes) {
         ]
       }
     ]
-  })
+  });
 
   Company.associate = function (models) {
-    Company.belongsTo(models.country, { as: 'country', foreignKey: 'countryId'})
-    Company.belongsTo(models.city, { as: 'city', foreignKey: 'cityId'})
-    Company.belongsTo(models.dialCode, { as: 'dialCode', foreignKey: 'dialCodeId'})
+    Company.belongsTo(models.Country, { as: 'country', foreignKey: 'companyId'})
+    Company.belongsTo(models.City, { as: 'city', foreignKey: 'companyId'})
+    Company.belongsTo(models.DialCode, { as: 'dialCode', foreignKey: 'companyId'})
   }
 
-  return Company
-}
+  return Company;
+};

@@ -112,6 +112,12 @@ module.exports = function (sequelize, DataTypes) {
     Sale.belongsTo(models.customer, { as: 'customer', foreignKey: 'customerId'})
     Sale.belongsTo(models.paymentMethod, { as: 'paymentMethod', foreignKey: 'paymentMethodId'})
     Sale.belongsTo(models.coupon, { as: 'coupon', foreignKey: 'couponId'})
+
+    Sale.hasMany(models.Invoice, { as: 'Invoice', foreignKey: 'saleId'})
+    Sale.hasMany(models.Return, { as: 'Return', foreignKey: 'saleId'})
+    Sale.hasMany(models.SaleDetail, { as: 'SaleDetail', foreignKey: 'saleId'})
+    Sale.hasMany(models.Ticket, { as: 'Ticket', foreignKey: 'saleId'})
+    Sale.belongsToMany(models.Product, { through: models.SaleDetail, as: 'products', foreignKey: 'saleId' })
   }
 
   return Sale

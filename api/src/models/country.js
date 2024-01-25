@@ -8,15 +8,39 @@ module.exports = function (sequelize, DataTypes) {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please provide a country name.'
+        },
+        notEmpty: {
+          msg: 'Country name cannot be empty.'
+        }
+      }
     },
     iso2: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please provide a valid ISO2 code.'
+        },
+        notEmpty: {
+          msg: 'ISO2 code cannot be empty.'
+        }
+      }
     },
     iso3: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please provide a valid ISO3 code.'
+        },
+        notEmpty: {
+          msg: 'ISO3 code cannot be empty.'
+        }
+      }
     },
     visible: {
       type: DataTypes.BOOLEAN,
@@ -54,11 +78,15 @@ module.exports = function (sequelize, DataTypes) {
         ]
       }
     ]
-  })
+  });
 
   Country.associate = function (models) {
-
+    Country.hasMany(models.City, { as: 'City', foreignKey: 'countryId'})
+    Country.hasMany(models.Company, { as: 'Company', foreignKey: 'countryId'})
+    Country.hasMany(models.Customer, { as: 'Customer', foreignKey: 'countryId' })
+    Country.hasMany(models.DialCode, { as: 'DialCode', foreignKey: 'countryId'})
+    Country.hasMany(models.Tax, { as: 'Tax', foreignKey: 'countryId'})
   }
 
-  return Country
-}
+  return Country;
+};

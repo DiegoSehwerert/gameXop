@@ -8,22 +8,49 @@ module.exports = function (sequelize, DataTypes) {
     },
     fingerprintId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        isInt: {
+          msg: 'Please provide a valid fingerprint ID.'
+        }
+      }
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please provide a name.'
+        }
+      }
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: {
+          msg: 'Please provide a valid email address.'
+        }
+      }
     },
     subject: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please provide a subject.'
+        }
+      }
     },
     message: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please provide a message.'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -72,11 +99,11 @@ module.exports = function (sequelize, DataTypes) {
         ]
       }
     ]
-  })
+  });
 
   Contact.associate = function (models) {
-    Contact.belongsTo(models.fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId'})
+    Contact.belongsTo(models.Fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId'})
   }
 
-  return Contact
-}
+  return Contact;
+};

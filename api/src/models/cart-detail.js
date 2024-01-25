@@ -9,55 +9,105 @@ module.exports = function (sequelize, DataTypes) {
     cartId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        isInt: {
+          msg: 'Please provide a valid cart ID.'
+        }
+      }
     },
     productId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        isInt: {
+          msg: 'Please provide a valid product ID.'
+        }
+      }
     },
     localeId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        isInt: {
+          msg: 'Please provide a valid locale ID.'
+        }
+      }
     },
     priceId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        isInt: {
+          msg: 'Please provide a valid price ID.'
+        }
+      }
     },
     priceDiscountId: {
       type: DataTypes.INTEGER,
+      validate: {
+        isInt: {
+          msg: 'Please provide a valid price discount ID.'
+        }
+      }
     },
     taxId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        isInt: {
+          msg: 'Please provide a valid tax ID.'
+        }
+      }
     },
     productName: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please provide a product name.'
+        }
+      }
     },
     basePrice: {
       type: DataTypes.DECIMAL(6, 2),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isDecimal: {
+          msg: 'Please provide a valid base price.'
+        }
+      }
     },
     taxPrice: {
-      type: DataTypes.DECIMAL(6, 2)
+      type: DataTypes.DECIMAL(6, 2),
+      validate: {
+        isDecimal: {
+          msg: 'Please provide a valid tax price.'
+        }
+      }
     },
     quantity: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: {
+          msg: 'Please provide a valid quantity.'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
-      get () {
+      get() {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null
+          : null;
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get () {
+      get() {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null
+          : null;
       }
     }
   }, {
@@ -126,12 +176,14 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   CartDetail.associate = function (models) {
-    CartDetail.belongsTo(models.cart, { as: 'cart', foreignKey: 'cartId'})
-    CartDetail.belongsTo(models.product, { as: 'product', foreignKey: 'productId'})
-    CartDetail.belongsTo(models.locale, { as: 'locale', foreignKey: 'localeId'})
-    CartDetail.belongsTo(models.price, { as: 'price', foreignKey: 'priceId'})
-    CartDetail.belongsTo(models.priceDiscount, { as: 'priceDiscount', foreignKey: 'priceDiscountId'})
-    CartDetail.belongsTo(models.tax, { as: 'tax', foreignKey: 'taxId'})
+    CartDetail.belongsTo(models.Cart, { as: 'cart', foreignKey: 'cartId'})
+    CartDetail.belongsTo(models.Product, { as: 'product', foreignKey: 'productId'})
+    CartDetail.belongsTo(models.Locale, { as: 'locale', foreignKey: 'localeId'})
+    CartDetail.belongsTo(models.Price, { as: 'price', foreignKey: 'priceId'})
+    CartDetail.belongsTo(models.PriceDiscount, { as: 'priceDiscount', foreignKey: 'priceDiscountId'})
+    CartDetail.belongsTo(models.Tax, { as: 'tax', foreignKey: 'taxId'})
+
+    CartDetail.hasMany(models.Product, { as: 'Product', foreignKey: 'cartDetailId'})
   }
 
   return CartDetail

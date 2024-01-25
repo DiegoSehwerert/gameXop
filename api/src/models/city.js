@@ -4,22 +4,32 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false
+      allowNull: false,
     },
     countryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        isInt: {
+          msg: 'Please provide a valid country ID.'
+        }
+      }
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please provide a city name.'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
       get() {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null
+          : null;
       }
     },
     updatedAt: {
@@ -27,7 +37,7 @@ module.exports = function (sequelize, DataTypes) {
       get() {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null
+          : null;
       }
     }
   }, {
@@ -53,11 +63,15 @@ module.exports = function (sequelize, DataTypes) {
         ]
       }
     ]
-  })
+  });
 
   City.associate = function (models) {
-    City.belongsTo(models.country, { as: 'country', foreignKey: 'countryId'})
+    City.belongsTo(models.Country, { as: 'country', foreignKey: 'countryId'});
+
+    City.hasMany(models.Company, { as: 'Company', foreignKey: 'cityId'});
+    City.hasMany(models.Customer, { as: 'Customer', foreignKey: 'cityId'});
+    City.hasMany(models.Fingerprint, { as: 'Fingerprint', foreignKey: 'cityId'});
   }
 
-  return City
-}
+  return City;
+};

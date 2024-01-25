@@ -4,42 +4,94 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false
+      allowNull: false,
     },
     entity: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "Entidad".',
+        },
+        isString: {
+          msg: 'El campo "Entidad" debe ser una cadena de texto.',
+        },
+      },
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "Nombre".',
+        },
+        isString: {
+          msg: 'El campo "Nombre" debe ser una cadena de texto.',
+        },
+      },
     },
     mediaQuery: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "Media Query".',
+        },
+        isString: {
+          msg: 'El campo "Media Query" debe ser una cadena de texto.',
+        },
+      },
     },
     widthPx: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: {
+          msg: 'El campo "Ancho en píxeles" debe ser un número entero.',
+        },
+      },
     },
     heightPx: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: {
+          msg: 'El campo "Alto en píxeles" debe ser un número entero.',
+        },
+      },
     },
     createdAt: {
       type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        isDate: {
+          msg: 'El campo "Fecha de Creación" debe ser una fecha válida.',
+        },
+        notNull: {
+          msg: 'Por favor, rellena el campo "Fecha de Creación".',
+        },
+      },
       get() {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null
-      }
+          : null;
+      },
     },
     updatedAt: {
       type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        isDate: {
+          msg: 'El campo "Fecha de Actualización" debe ser una fecha válida.',
+        },
+        notNull: {
+          msg: 'Por favor, rellena el campo "Fecha de Actualización".',
+        },
+      },
       get() {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null
-      }
-    }
+          : null;
+      },
+    },
   }, {
     sequelize,
     tableName: 'image_configuration',
@@ -51,8 +103,8 @@ module.exports = function (sequelize, DataTypes) {
         unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'id' }
-        ]
+          { name: 'id' },
+        ],
       },
       {
         name: 'image_configurations_entity_name_mediaQuery_index',
@@ -62,14 +114,14 @@ module.exports = function (sequelize, DataTypes) {
           { name: 'entity' },
           { name: 'name' },
           { name: 'mediaQuery' },
-        ]
-      }
-    ]
-  })
+        ],
+      },
+    ],
+  });
 
   ImageConfiguration.associate = function (models) {
+    ImageConfiguration.hasMany(models.Image, { as: 'Image', foreignKey: 'imageConfigurationId' });
+  };
 
-  }
-
-  return ImageConfiguration
-}
+  return ImageConfiguration;
+};

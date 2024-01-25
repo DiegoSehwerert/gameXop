@@ -8,11 +8,27 @@ module.exports = function (sequelize, DataTypes) {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please provide a valid coupon name.'
+        },
+        notEmpty: {
+          msg: 'Coupon name cannot be empty.'
+        }
+      }
     },
     code: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please provide a valid coupon code.'
+        },
+        notEmpty: {
+          msg: 'Coupon code cannot be empty.'
+        }
+      }
     },
     percentage: {
       type: DataTypes.DECIMAL
@@ -21,10 +37,20 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.DECIMAL
     },
     startsAt: {
-      type: DataTypes.DATE
+      type: DataTypes.DATE,
+      validate: {
+        isDate: {
+          msg: 'Please provide a valid start date.'
+        }
+      }
     },
     endsAt: {
-      type: DataTypes.DATE
+      type: DataTypes.DATE,
+      validate: {
+        isDate: {
+          msg: 'Please provide a valid end date.'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -60,8 +86,8 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Coupon.associate = function (models) {
-
+    Coupon.hasMany(models.Sale, { as: 'Sale', foreignKey: 'couponId'})
   }
 
   return Coupon
-}
+};

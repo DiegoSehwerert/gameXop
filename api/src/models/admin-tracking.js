@@ -9,33 +9,53 @@ module.exports = function (sequelize, DataTypes) {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please provide a user ID.'
+        }
+      }
     },
     entity: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please provide an entity.'
+        }
+      }
     },
     entityId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please provide an entity ID.'
+        }
+      }
     },
     action: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please provide an action.'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
-      get () {
+      get() {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null
+          : null;
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get () {
+      get() {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null
+          : null;
       }
     }
   }, {

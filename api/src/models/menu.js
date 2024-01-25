@@ -4,28 +4,41 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the name.' },
+      },
     },
     createdAt: {
       type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the creation date.' },
+        isDate: { msg: 'Invalid date format for createdAt.' },
+      },
       get() {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null
-      }
+          : null;
+      },
     },
     updatedAt: {
       type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Please provide the update date.' },
+        isDate: { msg: 'Invalid date format for updatedAt.' },
+      },
       get() {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null
-      }
-    }
+          : null;
+      },
+    },
   }, {
     sequelize,
     tableName: 'menus',
@@ -37,15 +50,17 @@ module.exports = function (sequelize, DataTypes) {
         unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'id' }
-        ]
-      }
-    ]
-  })
+          { name: 'id' },
+        ],
+      },
+    ],
+  });
 
   Menu.associate = function (models) {
+    Menu.hasMany(models.MenuItem, { as: 'MenuItem', foreignKey: 'menuId' });
+    Menu.belongsToMany(models.LocaleSeo, { through: models.MenuItem, as: 'localeSeos', foreignKey: 'menuId' });
+    Menu.belongsToMany(models.LocaleSeoSlug, { through: models.MenuItem, as: 'localeSeoSlugs', foreignKey: 'menuId' });
+  };
 
-  }
-
-  return Menu
-}
+  return Menu;
+};
