@@ -255,25 +255,40 @@ class Tabs extends HTMLElement {
                 <div class="form-row">
                 <div class="form-element">
                     <div class="form-element-label">
-                    <label for="password">
-                        Contraseña
-                    </label>
+                      <label for="password">
+                          Contraseña
+                      </label>
                     </div>
                     <div class="form-element-input">
-                    <input type="password" class="validate" data-minlength="8">
+                      <input type="password" class="validate" data-minlength="8">
                     </div>
                 </div>
                 <div class="form-element">
                     <div class="form-element-label">
-                    <label for="confirmar-password">
-                        Repetir contraseña
-                    </label>
+                      <label for="confirmar-password">
+                          Repetir contraseña
+                      </label>
                     </div>
                     <div class="form-element-input">
-                    <input type="password">
+                      <input type="password">
                     </div>
                 </div>
+                    <div class="tabs">
+                      <div class="tab active" data-form="main">
+                        <button>
+                            <p>General</p>
+                        </button>
+                      </div>
+                      <div class="tab" data-form="avatar">
+                        <button>
+                            <p>Imagenes</p>
+                        </button>
+                      </div>
+                    </div>
                 </div>
+
+
+
             </div>
             <div class="tab-content" data-form="avatar">
                 <div class="form-row">
@@ -298,6 +313,7 @@ class Tabs extends HTMLElement {
     const tabContents = this.shadow.querySelectorAll('.tab-content')
     const form = this.shadow.querySelector('.form')
     const deleteButton = this.shadow.querySelector('form-save-button')
+
     allTabs.addEventListener('click', (event) => {
       if (event.target.closest('.tab')) {
         const tabClick = event.target.closest('.tab')
@@ -314,9 +330,11 @@ class Tabs extends HTMLElement {
         })
       }
     })
+
     deleteButton.addEventListener('click', () => {
       deleteButton.classList.add('active')
     })
+
     setTimeout(() => {
 
     })
