@@ -83,14 +83,15 @@ p {
 }
 
 .tab{
-    background-color: #b0b0b0;
+    background-color: none;
     display: flex;
     align-items: center;
     padding: 0.5rem;
 }
 
 .tab:hover{
-  background-color: #e5a450;
+  background-color: hsl(206.87,84.81%,69.02%);
+  cursor:pointer;
 }
 
 .tab button{
@@ -186,10 +187,7 @@ textarea{
   margin: 1rem 0;
 }
 
-
-
-
-        </style>
+</style>
 <div class="form">
   <div class="form-top-bar">
     <div class="tabs">
@@ -320,14 +318,14 @@ textarea{
           <div class="tabs">
   
               <div class="tab active" data-tab="es">
-                <button>
+                
                   ES
-                </button>
+                
               </div>
               <div class="tab" data-tab="en">
-                <button>
+                
                   EN
-                </button>
+                
               </div>
   
           </div>
