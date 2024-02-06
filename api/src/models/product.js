@@ -55,7 +55,7 @@ module.exports = function (sequelize, DataTypes) {
     Product.hasMany(models.Price, { as: 'Price', foreignKey: 'productId'})
     Product.hasMany(models.ProductCategoryRelation, { as: 'ProductCategoryRelation', foreignKey: 'productId'})
     Product.hasMany(models.ReturnDetail, { as: 'ReturnDetail', foreignKey: 'productId'})
-    Product.belongsToMany(models.ProductCategory, { through: models.ProductCategoryRelation, as: 'categories', foreignKey: 'productId' })
+    // Product.belongsToMany(models.ProductCategory, { through: models.ProductCategoryRelation, as: 'categories', foreignKey: 'productId' })
 
   }
 

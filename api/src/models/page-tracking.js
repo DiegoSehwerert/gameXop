@@ -108,10 +108,10 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   PageTracking.associate = function (models) {
-    PageTracking.belongsTo(models.customer, { as: 'customer', foreignKey: 'customerId'})
-    PageTracking.belongsTo(models.fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId'})
-    PageTracking.belongsTo(models.localeSeo, { as: 'localeSeo', foreignKey: 'localeSeoId'})
-    PageTracking.belongsTo(models.localeSeoSlug, { as: 'localeSeoSlug', foreignKey: 'localeSeoSlugId'})
+    PageTracking.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId'})
+    PageTracking.belongsTo(models.Fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId'})
+    PageTracking.belongsTo(models.LocaleSeo, { as: 'localeSeo', foreignKey: 'localeSeoId'})
+    PageTracking.belongsTo(models.LocaleSeoSlug, { as: 'localeSeoSlug', foreignKey: 'localeSeoSlugId'})
   }
 
   return PageTracking

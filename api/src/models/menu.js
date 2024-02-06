@@ -57,9 +57,9 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   Menu.associate = function (models) {
-    Menu.hasMany(models.MenuItem, { as: 'MenuItem', foreignKey: 'menuId' });
-    Menu.belongsToMany(models.LocaleSeo, { through: models.MenuItem, as: 'localeSeos', foreignKey: 'menuId' });
-    Menu.belongsToMany(models.LocaleSeoSlug, { through: models.MenuItem, as: 'localeSeoSlugs', foreignKey: 'menuId' });
+    // Menu.belongsToMany(models.LocaleSeo, { through: models.MenuItem, as: 'localeSeos', foreignKey: 'menuId' })
+    // Menu.belongsToMany(models.LocaleSeoSlug, { through: models.MenuItem, as: 'localeSeoSlugs', foreignKey: 'menuId' })
+    Menu.hasMany(models.MenuItem, { as: 'menuItems', foreignKey: 'menuId' })
   };
 
   return Menu;

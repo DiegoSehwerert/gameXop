@@ -167,8 +167,8 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   Fingerprint.associate = function (models) {
-    Fingerprint.belongsTo(models.city, { as: 'city', foreignKey: 'cityId' });
-    Fingerprint.belongsTo(models.dialCode, { as: 'dialCode', foreignKey: 'dialCodeId' });
+    Fingerprint.belongsTo(models.City, { as: 'city', foreignKey: 'cityId' });
+    Fingerprint.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' });
 
     Fingerprint.hasMany(models.ApiTracking, { as: 'apiTracking', foreignKey: 'fingerprintId' });
     Fingerprint.hasMany(models.Cart, { as: 'Cart', foreignKey: 'fingerprintId' });

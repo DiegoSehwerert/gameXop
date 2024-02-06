@@ -93,8 +93,8 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   EmailError.associate = function (models) {
-    EmailError.belongsTo(models.customer, { as: 'customer', foreignKey: 'customerId' });
-    EmailError.belongsTo(models.email, { as: 'email', foreignKey: 'emailId' });
+    EmailError.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' });
+    EmailError.belongsTo(models.Email, { as: 'email', foreignKey: 'emailId' });
   };
 
   return EmailError;

@@ -95,7 +95,7 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   Locale.associate = function (models) {
-    Locale.hasMany(models.locale, { as: 'CartDetail', foreignKey: 'localeId' });
+    Locale.hasMany(models.Locale, { as: 'CartDetail', foreignKey: 'localeId' });
     Locale.hasMany(models.ReturnDetail, { as: 'ReturnDetail', foreignKey: 'localeId' });
     Locale.belongsTo(models.SaleDetail, { as: 'SaleDetail', foreignKey: 'localeId' });
   };

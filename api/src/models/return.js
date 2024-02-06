@@ -100,15 +100,15 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Return.associate = function (models) {
-    Return.belongsTo(models.sale, { as: 'sale', foreignKey: 'saleId'})
-    Return.belongsTo(models.customer, { as: 'customer', foreignKey: 'customerId'})
-    Return.belongsTo(models.paymentMethod, { as: 'paymentMethod', foreignKey: 'paymentMethodId'})
+    Return.belongsTo(models.Sale, { as: 'sale', foreignKey: 'saleId'})
+    Return.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId'})
+    Return.belongsTo(models.PaymentMethod, { as: 'paymentMethod', foreignKey: 'paymentMethodId'})
 
     Return.hasMany(models.Invoice, { as: 'Invoice', foreignKey: 'returnId'})
     Return.hasMany(models.ReturnDetail, { as: 'ReturnDetail', foreignKey: 'returnId'})
     Return.hasMany(models.ReturnError, { as: 'ReturnError', foreignKey: 'returnId'})
     Return.hasMany(models.Ticket, { as: 'Ticket', foreignKey: 'returnId'})
-    Return.belongsToMany(models.Product, { through: models.ReturnDetail, as: 'products', foreignKey: 'returnId' })
+    // Return.belongsToMany(models.Product, { through: models.ReturnDetail, as: 'products', foreignKey: 'returnId' })
 
   }
 

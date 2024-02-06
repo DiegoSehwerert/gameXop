@@ -389,18 +389,52 @@ textarea{
   
       </div>
       <div class="tab-content" data-tab="images">
-        <div class="form-row">
-          <div class="form-element">
-            <div class="form-element-label">
-              <label for="main-image">
-                Imagen Principal
-              </label>
-            </div>
-            <div class="form-element-input">
-              <input type="image" name="" value="">
+        <div class="form-language-bar">
+            <div class="tabs">
+    
+                <div class="tab active" data-tab="es-image">
+                  
+                    ES
+                  
+                </div>
+                <div class="tab" data-tab="en-image">
+                  
+                    EN
+                  
+                </div>
+    
             </div>
           </div>
-        </div>
+          <div class="tab-contents">
+            <div class="tab-content active" data-tab="es-image">
+              <div class="form-row">
+                <div class="form-element">
+                  <div class="form-element-label">
+                    <label for="main-image">
+                      Imagen Principal
+                    </label>
+                  </div>
+                  <div class="form-element-input">
+                    <input type="image" name="" value="">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-content" data-tab="en-image">
+              <div class="form-row">
+                <div class="form-element">
+                  <div class="form-element-label">
+                    <label for="main-image">
+                      Imagen NOPrincipal
+                    </label>
+                  </div>
+                  <div class="form-element-input">
+                    <input type="image" name="" value="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
   </form>

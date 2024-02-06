@@ -121,9 +121,9 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   MenuItem.associate = function (models) {
-    MenuItem.belongsTo(models.menu, { as: 'menu', foreignKey: 'menuId' });
-    MenuItem.belongsTo(models.localeSeo, { as: 'localeSeo', foreignKey: 'localeSeoId' });
-    MenuItem.belongsTo(models.localeSeoSlug, { as: 'localeSeoSlug', foreignKey: 'localeSeoSlugId' });
+    MenuItem.belongsTo(models.Menu, { as: 'menu', foreignKey: 'menuId' });
+    MenuItem.belongsTo(models.LocaleSeo, { as: 'localeSeo', foreignKey: 'localeSeoId' });
+    MenuItem.belongsTo(models.LocaleSeoSlug, { as: 'localeSeoSlug', foreignKey: 'localeSeoSlugId' });
   };
 
   return MenuItem;

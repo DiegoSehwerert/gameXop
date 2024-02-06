@@ -83,9 +83,9 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   ReturnError.associate = function (models) {
-    ReturnError.belongsTo(models.customer, { as: 'customer', foreignKey: 'customerId'})
-    ReturnError.belongsTo(models.return, { as: 'return', foreignKey: 'returnId'})
-    ReturnError.belongsTo(models.paymentMethod, { as: 'paymentMethod', foreignKey: 'paymentMethodId'})
+    ReturnError.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId'})
+    ReturnError.belongsTo(models.Return, { as: 'return', foreignKey: 'returnId'})
+    ReturnError.belongsTo(models.PaymentMethod, { as: 'paymentMethod', foreignKey: 'paymentMethodId'})
   }
 
   return ReturnError

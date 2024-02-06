@@ -115,7 +115,7 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   LocaleSeoSlug.associate = function (models) {
-    LocaleSeoSlug.belongsTo(models.localeSeo, { as: 'localeSeo', foreignKey: 'localeSeoId' });
+    LocaleSeoSlug.belongsTo(models.LocaleSeo, { as: 'localeSeo', foreignKey: 'localeSeoId' });
 
     LocaleSeoSlug.hasMany(models.CustomerTracking, { as: 'CustomerTracking', foreignKey: 'localeSeoSlugId' });
     LocaleSeoSlug.hasMany(models.LocaleSeoSlugRedirect, { as: 'LocaleSeoSlugRedirect', foreignKey: 'localeSeoSlugId' });

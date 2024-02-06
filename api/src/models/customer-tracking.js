@@ -97,10 +97,10 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   CustomerTracking.associate = function (models) {
-    CustomerTracking.belongsTo(models.customer, { as: 'customer', foreignKey: 'customerId'})
-    CustomerTracking.belongsTo(models.fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId'})
-    CustomerTracking.belongsTo(models.localeSeo, { as: 'localeSeo', foreignKey: 'localeSeoId'})
-    CustomerTracking.belongsTo(models.localeSeoSlug, { as: 'localeSeoSlug', foreignKey: 'localeSeoSlugId'})
+    CustomerTracking.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId'})
+    CustomerTracking.belongsTo(models.Fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId'})
+    CustomerTracking.belongsTo(models.LocaleSeo, { as: 'localeSeo', foreignKey: 'localeSeoId'})
+    CustomerTracking.belongsTo(models.LocaleSeoSlug, { as: 'localeSeoSlug', foreignKey: 'localeSeoSlugId'})
   }
 
   return CustomerTracking

@@ -127,12 +127,12 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   ReturnDetail.associate = function (models) {
-    ReturnDetail.belongsTo(models.return, { as: 'return', foreignKey: 'returnId'})
-    ReturnDetail.belongsTo(models.product, { as: 'product', foreignKey: 'productId'})
-    ReturnDetail.belongsTo(models.locale, { as: 'locale', foreignKey: 'localeId'})
-    ReturnDetail.belongsTo(models.price, { as: 'price', foreignKey: 'priceId'})
-    ReturnDetail.belongsTo(models.tax, { as: 'tax', foreignKey: 'taxId'})
-    ReturnDetail.belongsTo(models.priceDiscount, { as: 'priceDiscount', foreignKey: 'priceDiscountId'})
+    ReturnDetail.belongsTo(models.Return, { as: 'return', foreignKey: 'returnId'})
+    ReturnDetail.belongsTo(models.Product, { as: 'product', foreignKey: 'productId'})
+    ReturnDetail.belongsTo(models.Locale, { as: 'locale', foreignKey: 'localeId'})
+    ReturnDetail.belongsTo(models.Price, { as: 'price', foreignKey: 'priceId'})
+    ReturnDetail.belongsTo(models.Tax, { as: 'tax', foreignKey: 'taxId'})
+    ReturnDetail.belongsTo(models.PriceDiscount, { as: 'priceDiscount', foreignKey: 'priceDiscountId'})
   }
 
   return ReturnDetail
