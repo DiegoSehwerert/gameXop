@@ -166,9 +166,9 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   Company.associate = function (models) {
-    Company.belongsTo(models.Country, { as: 'country', foreignKey: 'companyId'})
-    Company.belongsTo(models.City, { as: 'city', foreignKey: 'companyId'})
-    Company.belongsTo(models.DialCode, { as: 'dialCode', foreignKey: 'companyId'})
+    Company.belongsTo(models.Country, { as: 'country', foreignKey: 'countryId'})
+    Company.belongsTo(models.City, { as: 'city', foreignKey: 'cityId'})
+    Company.belongsTo(models.DialCode, { as: 'dialCode', foreignKey: 'dialCodeId'})
   }
 
   return Company;

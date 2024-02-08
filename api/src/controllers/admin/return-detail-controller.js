@@ -17,7 +17,7 @@ exports.findAll = (req, res) => {
   const offset = (page - 1) * limit
 
   ReturnDetail.findAndCountAll({
-    attributes: ['iid', 'productName', 'basePrice', 'taxPrice', 'quantity', 'createdAt', 'updatedAt'],
+    attributes: ['id', 'productName', 'basePrice', 'taxPrice', 'quantity', 'createdAt', 'updatedAt'],
     limit,
     offset,
     order: [['createdAt', 'DESC']]

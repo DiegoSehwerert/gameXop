@@ -12,10 +12,7 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "Entidad".',
-        },
-        isString: {
-          msg: 'El campo "Entidad" debe ser una cadena de texto.',
-        },
+        }
       },
     },
     name: {
@@ -24,10 +21,7 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "Nombre".',
-        },
-        isString: {
-          msg: 'El campo "Nombre" debe ser una cadena de texto.',
-        },
+        }
       },
     },
     mediaQuery: {
@@ -36,10 +30,7 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "Media Query".',
-        },
-        isString: {
-          msg: 'El campo "Media Query" debe ser una cadena de texto.',
-        },
+        }
       },
     },
     widthPx: {
@@ -94,7 +85,7 @@ module.exports = function (sequelize, DataTypes) {
     },
   }, {
     sequelize,
-    tableName: 'image_configuration',
+    tableName: 'image_configurations',
     timestamps: true,
     paranoid: true,
     indexes: [

@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
   const ReturnDetail = sequelize.define('ReturnDetail', {
-    iid: {
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,

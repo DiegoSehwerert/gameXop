@@ -18,7 +18,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -26,13 +26,14 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
       }
     }
-  }, {
+  },
+  {
     sequelize,
     tableName: 'products',
     timestamps: true,
@@ -50,13 +51,14 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Product.associate = function (models) {
-    Product.belongsTo(models.CartDetail, { as: 'CartDetail', foreignKey: 'CartDetailId'})
+    // Product.belongsToMany(models.ProductCategory, { through: models.ProductCategoryRelation, as: 'productCategory', foreignKey: 'productId' })
 
-    Product.hasMany(models.Price, { as: 'Price', foreignKey: 'productId'})
-    Product.hasMany(models.ProductCategoryRelation, { as: 'ProductCategoryRelation', foreignKey: 'productId'})
-    Product.hasMany(models.ReturnDetail, { as: 'ReturnDetail', foreignKey: 'productId'})
-    // Product.belongsToMany(models.ProductCategory, { through: models.ProductCategoryRelation, as: 'categories', foreignKey: 'productId' })
-
+    Product.hasMany(models.CartDetail, { as: 'cartDetails', foreignKey: 'productId' })
+    Product.hasMany(models.Price, { as: 'prices', foreignKey: 'productId' })
+    Product.hasMany(models.ProductCategoryRelation, { as: 'productCategoryRelations', foreignKey: 'productId' })
+    Product.hasMany(models.ReturnDetail, { as: 'returnDetails', foreignKey: 'productId' })
+    Product.hasMany(models.SaleDetail, { as: 'saleDetails', foreignKey: 'productId' })
+    Product.belongsToMany(models.ProductCategory, { through: models.ProductCategoryRelation, as: 'categories', foreignKey: 'productId' })
   }
 
   return Product

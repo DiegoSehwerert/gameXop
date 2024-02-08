@@ -9,11 +9,7 @@ module.exports = function (sequelize, DataTypes) {
     cartId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        isInt: {
-          msg: 'Please provide a valid cart ID.'
-        }
-      }
+      
     },
     productId: {
       type: DataTypes.INTEGER,

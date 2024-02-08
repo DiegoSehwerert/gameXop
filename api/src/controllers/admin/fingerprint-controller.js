@@ -17,8 +17,7 @@ exports.findAll = (req, res) => {
   const offset = (page - 1) * limit
 
   Fingerprint.findAndCountAll({
-    attributes: ['id', 'name', 'surname', 'telephone', 'email', 'postalCode', 'address', 'password', 'createdAt', 'updatedAt'],
-    limit,
+    attributes: ['id', 'fingerprint', 'browser', 'browserVersion', 'os', 'osVersion', 'screenHeight', 'screenWidth', 'createdAt', 'updatedAt'],    limit,
     offset,
     order: [['createdAt', 'DESC']]
   })

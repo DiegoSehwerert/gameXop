@@ -1,138 +1,97 @@
-module.exports = function (sequelize, DataTypes) {
+const { DataTypes } = require('sequelize')
+
+module.exports = function (sequelize) {
   const Fingerprint = sequelize.define('Fingerprint', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
+      allowNull: false
+    },
+    customerId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        isInt: { msg: 'Por favor, proporciona un valor entero válido para el ID del cliente.' },
+        notNull: { msg: 'El ID del cliente no puede ser nulo.' }
+      }
     },
     cityId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Ciudad".',
-        },
-      },
+        isInt: { msg: 'Por favor, proporciona un valor entero válido para el ID de la ciudad.' },
+        notNull: { msg: 'El ID de la ciudad no puede ser nulo.' }
+      }
     },
-    dialCodeId: {
+    fingerprint: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'La huella digital no puede estar vacía.' },
+        notNull: { msg: 'La huella digital no puede ser nula.' }
+      }
+    },
+    browser: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'El navegador no puede estar vacío.' },
+        notNull: { msg: 'El navegador no puede ser nulo.' }
+      }
+    },
+    browserVersion: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'La versión del navegador no puede estar vacía.' },
+        notNull: { msg: 'La versión del navegador no puede ser nula.' }
+      }
+    },
+    os: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'El sistema operativo no puede estar vacío.' },
+        notNull: { msg: 'El sistema operativo no puede ser nulo.' }
+      }
+    },
+    osVersion: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'La versión del sistema operativo no puede estar vacía.' },
+        notNull: { msg: 'La versión del sistema operativo no puede ser nula.' }
+      }
+    },
+    screenHeight: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Prefijo telefónico".',
-        },
-      },
+        isInt: { msg: 'Por favor, proporciona un valor entero válido para la altura de la pantalla.' },
+        notNull: { msg: 'La altura de la pantalla no puede ser nula.' }
+      }
     },
-    name: {
-      type: DataTypes.STRING,
+    screenWidth: {
+      type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Nombre".',
-        },
-        is: {
-          args: /^[a-zA-Z0-9\sáéíóúüñÁÉÍÓÚÜÑ]+$/,
-          msg: 'Por favor, rellena el campo "Nombre" con un nombre válido, sin caracteres especiales.',
-        },
-      },
-    },
-    surname: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Apellido".',
-        },
-        is: {
-          args: /^[a-zA-Z0-9\sáéíóúüñÁÉÍÓÚÜÑ]+$/,
-          msg: 'Por favor, rellena el campo "Apellido" con un apellido válido, sin caracteres especiales.',
-        },
-      },
-    },
-    telephone: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Teléfono".',
-        },
-      },
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Email".',
-        },
-        isEmail: {
-          msg: 'Por favor, rellena el campo "Email" con un email válido.',
-        },
-      },
-    },
-    postalCode: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Código Postal".',
-        },
-      },
-    },
-    address: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Dirección".',
-        },
-      },
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Contraseña".',
-        },
-      },
+        isInt: { msg: 'Por favor, proporciona un valor entero válido para el ancho de la pantalla.' },
+        notNull: { msg: 'El ancho de la pantalla no puede ser nulo.' }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        isDate: {
-          msg: 'El campo "Fecha de Creación" debe ser una fecha válida.',
-        },
-        notNull: {
-          msg: 'Por favor, rellena el campo "Fecha de Creación".',
-        },
-      },
-      get() {
-        return this.getDataValue('createdAt')
-          ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null;
-      },
+      get () {
+        return this.getDataValue('createdAt') ? this.getDataValue('createdAt').toISOString().split('T')[0] : null
+      }
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        isDate: {
-          msg: 'El campo "Fecha de Actualización" debe ser una fecha válida.',
-        },
-        notNull: {
-          msg: 'Por favor, rellena el campo "Fecha de Actualización".',
-        },
-      },
-      get() {
-        return this.getDataValue('updatedAt')
-          ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null;
-      },
-    },
+      get () {
+        return this.getDataValue('updatedAt') ? this.getDataValue('updatedAt').toISOString().split('T')[0] : null
+      }
+    }
   }, {
     sequelize,
     tableName: 'fingerprints',
@@ -144,38 +103,36 @@ module.exports = function (sequelize, DataTypes) {
         unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'id' },
-        ],
+          { name: 'id' }
+        ]
       },
       {
         name: 'fingerprints_customerId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'customerId' },
-        ],
+          { name: 'customerId' }
+        ]
       },
       {
         name: 'fingerprints_cityId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'cityId' },
-        ],
-      },
-    ],
-  });
+          { name: 'cityId' }
+        ]
+      }
+    ]
+  })
 
   Fingerprint.associate = function (models) {
-    Fingerprint.belongsTo(models.City, { as: 'city', foreignKey: 'cityId' });
-    Fingerprint.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' });
+    Fingerprint.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
+    Fingerprint.belongsTo(models.City, { as: 'city', foreignKey: 'cityId' })
 
-    Fingerprint.hasMany(models.ApiTracking, { as: 'apiTracking', foreignKey: 'fingerprintId' });
-    Fingerprint.hasMany(models.Cart, { as: 'Cart', foreignKey: 'fingerprintId' });
-    Fingerprint.hasMany(models.Contact, { as: 'Contact', foreignKey: 'fingerprintId' });
-    Fingerprint.hasMany(models.CustomerTracking, { as: 'CustomerTracking', foreignKey: 'fingerprintId' });
-    Fingerprint.hasMany(models.PageTracking, { as: 'PageTracking', foreignKey: 'fingerprintId' });
-  };
+    Fingerprint.hasMany(models.ApiTracking, { as: 'apiTrackings', foreignKey: 'fingerprintId' })
+    Fingerprint.hasMany(models.Cart, { as: 'carts', foreignKey: 'fingerprintId' })
+    Fingerprint.hasMany(models.Contact, { as: 'contacts', foreignKey: 'fingerprintId' })
+    Fingerprint.hasMany(models.CustomerTracking, { as: 'customerTrackings', foreignKey: 'fingerprintId' })
+    Fingerprint.hasMany(models.PageTracking, { as: 'pageTrackings', foreignKey: 'fingerprintId' })
+  }
 
-  return Fingerprint;
-};
+  return Fingerprint
+}

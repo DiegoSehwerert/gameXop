@@ -10,15 +10,13 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    featured: {
-      type: DataTypes.BOOLEAN
-    },
     visible: {
-      type: DataTypes.BOOLEAN
+      type: DataTypes.BOOLEAN,
+      allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -26,13 +24,14 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
       }
     }
-  }, {
+  },
+  {
     sequelize,
     tableName: 'product_categories',
     timestamps: true,
@@ -45,29 +44,15 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
-      },
-      {
-        name: 'product_category_relations_productId_fk',
-        unique: true,
-        using: 'BTREE',
-        fields: [
-          { name: 'productId' }
-        ]
-      },
-      {
-        name: 'product_category_relations_productCategoryId_fk',
-        unique: true,
-        using: 'BTREE',
-        fields: [
-          { name: 'productCategoryId' }
-        ]
       }
     ]
   })
 
   ProductCategory.associate = function (models) {
-    ProductCategory.hasMany(models.ProductCategoryRelation, { as: 'productCategoryRelations', foreignKey: 'productCategoryId'})
-    // ProductCategory.belongsToMany(models.Product, { through: models.ProductCategoryRelation, as: 'products', foreignKey: 'productCategoryId' })
+    //ProductCategory.belongsToMany(models.Product, { through: models.ProductCategoryRelation, as: 'products', foreignKey: 'productCategoryId' })
+
+    ProductCategory.hasMany(models.ProductCategoryRelation, { as: 'productCategoryRelations', foreignKey: 'productCategoryId' })
+    ProductCategory.belongsToMany(models.Product, { through: models.ProductCategoryRelation, as: 'products', foreignKey: 'productCategoryId' })
   }
 
   return ProductCategory

@@ -8,19 +8,14 @@ module.exports = function (sequelize, DataTypes) {
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Please provide a user ID.'
-        }
-      }
+      allowNull: false
     },
     entity: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Please provide an entity.'
+          msg: 'Por favor, rellena el campo "Entidad".'
         }
       }
     },
@@ -29,7 +24,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Please provide an entity ID.'
+          msg: 'Por favor, rellena el campo "EntidadId".'
         }
       }
     },
@@ -38,24 +33,24 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Please provide an action.'
+          msg: 'Por favor, rellena el campo "Accion".'
         }
       }
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null;
+          : null
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null;
+          : null
       }
     }
   }, {
@@ -74,26 +69,16 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'admin_trackings_userId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'userId' }
         ]
-      },
-      {
-        name: 'admin_trackings_entity_entityId_index',
-        unique: true,
-        using: 'BTREE',
-        fields: [
-          { name: 'entity' },
-          { name: 'entityId' }
-        ]
       }
     ]
   })
-
+  // claves foraneas
   AdminTracking.associate = function (models) {
-    AdminTracking.belongsTo(models.User, { as: 'user', foreignKey: 'userId'})
+    AdminTracking.belongsTo(models.User, { as: 'user', foreignKey: 'userId' })
   }
 
   return AdminTracking
