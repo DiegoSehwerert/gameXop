@@ -392,6 +392,7 @@ textarea{
           }))
         }
       } catch (error) {
+        
       }
       document.dispatchEvent(new CustomEvent('save-notification'))
     })

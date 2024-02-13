@@ -10,9 +10,6 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "contry".'
-        }
       }
     },
     dialCode: {
@@ -21,6 +18,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "dialCode".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "dialCode".'
         }
       }
     },

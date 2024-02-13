@@ -15,6 +15,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "name".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "name".'
         }
       }
     },
@@ -23,7 +26,10 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Por favor, rellena el campo "País".'
+          msg: 'Por favor, rellena el campo "email".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "email".'
         },
         isEmail: {
           msg: 'Por favor, introduce un email válido.'
@@ -36,6 +42,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "subject".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "subject".'
         }
       }
     },
@@ -45,6 +54,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "message".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "message".'
         }
       }
     },

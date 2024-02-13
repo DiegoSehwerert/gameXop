@@ -8,12 +8,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     localeSeoId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "lacaleSeo".'
-        }
-      }
+      allowNull: false
     },
     languageAlias: {
       type: DataTypes.STRING,
@@ -21,6 +16,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "lenguageAlias".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "languageAlias".'
         }
       }
     },
@@ -30,6 +28,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "relParent".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "relParent".'
         }
       }
     },
@@ -38,7 +39,10 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Por favor, rellena el campo "alug".'
+          msg: 'Por favor, rellena el campo "slug".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "slug".'
         }
       }
     },
@@ -48,6 +52,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "key".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "key".'
         }
       }
     },
@@ -59,7 +66,10 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Por favor, rellena el campo "title".'
+          msg: 'Por favor, rellena el campo "parentSlug".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "parentSlug".'
         }
       }
     },

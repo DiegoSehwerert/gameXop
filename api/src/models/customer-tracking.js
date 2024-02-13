@@ -7,25 +7,49 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false
     },
     customerId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER
     },
     fingerprintId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER
     },
     localeSeoId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER
     },
     localeSeoSlugId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER
     },
     eventTime: {
-      type: DataTypes.DOUBLE
+      type: DataTypes.DOUBLE,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "name".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "name ".'
+        }
+      }
     },
     eventName: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "name".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "name ".'
+        }
+      }
     },
     path: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "name".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "name ".'
+        }
+      }
     },
     event: {
       type: DataTypes.TEXT,
@@ -33,6 +57,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "event".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "name ".'
         }
       }
     },

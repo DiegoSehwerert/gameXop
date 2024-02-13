@@ -12,6 +12,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "name".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "name".'
         }
       }
     },
@@ -22,6 +25,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "alias".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "alias".'
         }
       },
       isUnique: function (value, next) {

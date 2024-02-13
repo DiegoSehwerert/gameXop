@@ -9,40 +9,28 @@ module.exports = function (sequelize, DataTypes) {
     countryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "País".'
-        }
-      }
     },
     cityId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Ciudad".'
-        }
-      }
     },
     dialCodeId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Prefijo telefónico".'
-        }
-      }
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Por favor, rellena el campo "Nombre".'
+          msg: 'Por favor, rellena el campo "nombre".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "nombre".'
         },
         is: {
           args: /^[a-z0-9\sáéíóúüñÁÉÍÓÚÜÑ]+$/i,
-          msg: 'Por favor, rellena el campo "Nombre" con un nombre válido, sin caracteres especiales.'
+          msg: 'Por favor, rellena el campo "nombre" con un nombre válido, sin caracteres especiales.'
         }
       }
     },
@@ -51,7 +39,10 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Por favor, rellena el campo "Apellido".'
+          msg: 'Por favor, rellena el campo "apellido".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "apellido".'
         },
         is: {
           args: /^[a-z0-9\sáéíóúüñÁÉÍÓÚÜÑ]+$/i,
@@ -64,7 +55,10 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Por favor, rellena el campo "Teléfono".'
+          msg: 'Por favor, rellena el campo "teléfono".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "telefono".'
         }
       }
     },
@@ -74,10 +68,13 @@ module.exports = function (sequelize, DataTypes) {
       unique: true,
       validate: {
         notNull: {
-          msg: 'Por favor, rellena el campo "Email".'
+          msg: 'Por favor, rellena el campo "email".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "email ".'
         },
         isEmail: {
-          msg: 'Por favor, rellena el campo "Email" con un email válido.'
+          msg: 'Por favor, rellena el campo "email" con un email válido.'
         },
         isUnique: function (value, next) {
           const self = this

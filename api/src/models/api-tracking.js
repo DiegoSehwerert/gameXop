@@ -21,6 +21,9 @@ module.exports = function (sequelize, DataTypes) {
         },
         isIP: {
           msg: 'Introduce una IP valida".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "IP".'
         }
       }
     },
@@ -30,6 +33,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "isRobot".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "IsRobot".'
         }
       }
     },
@@ -39,6 +45,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "Resource".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "Resource".'
         }
       }
     },
@@ -51,6 +60,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "method".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "method".'
         }
       }
     },
@@ -60,6 +72,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "httpCode".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "httpCode".'
         }
       }
     },
@@ -73,6 +88,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "startTime".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "startTime".'
         }
       }
     },
@@ -82,6 +100,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "endTime".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "endTime".'
         }
       }
     },
@@ -91,6 +112,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "latency".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "latency".'
         }
       }
     },

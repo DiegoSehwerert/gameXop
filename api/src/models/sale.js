@@ -24,6 +24,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "reference".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "reference".'
         }
       }
     },
@@ -72,6 +75,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "saleDate".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "saleDate".'
         }
       }
     },
@@ -81,6 +87,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "saleTime".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "saleTime".'
         }
       }
     },

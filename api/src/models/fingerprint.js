@@ -15,6 +15,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "city".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "city".'
         }
       }
     },
@@ -24,6 +27,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "fingerprint".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "fingerprint".'
         }
       }
     },
@@ -33,6 +39,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "browser".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "browser".'
         }
       }
     },
@@ -42,6 +51,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "browserVersion".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "browserVersion".'
         }
       }
     },
@@ -51,6 +63,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "os".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "os".'
         }
       }
     },
@@ -60,6 +75,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "osVersion".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "osVersion".'
         }
       }
     },
@@ -69,6 +87,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "screenHeight".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "screenHeight".'
         }
       }
     },
@@ -78,6 +99,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "screenWidth".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "screenWidth".'
         }
       }
     },

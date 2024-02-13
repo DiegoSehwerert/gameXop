@@ -12,6 +12,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "country".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "country".'
         }
       }
     },
@@ -21,6 +24,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "city".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "city".'
         }
       }
     },
@@ -30,6 +36,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "dialCode".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "dialCode".'
         }
       }
     },
@@ -39,6 +48,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "fiscalName".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "fiscalName".'
         }
       }
     },
@@ -48,6 +60,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "comercialName".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "comercialName".'
         }
       }
     },
@@ -57,6 +72,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "vat".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "vat".'
         }
       }
     },
@@ -66,6 +84,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "comercialAdress".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "comercialAdress".'
         }
       }
     },
@@ -75,6 +96,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "fiscalAdress".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "fiscalAdress".'
         }
       }
     },
@@ -84,6 +108,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "postalCode".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "postalCode".'
         }
       }
     },
@@ -92,7 +119,10 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       unique: true,
       notNull: {
-        msg: 'Por favor, rellena el campo "Email".'
+        msg: 'Por favor, rellena el campo "email".'
+      },
+      notEmpty: {
+        msg: 'Por favor, introduce un valor para el campo "email".'
       },
       isEmail: {
         msg: 'Por favor, rellena el campo "Email" con un email válido.'

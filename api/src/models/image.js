@@ -9,11 +9,6 @@ module.exports = function (sequelize, DataTypes) {
     imageConfigurationId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "imageConfiguartionId".'
-        }
-      }
     },
     entityId: {
       type: DataTypes.INTEGER
@@ -24,23 +19,66 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "entity".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "entity".'
         }
       }
     },
     name: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "name".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "name".'
+        }
+      }
     },
     originalFilename: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "originalFileName".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "originalFileName".'
+        }
+      }
     },
     resizedFilename: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "resizedFileName".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "resizedFileName".'
+        }
+      }
     },
     title: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "title".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "title".'
+        }
+      }
     },
     alt: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "alt".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "alt".'
+        }
+      }
     },
     languageAlias: {
       type: DataTypes.STRING,
@@ -48,6 +86,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "languageAlias".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "languageAlias".'
         }
       }
     },
@@ -57,6 +98,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "mediaQuery".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "mediaQuery".'
         }
       }
     },
@@ -66,6 +110,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "latencyms".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "letencyms".'
         }
       }
     },

@@ -12,6 +12,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "Usuario".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "ususario".'
         }
       }
     },
@@ -21,17 +24,15 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "Entity".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "entity".'
         }
       }
     },
     entityId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "EntityId".'
-        }
-      }
     },
     action: {
       type: DataTypes.STRING,
@@ -39,6 +40,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "Acción".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "Nombre".'
         }
       }
     },

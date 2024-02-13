@@ -9,20 +9,10 @@ module.exports = function (sequelize, DataTypes) {
     customerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "customer".'
-        }
-      }
     },
     saleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "sale".'
-        }
-      }
     },
     returnId: {
       type: DataTypes.INTEGER,
@@ -33,6 +23,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "reference".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "reference".'
         }
       }
     },
@@ -42,6 +35,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "path".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "path".'
         }
       }
     },

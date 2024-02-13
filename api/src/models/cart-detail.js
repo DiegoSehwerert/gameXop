@@ -11,7 +11,10 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Por favor, rellena el campo "Cart".'
+          msg: 'Por favor, rellena el campo "cart".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "cart".'
         }
       }
     },
@@ -21,6 +24,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "product".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "product".'
         }
       }
     },
@@ -30,6 +36,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "locale".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "locale".'
         }
       }
     },
@@ -39,6 +48,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "price".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "price".'
         }
       }
     },
@@ -51,6 +63,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "tax".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "tax".'
         }
       }
     },
@@ -60,6 +75,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "productName".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "productName".'
         }
       }
     },
@@ -69,6 +87,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "basePrice".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "basePrice".'
         },
         is: {
           args: /^[0-9]{1,6}\.[0-9]{2}$/,
@@ -82,6 +103,9 @@ module.exports = function (sequelize, DataTypes) {
         is: {
           args: /^[0-9]{1,6}\.[0-9]{2}$/,
           msg: 'Por favor, añade un precio válido".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "taxPrice".'
         }
       }
     },
@@ -91,6 +115,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "quantity".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "quantity".'
         }
       }
     },

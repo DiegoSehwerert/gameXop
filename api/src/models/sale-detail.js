@@ -12,6 +12,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "sale".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "sale".'
         }
       }
     },
@@ -21,6 +24,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "product".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "product".'
         }
       }
     },
@@ -30,6 +36,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "locale".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "locale".'
         }
       }
     },
@@ -39,6 +48,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "price".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "price".'
         }
       }
     },
@@ -51,6 +63,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "tax".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "tax".'
         }
       }
     },
@@ -60,6 +75,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "productName".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "productName".'
         }
       }
     },
@@ -95,6 +113,9 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "quantity".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "quantity".'
         }
       }
     },
