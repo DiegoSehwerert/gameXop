@@ -2,17 +2,27 @@ module.exports = function (sequelize, DataTypes) {
   const Ticket = sequelize.define('Ticket', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     customerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "customer".'
+        }
+      }
     },
     saleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "sale".'
+        }
+      }
     },
     returnId: {
       type: DataTypes.INTEGER,
@@ -20,11 +30,21 @@ module.exports = function (sequelize, DataTypes) {
     },
     reference: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "reference".'
+        }
+      }
     },
     path: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "path".'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -58,7 +78,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'tickets_customerId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'customerId' }
@@ -66,7 +85,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'tickets_saleId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'saleId' }
@@ -74,7 +92,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'tickets_returnId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'returnId' }
@@ -84,9 +101,10 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Ticket.associate = function (models) {
-    Ticket.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId'})
-    Ticket.belongsTo(models.Sale, { as: 'sale', foreignKey: 'saleId'})
-    Ticket.belongsTo(models.Return, { as: 'return', foreignKey: 'returnId'})
+    Ticket.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
+    Ticket.belongsTo(models.Sale, { as: 'sale', foreignKey: 'saleId' })
+    Ticket.belongsTo(models.Return, { as: 'return', foreignKey: 'returnId' })
+    
   }
 
   return Ticket

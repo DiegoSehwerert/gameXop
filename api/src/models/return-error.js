@@ -2,25 +2,45 @@ module.exports = function (sequelize, DataTypes) {
   const ReturnError = sequelize.define('ReturnError', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     customerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "customer".'
+        }
+      }
     },
     returnId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "return".'
+        }
+      }
     },
     paymentMethodId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "paymentMethod".'
+        }
+      }
     },
     errorCode: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "errorCode".'
+        }
+      }
     },
     errorMessage: {
       type: DataTypes.STRING
@@ -57,7 +77,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'return_errors_customerId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'customerId' }
@@ -65,7 +84,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'return_errors_returnId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'returnId' }
@@ -73,7 +91,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'return_errors_paymentMethodId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'paymentMethodId' }
@@ -83,9 +100,10 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   ReturnError.associate = function (models) {
-    ReturnError.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId'})
-    ReturnError.belongsTo(models.Return, { as: 'return', foreignKey: 'returnId'})
-    ReturnError.belongsTo(models.PaymentMethod, { as: 'paymentMethod', foreignKey: 'paymentMethodId'})
+    ReturnError.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
+    ReturnError.belongsTo(models.Return, { as: 'return', foreignKey: 'returnId' })
+    ReturnError.belongsTo(models.PaymentMethod, { as: 'paymentMethod', foreignKey: 'paymentMethodId' })
+    
   }
 
   return ReturnError

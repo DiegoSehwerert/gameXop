@@ -2,8 +2,8 @@ module.exports = function (sequelize, DataTypes) {
   const Sale = sequelize.define('Sale', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     cartId: {
@@ -20,31 +20,73 @@ module.exports = function (sequelize, DataTypes) {
     },
     reference: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "reference".'
+        }
+      }
     },
     totalPrice: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "totalPrice".'
+        },
+        is: {
+          args: /^[0-9]{1,10}\.[0-9]{2}$/,
+          msg: 'Por favor, añade un precio válido".'
+        }
+      }
     },
     totalBasePrice: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "totalBasePrice".'
+        },
+        is: {
+          args: /^[0-9]{1,10}\.[0-9]{2}$/,
+          msg: 'Por favor, añade un precio válido".'
+        }
+      }
     },
     totalTaxPrice: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "totalTaxPrice".'
+        },
+        is: {
+          args: /^[0-9]{1,10}\.[0-9]{2}$/,
+          msg: 'Por favor, añade un precio válido".'
+        }
+      }
     },
     saleDate: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "saleDate".'
+        }
+      }
     },
     saleTime: {
       type: DataTypes.TIME,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "saleTime".'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -52,7 +94,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
@@ -74,7 +116,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'sales_cartId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'cartId' }
@@ -82,7 +123,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'sales_customerId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'customerId' }
@@ -90,7 +130,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'sales_paymentMethodId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'paymentMethodId' }
@@ -98,7 +137,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'sales_couponId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'couponId' }
@@ -108,16 +146,16 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Sale.associate = function (models) {
-    Sale.belongsTo(models.Cart, { as: 'cart', foreignKey: 'cartId'})
-    Sale.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId'})
-    Sale.belongsTo(models.PaymentMethod, { as: 'paymentMethod', foreignKey: 'paymentMethodId'})
-    Sale.belongsTo(models.Coupon, { as: 'coupon', foreignKey: 'couponId'})
+    Sale.belongsTo(models.Cart, { as: 'cart', foreignKey: 'cartId' })
+    Sale.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
+    Sale.belongsTo(models.PaymentMethod, { as: 'paymentMethod', foreignKey: 'paymentMethodId' })
+    Sale.belongsTo(models.Coupon, { as: 'coupon', foreignKey: 'couponId' })
+    Sale.belongsToMany(models.Product, { through: models.SaleDetail, as: 'products', foreignKey: 'saleId' })
 
-    Sale.hasMany(models.Invoice, { as: 'Invoice', foreignKey: 'saleId'})
-    Sale.hasMany(models.Return, { as: 'Return', foreignKey: 'saleId'})
-    Sale.hasMany(models.SaleDetail, { as: 'SaleDetail', foreignKey: 'saleId'})
-    Sale.hasMany(models.Ticket, { as: 'Ticket', foreignKey: 'saleId'})
-    // Sale.belongsToMany(models.Product, { through: models.SaleDetail, as: 'products', foreignKey: 'saleId' })
+    Sale.hasMany(models.Invoice, { as: 'invoices', foreignKey: 'saleId' })
+    Sale.hasMany(models.Return, { as: 'returns', foreignKey: 'saleId' })
+    Sale.hasMany(models.SaleDetail, { as: 'saleDetails', foreignKey: 'saleId' })
+    Sale.hasMany(models.Ticket, { as: 'tickets', foreignKey: 'saleId' })
   }
 
   return Sale

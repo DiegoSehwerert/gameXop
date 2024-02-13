@@ -2,21 +2,31 @@ module.exports = function (sequelize, DataTypes) {
   const ProductCategoryRelation = sequelize.define('ProductCategoryRelation', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     productId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "product".'
+        }
+      }
     },
     productCategoryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "productCategory".'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -24,7 +34,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
@@ -43,13 +53,28 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'id' }
         ]
+      },
+      {
+        name: 'product_category_relations_productId_fk',
+        using: 'BTREE',
+        fields: [
+          { name: 'productId' }
+        ]
+      },
+      {
+        name: 'product_category_relations_productCategoryId_fk',
+        using: 'BTREE',
+        fields: [
+          { name: 'productCategoryId' }
+        ]
       }
     ]
   })
 
   ProductCategoryRelation.associate = function (models) {
-    ProductCategoryRelation.belongsTo(models.Product, { as: 'product', foreignKey: 'productId'})
-    ProductCategoryRelation.belongsTo(models.ProductCategory, { as: 'productCategory', foreignKey: 'productCategoryId'})
+    ProductCategoryRelation.belongsTo(models.Product, { as: 'product', foreignKey: 'productId' })
+    ProductCategoryRelation.belongsTo(models.ProductCategory, { as: 'productCategory', foreignKey: 'productCategoryId' })
+    
   }
 
   return ProductCategoryRelation

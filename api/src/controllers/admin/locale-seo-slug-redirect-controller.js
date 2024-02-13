@@ -1,5 +1,6 @@
 const db = require('../../models')
 const LocaleSeoSlugRedirect = db.LocaleSeoSlugRedirect
+const Op = db.Sequelize.Op
 
 exports.create = (req, res) => {
   LocaleSeoSlugRedirect.create(req.body).then(data => {
@@ -12,12 +13,13 @@ exports.create = (req, res) => {
 }
 
 exports.findAll = (req, res) => {
+
   const page = req.query.page || 1
   const limit = parseInt(req.query.size) || 10
   const offset = (page - 1) * limit
 
   LocaleSeoSlugRedirect.findAndCountAll({
-    attributes: ['id', 'languageAlias', 'oldUrl', 'createdAt', 'updatedAt'],
+    attributes: ['id', 'languageAlias', 'createdAt', 'updatedAt'],
     limit,
     offset,
     order: [['createdAt', 'DESC']]
@@ -31,8 +33,9 @@ exports.findAll = (req, res) => {
 
       res.status(200).send(result)
     }).catch(err => {
+      console.log(err)
       res.status(500).send({
-        message: err.errors || 'Algún error ha surgido al recuperar los datos.'
+        message: err.errors || 'Algún error ha surgido al recuperar los datos.' +err
       })
     })
 }
@@ -72,7 +75,7 @@ exports.update = (req, res) => {
     }
   }).catch(_ => {
     res.status(500).send({
-      message: 'Algún error ha surgido al actualizar la id=' + id
+      message: 'Algún error ha surgido al actualiazar la id=' + id
     })
   })
 }

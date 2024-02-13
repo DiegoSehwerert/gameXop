@@ -2,26 +2,41 @@ module.exports = function (sequelize, DataTypes) {
   const PaymentMethod = sequelize.define('PaymentMethod', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "name".'
+        }
+      }
     },
     configuration: {
       type: DataTypes.JSON,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "configuration".'
+        }
+      }
     },
     visible: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: true
+      defaultValue: true,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "visible".'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -29,7 +44,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
@@ -53,11 +68,11 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   PaymentMethod.associate = function (models) {
-    PaymentMethod.hasMany(models.ReturnError, { as: 'ReturnError', foreignKey: 'paymentMethodId'})
-    PaymentMethod.hasMany(models.Return, { as: 'Return', foreignKey: 'paymentMethodId'})
-    PaymentMethod.hasMany(models.SaleError, { as: 'SaleError', foreignKey: 'paymentMethodId'})
-    PaymentMethod.hasMany(models.SaleDetail, { as: 'saleDetail', foreignKey: 'paymentMethodId'})
-    PaymentMethod.belongsToMany(models.Product, { through: models.SaleDetail, as: 'products', foreignKey: 'paymentMethodId' })
+    PaymentMethod.hasMany(models.ReturnError, { as: 'returnErrors', foreignKey: 'paymentMethodId' })
+    PaymentMethod.hasMany(models.Return, { as: 'returns', foreignKey: 'paymentMethodId' })
+    PaymentMethod.hasMany(models.SaleError, { as: 'saleErrors', foreignKey: 'paymentMethodId' })
+    PaymentMethod.hasMany(models.Sale, { as: 'sales', foreignKey: 'paymentMethodId' })
+    PaymentMethod.belongsToMany(models.Product, { through: models.Sale, as: 'products', foreignKey: 'paymentMethodId' })
   }
 
   return PaymentMethod

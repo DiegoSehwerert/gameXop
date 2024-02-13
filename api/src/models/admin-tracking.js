@@ -2,20 +2,25 @@ module.exports = function (sequelize, DataTypes) {
   const AdminTracking = sequelize.define('AdminTracking', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "Usuario".'
+        }
+      }
     },
     entity: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Por favor, rellena el campo "Entidad".'
+          msg: 'Por favor, rellena el campo "Entity".'
         }
       }
     },
@@ -24,7 +29,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Por favor, rellena el campo "EntidadId".'
+          msg: 'Por favor, rellena el campo "EntityId".'
         }
       }
     },
@@ -33,7 +38,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Por favor, rellena el campo "Accion".'
+          msg: 'Por favor, rellena el campo "Acción".'
         }
       }
     },
@@ -73,10 +78,18 @@ module.exports = function (sequelize, DataTypes) {
         fields: [
           { name: 'userId' }
         ]
+      },
+      {
+        name: 'admin_trackings_entity_entityId_index',
+        using: 'BTREE',
+        fields: [
+          { name: 'entity' },
+          { name: 'entityId' }
+        ]
       }
     ]
   })
-  // claves foraneas
+
   AdminTracking.associate = function (models) {
     AdminTracking.belongsTo(models.User, { as: 'user', foreignKey: 'userId' })
   }

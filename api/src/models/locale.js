@@ -2,70 +2,65 @@ module.exports = function (sequelize, DataTypes) {
   const Locale = sequelize.define('Locale', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      primaryKey: true,
+      allowNull: false
     },
     languageAlias: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { msg: 'Please provide the languageAlias.' },
-        is: { args: /^[A-Za-z0-9_]+$/, msg: 'Invalid characters in languageAlias.' },
-      },
+        notNull: {
+          msg: 'Por favor, rellena el campo "languageAlias".'
+        }
+      }
     },
     entity: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { msg: 'Please provide the entity.' },
-        is: { args: /^[A-Za-z0-9_]+$/, msg: 'Invalid characters in entity.' },
-      },
+        notNull: {
+          msg: 'Por favor, rellena el campo "entity".'
+        }
+      }
     },
     entityId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notNull: { msg: 'Please provide the entityId.' },
-      },
+        notNull: {
+          msg: 'Por favor, rellena el campo "entityId".'
+        }
+      }
     },
     key: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { msg: 'Please provide the key.' },
-        is: { args: /^[A-Za-z0-9_]+$/, msg: 'Invalid characters in key.' },
-      },
+        notNull: {
+          msg: 'Por favor, rellena el campo "key".'
+        }
+      }
     },
     value: {
-      type: DataTypes.TEXT,
+      type: DataTypes.TEXT
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notNull: { msg: 'Please provide the creation date.' },
-        isDate: { msg: 'Invalid date format for createdAt.' },
-      },
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null;
-      },
+          : null
+      }
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notNull: { msg: 'Please provide the update date.' },
-        isDate: { msg: 'Invalid date format for updatedAt.' },
-      },
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null;
-      },
-    },
+          : null
+      }
+    }
   }, {
     sequelize,
     tableName: 'locales',
@@ -77,28 +72,27 @@ module.exports = function (sequelize, DataTypes) {
         unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'id' },
-        ],
+          { name: 'id' }
+        ]
       },
       {
         name: 'locales_languageAlias_entity_entityId_key_index',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'languageAlias' },
           { name: 'entity' },
           { name: 'entityId' },
-          { name: 'key' },
-        ],
-      },
-    ],
-  });
+          { name: 'key' }
+        ]
+      }
+    ]
+  })
 
   Locale.associate = function (models) {
-    Locale.hasMany(models.CartDetail, { as: 'cartDetail', foreignKey: 'localeId' });
-    Locale.hasMany(models.ReturnDetail, { as: 'returnDetail', foreignKey: 'localeId' });
-    Locale.belongsTo(models.Sale, { as: 'sale', foreignKey: 'saleId' });
-  };
+    Locale.hasMany(models.CartDetail, { as: 'cartDetails', foreignKey: 'localeId' })
+    Locale.hasMany(models.ReturnDetail, { as: 'returnDetails', foreignKey: 'localeId' })
+    Locale.hasMany(models.SaleDetail, { as: 'saleDetails', foreignKey: 'localeId' })
+  }
 
-  return Locale;
-};
+  return Locale
+}

@@ -2,35 +2,31 @@ module.exports = function (sequelize, DataTypes) {
   const Contact = sequelize.define('Contact', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     fingerprintId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        isInt: {
-          msg: 'Please provide a valid fingerprint ID.'
-        }
-      }
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: {
-          msg: 'Please provide a name.'
+        notNull: {
+          msg: 'Por favor, rellena el campo "name".'
         }
       }
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
       validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "País".'
+        },
         isEmail: {
-          msg: 'Please provide a valid email address.'
+          msg: 'Por favor, introduce un email válido.'
         }
       }
     },
@@ -38,8 +34,8 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: {
-          msg: 'Please provide a subject.'
+        notNull: {
+          msg: 'Por favor, rellena el campo "subject".'
         }
       }
     },
@@ -47,14 +43,14 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: false,
       validate: {
-        notEmpty: {
-          msg: 'Please provide a message.'
+        notNull: {
+          msg: 'Por favor, rellena el campo "message".'
         }
       }
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -62,7 +58,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
@@ -84,7 +80,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'contacts_fingerprintId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'fingerprintId' }
@@ -92,18 +87,17 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'contacts_email_index',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'email' }
         ]
       }
     ]
-  });
+  })
 
   Contact.associate = function (models) {
-    Contact.belongsTo(models.Fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId'})
+    Contact.belongsTo(models.Fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId' })
   }
 
-  return Contact;
-};
+  return Contact
+}

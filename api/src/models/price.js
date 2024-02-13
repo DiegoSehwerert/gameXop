@@ -2,8 +2,8 @@ module.exports = function (sequelize, DataTypes) {
   const Price = sequelize.define('Price', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     productId: {
@@ -20,7 +20,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -28,7 +28,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
@@ -50,7 +50,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'prices_productId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'productId' }
@@ -58,7 +57,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'prices_taxId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'taxId' }
@@ -68,13 +66,13 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Price.associate = function (models) {
-    Price.belongsTo(models.Product, { as: 'product', foreignKey: 'productId'})
-    Price.belongsTo(models.Tax, { as: 'tax', foreignKey: 'taxId'})
+    Price.belongsTo(models.Product, { as: 'product', foreignKey: 'productId' })
+    Price.belongsTo(models.Tax, { as: 'tax', foreignKey: 'taxId' })
 
-    Price.hasMany(models.CartDetail, { as: 'CartDetail', foreignKey: 'priceId'})
-    Price.hasMany(models.PriceDiscount, { as: 'PriceDiscount', foreignKey: 'priceId'})
-    Price.hasMany(models.ReturnDetail, { as: 'ReturnDetail', foreignKey: 'priceId'})
-    Price.hasMany(models.SaleDetail, { as: 'SaleDetail', foreignKey: 'priceId'})
+    Price.hasMany(models.CartDetail, { as: 'cartDetails', foreignKey: 'priceId' })
+    Price.hasMany(models.PriceDiscount, { as: 'priceDiscounts', foreignKey: 'priceId' })
+    Price.hasMany(models.ReturnDetail, { as: 'returnDetails', foreignKey: 'priceId' })
+    Price.hasMany(models.SaleDetail, { as: 'saleDetails', foreignKey: 'priceId' })
   }
 
   return Price

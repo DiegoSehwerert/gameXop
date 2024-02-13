@@ -2,8 +2,8 @@ module.exports = function (sequelize, DataTypes) {
   const Country = sequelize.define('Country', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     name: {
@@ -11,10 +11,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Please provide a country name.'
-        },
-        notEmpty: {
-          msg: 'Country name cannot be empty.'
+          msg: 'Por favor, rellena el campo "name".'
         }
       }
     },
@@ -23,10 +20,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Please provide a valid ISO2 code.'
-        },
-        notEmpty: {
-          msg: 'ISO2 code cannot be empty.'
+          msg: 'Por favor, rellena el campo "iso2".'
         }
       }
     },
@@ -35,21 +29,23 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Please provide a valid ISO3 code.'
-        },
-        notEmpty: {
-          msg: 'ISO3 code cannot be empty.'
+          msg: 'Por favor, rellena el campo "iso3".'
         }
       }
     },
     visible: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: true
+      defaultValue: true,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "visible".'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -57,7 +53,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
@@ -78,15 +74,16 @@ module.exports = function (sequelize, DataTypes) {
         ]
       }
     ]
-  });
+  })
 
   Country.associate = function (models) {
-    Country.hasMany(models.City, { as: 'city', foreignKey: 'countryId'})
-    Country.hasMany(models.Company, { as: 'companies', foreignKey: 'countryId'})
-    Country.hasMany(models.Customer, { as: 'customer', foreignKey: 'countryId' })
-    Country.hasMany(models.DialCode, { as: 'dialCode', foreignKey: 'countryId'})
-    Country.hasMany(models.Tax, { as: 'Tax', foreignKey: 'countryId'})
+    Country.hasMany(models.City, { as: 'cities', foreignKey: 'countryId' })
+    Country.hasMany(models.Company, { as: 'companies', foreignKey: 'countryId' })
+    Country.hasMany(models.Customer, { as: 'customers', foreignKey: 'countryId' })
+    Country.hasMany(models.DialCode, { as: 'dialCodes', foreignKey: 'countryId' })
+    // Country.hasOne(models.DialCode, { as: 'dialCodes', foreignKey: 'countryId' })
+    Country.hasMany(models.Tax, { as: 'taxes', foreignKey: 'countryId' })
   }
 
-  return Country;
-};
+  return Country
+}

@@ -2,13 +2,18 @@ module.exports = function (sequelize, DataTypes) {
   const Product = sequelize.define('Product', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "name".'
+        }
+      }
     },
     featured: {
       type: DataTypes.BOOLEAN
@@ -32,8 +37,7 @@ module.exports = function (sequelize, DataTypes) {
           : null
       }
     }
-  },
-  {
+  }, {
     sequelize,
     tableName: 'products',
     timestamps: true,
@@ -51,14 +55,12 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Product.associate = function (models) {
-    // Product.belongsToMany(models.ProductCategory, { through: models.ProductCategoryRelation, as: 'productCategory', foreignKey: 'productId' })
-
     Product.hasMany(models.CartDetail, { as: 'cartDetails', foreignKey: 'productId' })
     Product.hasMany(models.Price, { as: 'prices', foreignKey: 'productId' })
-    Product.hasMany(models.ProductCategoryRelation, { as: 'productCategoryRelations', foreignKey: 'productId' })
     Product.hasMany(models.ReturnDetail, { as: 'returnDetails', foreignKey: 'productId' })
     Product.hasMany(models.SaleDetail, { as: 'saleDetails', foreignKey: 'productId' })
-    Product.belongsToMany(models.ProductCategory, { through: models.ProductCategoryRelation, as: 'categories', foreignKey: 'productId' })
+    Product.hasMany(models.ProductCategoryRelation, { as: 'productCategoryRelations', foreignKey: 'productId' })
+    Product.belongsToMany(models.ProductCategory, { through: models.ProductCategoryRelation, as: 'productCategories', foreignKey: 'productId' })
   }
 
   return Product

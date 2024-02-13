@@ -147,6 +147,7 @@ p {
 
 .form-row{
   display: flex;
+  flex-direction: column;
   gap: 1rem;
 }
 
@@ -167,6 +168,7 @@ p {
   padding: 0.5rem;
   width: 100%;
 }
+
 
 textarea{
   height: 15vh;
@@ -222,97 +224,14 @@ textarea{
         <div class="form-row">
           <div class="form-element">
             <div class="form-element-label">
-              <label for="title">
-                Titulo
+              <label for="question">
+                Nombre
               </label>
             </div>
             <div class="form-element-input">
               <input type="text" name="name" value="">
             </div>
           </div>
-          <div class="form-element">
-            <div class="form-element-label">
-              <label for="address">
-                Lugar del evento
-              </label>
-            </div>
-            <div class="form-element-input">
-              <input type="text" name="address" value="">
-            </div>
-          </div>
-        </div>
-  
-        <div class="form-row">
-          <div class="form-element">
-            <div class="form-element-label">
-              <label for="date">
-                Fecha Inicio
-              </label>
-            </div>
-            <div class="form-element-input">
-            <input type="date" name="start_date" value="">
-            </div>
-          </div>
-          <div class="form-element">
-            <div class="form-element-label">
-              <label for="date">
-                Fecha Fin
-              </label>
-            </div>
-            <div class="form-element-input">
-              <input type="date" name="end_date" value="">
-            </div>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-element">
-            <div class="form-element-label">
-              <label for="price">
-                Precio
-              </label>
-            </div>
-            <div class="form-element-input">
-              <input type="number" name="price" value="">
-            </div>
-          </div>
-          <div class="form-element">
-            <div class="form-element-label">
-              <label for="town">
-                Poblacion
-              </label>
-            </div>
-            <div class="form-element-input">
-              <select id="town_id" name="town_id">
-                <option value="">Seleccione una Poblacion</option>
-  
-                    <option value=""></option>
-  
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-element">
-            <div class="form-element-label">
-              <label for="start_time">
-                Hora Inicio
-              </label>
-            </div>
-            <div class="form-element-input">
-              <input type="time" name="start_time" value="">
-            </div>
-          </div>
-          <div class="form-element">
-            <div class="form-element-label">
-              <label for="start_time">
-                Hora Fin
-              </label>
-            </div>
-            <div class="form-element-input">
-              <input type="time" name="end_time" value="">
-            </div>
-          </div>
-        </div>
   
         <div class="form-language-bar">
           <div class="tabs">
@@ -411,11 +330,10 @@ textarea{
                 <div class="form-element">
                   <div class="form-element-label">
                     <label for="main-image">
-                      Imagen Principal
                     </label>
                   </div>
                   <div class="form-element-input">
-                    <input type="image" name="" value="">
+                    <slot name="upload-es-image-button"></slot>
                   </div>
                 </div>
               </div>
@@ -425,11 +343,10 @@ textarea{
                 <div class="form-element">
                   <div class="form-element-label">
                     <label for="main-image">
-                      Imagen NOPrincipal
                     </label>
                   </div>
                   <div class="form-element-input">
-                    <input type="image" name="" value="">
+                    <slot name="upload-en-image-button"></slot>
                   </div>
                 </div>
               </div>
@@ -443,11 +360,40 @@ textarea{
         `
 
     const buttonSave = this.shadow.querySelector('.store-button')
+    const form = this.shadow.querySelector('.admin-form')
 
-    buttonSave?.addEventListener('click', () => {
-      document.dispatchEvent(new CustomEvent('save-notification', {
+    buttonSave.addEventListener('click', async () => {
+      try {
+        const formData = new FormData(form)
+        const formDataJson = Object.fromEntries(formData.entries())
+        delete formDataJson.id
 
-      }))
+        const response = await fetch('http://127.0.0.1:8080/api/admin/faqs', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formDataJson)
+        })
+
+        if (response.status === 422 || response.status === 500) {
+          const errorData = await response.json()
+          errorData.message.forEach(element => {
+            console.log(element.message)
+          })
+        } else if (response.status === 200) {
+          const data = await response.json()
+
+          document.dispatchEvent(new CustomEvent('message', {
+            detail: {
+              text: 'Formulario enviado correctamente',
+              type: 'success'
+            }
+          }))
+        }
+      } catch (error) {
+      }
+      document.dispatchEvent(new CustomEvent('save-notification'))
     })
 
     // boton de clean
@@ -457,44 +403,8 @@ textarea{
       alert('HAS PULSADO LIMPIAR')
     })
 
-    // const tabsSection = document.querySelector('.form');
-
-    // tabsSection?.addEventListener('click', async (event) => {
-    //     if (event.target.closest('.form-buttons-main')) {
-    //         document.querySelector("form-buttons-main").classList.add("form-button-active");
-    //     }
-
-    // });
-    // Pestañas de navegación
-    // array de nodos
-
-    // const buttonContainer = this.shadow.querySelector('.form-buttons-change')
-
-    // buttonContainer?.addEventListener('click', (event) => {
-    //   if (event.target.tagName === 'BUTTON') {
-    //     // localizo al padre
-    //     const father = event.target.closest('.form-buttons-change')
-    //     const active = father.querySelector('.form-button-active')
-    //     // se lo quito al hijo que lo tiene
-    //     active.classList.remove('form-button-active')
-    //     // se lo doy al pulsado
-    //     event.target.classList.add('form-button-active')
-    //     const tabDataSet = event.target.dataset.tab
-    //     // console.log(tabDataSet);
-    //     const form = active.closest('.form-inside')
-    //     console.log(form)
-    //     // console.log(form.querySelector(".display"));
-    //     form.querySelector('.display').classList.remove('display')
-    //     const selector = `[data-tab="${tabDataSet}"]`
-    //     form.querySelector('.data-tabs').querySelector(selector).classList.add('display')
-    //   }
-    // })doc
-
     const main = this.shadow.querySelector('.form')
-    console.log(main)
     main?.addEventListener('click', (event) => {
-      // event.preventDefault()
-
       if (event.target.closest('.tab')) {
         if (event.target.closest('.tab').classList.contains('active')) {
           return
@@ -503,7 +413,6 @@ textarea{
         const tabClicked = event.target.closest('.tab')
         const tabActive = tabClicked.parentElement.querySelector('.active')
 
-        console.log(tabClicked)
         tabClicked.classList.add('active')
         tabActive.classList.remove('active')
 
@@ -511,66 +420,6 @@ textarea{
         this.shadow.querySelector(`.tab-content[data-tab="${tabClicked.dataset.tab}"]`).classList.add('active')
       }
     })
-
-    // // Selecciona el elemento padre .data-tabs
-    // const dataTabs = this.shadow.querySelector('.data-tabs')
-
-    // // Agrega un event listener al elemento padre
-    // dataTabs.addEventListener('input', (event) => {
-    //   // Verifica si el evento proviene de un elemento de tipo input
-    //   if (event.target.tagName === 'INPUT') {
-    //     const input = event.target.closest('.validate')
-    //     console.log(input)
-
-    //     if (input) {
-    //       const minLength = input.dataset.minlength
-    //       console.log(minLength)
-
-    //       if (input.value.length < parseInt(minLength) && input.value.length > 0) {
-    //         input.classList.add('border-red')
-    //       } else {
-    //         input.classList.remove('border-red')
-    //       }
-    //     }
-
-    // if (input) {
-    //   const letters = input.dataset.onlyletters
-    //   console.log(letters)
-    //   if (letters) {
-    //     const expresionRegular = /^[a-zA-Z]+$/
-    //     console.log(input.value)
-    //     expresionRegular.test(input.value)
-    //     console.log(expresionRegular.test(input.value))
-    //     if (expresionRegular.test(input.value)) {
-    //       input.classList.remove('border-red')
-    //     } else {
-    //       input.classList.add('border-red')
-    //     }
-    //     if (input.value.length === 0) {
-    //       input.classList.remove('border-red')
-    //     }
-    //   }
-    // }
-
-    // if (input) {
-    //   const mail = input.dataset.mail
-    //   if (mail) {
-    //     const expresionRegular = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    //     console.log(input.value)
-    //     expresionRegular.test(input.value)
-    //     console.log(expresionRegular.test(input.value))
-    //     if (expresionRegular.test(input.value)) {
-    //       input.classList.remove('border-red')
-    //     } else {
-    //       input.classList.add('border-red')
-    //     }
-    //     if (input.value.length === 0) {
-    //       input.classList.remove('border-red')
-    //     }
-    //   }
-    // }
-    // }
-    // })
   }
 }
 

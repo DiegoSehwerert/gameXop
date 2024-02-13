@@ -2,8 +2,8 @@ module.exports = function (sequelize, DataTypes) {
   const Coupon = sequelize.define('Coupon', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     name: {
@@ -11,10 +11,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Please provide a valid coupon name.'
-        },
-        notEmpty: {
-          msg: 'Coupon name cannot be empty.'
+          msg: 'Por favor, rellena el campo "name".'
         }
       }
     },
@@ -23,10 +20,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Please provide a valid coupon code.'
-        },
-        notEmpty: {
-          msg: 'Coupon code cannot be empty.'
+          msg: 'Por favor, rellena el campo "code".'
         }
       }
     },
@@ -37,24 +31,14 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.DECIMAL
     },
     startsAt: {
-      type: DataTypes.DATE,
-      validate: {
-        isDate: {
-          msg: 'Please provide a valid start date.'
-        }
-      }
+      type: DataTypes.DATE
     },
     endsAt: {
-      type: DataTypes.DATE,
-      validate: {
-        isDate: {
-          msg: 'Please provide a valid end date.'
-        }
-      }
+      type: DataTypes.DATE
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -62,7 +46,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
@@ -86,8 +70,8 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Coupon.associate = function (models) {
-    Coupon.hasMany(models.Sale, { as: 'Sale', foreignKey: 'couponId'})
+    Coupon.hasMany(models.Sale, { as: 'sales', foreignKey: 'couponId' })
   }
 
   return Coupon
-};
+}

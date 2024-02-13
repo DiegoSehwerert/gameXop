@@ -2,44 +2,44 @@ module.exports = function (sequelize, DataTypes) {
   const Email = sequelize.define('Email', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      primaryKey: true,
+      allowNull: false
     },
     subject: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Please provide a value for "subject".',
-        },
-      },
+          msg: 'Por favor, rellena el campo "subject".'
+        }
+      }
     },
     path: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Please provide a value for "path".',
-        },
-      },
+          msg: 'Por favor, rellena el campo "path".'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null;
-      },
+          : null
+      }
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null;
-      },
-    },
+          : null
+      }
+    }
   }, {
     sequelize,
     tableName: 'emails',
@@ -51,17 +51,17 @@ module.exports = function (sequelize, DataTypes) {
         unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'id' },
-        ],
-      },
-    ],
-  });
+          { name: 'id' }
+        ]
+      }
+    ]
+  })
 
   Email.associate = function (models) {
-    Email.hasMany(models.EmailError, { as: 'emailErrors', foreignKey: 'EmailId' });
-    Email.hasMany(models.SentEmail, { as: 'sentEmails', foreignKey: 'emailId' });
-    Email.belongsToMany(models.Customer, { through: models.SentEmail, as: 'customers', foreignKey: 'emailId' });
-  };
+    Email.hasMany(models.EmailError, { as: 'emailErrors', foreignKey: 'emailId' })
+    Email.hasMany(models.SentEmail, { as: 'sentEmails', foreignKey: 'emailId' })
+    Email.belongsToMany(models.Customer, { through: models.SentEmail, as: 'customers', foreignKey: 'emailId' })
+  }
 
-  return Email;
-};
+  return Email
+}

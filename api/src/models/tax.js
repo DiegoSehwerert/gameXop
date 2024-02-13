@@ -2,33 +2,62 @@ module.exports = function (sequelize, DataTypes) {
   const Tax = sequelize.define('Tax', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     countryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "country".'
+        }
+      }
     },
     type: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "type".'
+        }
+      }
     },
     rate: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "rate".'
+        }
+      }
     },
     multiplier: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "multiplier".'
+        },
+        is: {
+          args: /^[0-9]{1,10}\.[0-9]+$/,
+          msg: 'Por favor, añade un multiplicador válido".'
+        }
+      }
     },
     current: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "current".'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -36,7 +65,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
@@ -58,7 +87,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'taxes_countryId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'countryId' }
@@ -68,12 +96,12 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Tax.associate = function (models) {
-    Tax.belongsTo(models.Country, { as: 'country', foreignKey: 'countryId'})
+    Tax.belongsTo(models.Country, { as: 'country', foreignKey: 'countryId' })
 
-    Tax.hasMany(models.CartDetail, { as: 'CartDetail', foreignKey: 'taxId'})
-    Tax.hasMany(models.Price, { as: 'Price', foreignKey: 'taxId'})
-    Tax.hasMany(models.ReturnDetail, { as: 'ReturnDetail', foreignKey: 'taxId'})
-    Tax.hasMany(models.SaleDetail, { as: 'SaleDetail', foreignKey: 'taxId'})
+    Tax.hasMany(models.CartDetail, { as: 'cartDetails', foreignKey: 'taxId' })
+    Tax.hasMany(models.Price, { as: 'prices', foreignKey: 'taxId' })
+    Tax.hasMany(models.ReturnDetail, { as: 'returnDetails', foreignKey: 'taxId' })
+    Tax.hasMany(models.SaleDetail, { as: 'saleDetails', foreignKey: 'taxId' })
   }
 
   return Tax

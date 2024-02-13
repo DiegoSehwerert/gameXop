@@ -1,5 +1,6 @@
 const db = require('../../models')
 const AdminTracking = db.AdminTracking
+const Op = db.Sequelize.Op
 
 exports.create = (req, res) => {
   AdminTracking.create(req.body).then(data => {
@@ -12,12 +13,13 @@ exports.create = (req, res) => {
 }
 
 exports.findAll = (req, res) => {
+
   const page = req.query.page || 1
   const limit = parseInt(req.query.size) || 10
   const offset = (page - 1) * limit
 
   AdminTracking.findAndCountAll({
-    attributes: ['id', 'entity', 'entityId', 'action', 'createdAt', 'updatedAt'],
+    attributes: ['id', 'entity' ,'createdAt', 'updatedAt'],
     limit,
     offset,
     order: [['createdAt', 'DESC']]
@@ -32,7 +34,7 @@ exports.findAll = (req, res) => {
       res.status(200).send(result)
     }).catch(err => {
       res.status(500).send({
-        message: err.errors || 'Algún error ha surgido al recuperar los datos.'
+        message: err.errors || 'Algún error ha surgido al recuperar los datos.'+err
       })
     })
 }
@@ -72,7 +74,7 @@ exports.update = (req, res) => {
     }
   }).catch(_ => {
     res.status(500).send({
-      message: 'Algún error ha surgido al actualizar la id=' + id
+      message: 'Algún error ha surgido al actualiazar la id=' + id
     })
   })
 }

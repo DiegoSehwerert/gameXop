@@ -2,49 +2,94 @@ module.exports = function (sequelize, DataTypes) {
   const Return = sequelize.define('Return', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     saleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "sale".'
+        }
+      }
     },
     customerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "customer".'
+        }
+      }
     },
     paymentMethodId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "pamentMethod".'
+        }
+      }
     },
     reference: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "reference".'
+        }
+      }
     },
     totalPrice: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "totalPrice".'
+        }
+      }
     },
     totalBasePrice: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "totalBasePrice".'
+        }
+      }
     },
     totalTaxPrice: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "totalTaxPrice".'
+        }
+      }
     },
     returnDate: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "returnDate".'
+        }
+      }
     },
     returnTime: {
       type: DataTypes.TIME,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "returnTime".'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -52,7 +97,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
@@ -74,7 +119,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'returns_saleId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'saleId' }
@@ -82,7 +126,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'returns_customerId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'customerId' }
@@ -90,7 +133,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'returns_paymentMethodId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'paymentMethodId' }
@@ -100,16 +142,15 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Return.associate = function (models) {
-    Return.belongsTo(models.Sale, { as: 'sale', foreignKey: 'saleId'})
-    Return.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId'})
-    Return.belongsTo(models.PaymentMethod, { as: 'paymentMethod', foreignKey: 'paymentMethodId'})
-
-    Return.hasMany(models.Invoice, { as: 'Invoice', foreignKey: 'returnId'})
-    Return.hasMany(models.ReturnDetail, { as: 'ReturnDetail', foreignKey: 'returnId'})
-    Return.hasMany(models.ReturnError, { as: 'ReturnError', foreignKey: 'returnId'})
-    Return.hasMany(models.Ticket, { as: 'Ticket', foreignKey: 'returnId'})
-    // Return.belongsToMany(models.Product, { through: models.ReturnDetail, as: 'products', foreignKey: 'returnId' })
-
+    Return.belongsTo(models.Sale, { as: 'sale', foreignKey: 'saleId' })
+    Return.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
+    Return.belongsTo(models.PaymentMethod, { as: 'paymentMethod', foreignKey: 'paymentMethodId' })
+    Return.belongsToMany(models.Product, { through: models.ReturnDetail, as: 'products', foreignKey: 'returnId' })
+    
+    Return.hasMany(models.Invoice, { as: 'invoices', foreignKey: 'returnId' })
+    Return.hasMany(models.ReturnDetail, { as: 'returnDetails', foreignKey: 'returnId' })
+    Return.hasMany(models.ReturnError, { as: 'returnErrors', foreignKey: 'returnId' })
+    Return.hasMany(models.Ticket, { as: 'tickets', foreignKey: 'returnId' })
   }
 
   return Return

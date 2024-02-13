@@ -1,95 +1,100 @@
-const { DataTypes } = require('sequelize')
-
-module.exports = function (sequelize) {
+module.exports = function (sequelize, DataTypes) {
   const Fingerprint = sequelize.define('Fingerprint', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     customerId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        isInt: { msg: 'Por favor, proporciona un valor entero válido para el ID del cliente.' },
-        notNull: { msg: 'El ID del cliente no puede ser nulo.' }
-      }
     },
     cityId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        isInt: { msg: 'Por favor, proporciona un valor entero válido para el ID de la ciudad.' },
-        notNull: { msg: 'El ID de la ciudad no puede ser nulo.' }
+        notNull: {
+          msg: 'Por favor, rellena el campo "city".'
+        }
       }
     },
     fingerprint: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: 'La huella digital no puede estar vacía.' },
-        notNull: { msg: 'La huella digital no puede ser nula.' }
+        notNull: {
+          msg: 'Por favor, rellena el campo "fingerprint".'
+        }
       }
     },
     browser: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: 'El navegador no puede estar vacío.' },
-        notNull: { msg: 'El navegador no puede ser nulo.' }
+        notNull: {
+          msg: 'Por favor, rellena el campo "browser".'
+        }
       }
     },
     browserVersion: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: 'La versión del navegador no puede estar vacía.' },
-        notNull: { msg: 'La versión del navegador no puede ser nula.' }
+        notNull: {
+          msg: 'Por favor, rellena el campo "browserVersion".'
+        }
       }
     },
     os: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: 'El sistema operativo no puede estar vacío.' },
-        notNull: { msg: 'El sistema operativo no puede ser nulo.' }
+        notNull: {
+          msg: 'Por favor, rellena el campo "os".'
+        }
       }
     },
     osVersion: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: 'La versión del sistema operativo no puede estar vacía.' },
-        notNull: { msg: 'La versión del sistema operativo no puede ser nula.' }
+        notNull: {
+          msg: 'Por favor, rellena el campo "osVersion".'
+        }
       }
     },
     screenHeight: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        isInt: { msg: 'Por favor, proporciona un valor entero válido para la altura de la pantalla.' },
-        notNull: { msg: 'La altura de la pantalla no puede ser nula.' }
+        notNull: {
+          msg: 'Por favor, rellena el campo "screenHeight".'
+        }
       }
     },
     screenWidth: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        isInt: { msg: 'Por favor, proporciona un valor entero válido para el ancho de la pantalla.' },
-        notNull: { msg: 'El ancho de la pantalla no puede ser nulo.' }
+        notNull: {
+          msg: 'Por favor, rellena el campo "screenWidth".'
+        }
       }
     },
     createdAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('createdAt') ? this.getDataValue('createdAt').toISOString().split('T')[0] : null
+        return this.getDataValue('createdAt')
+          ? this.getDataValue('createdAt').toISOString().split('T')[0]
+          : null
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
       get () {
-        return this.getDataValue('updatedAt') ? this.getDataValue('updatedAt').toISOString().split('T')[0] : null
+        return this.getDataValue('updatedAt')
+          ? this.getDataValue('updatedAt').toISOString().split('T')[0]
+          : null
       }
     }
   }, {

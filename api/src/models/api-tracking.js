@@ -2,32 +2,25 @@ module.exports = function (sequelize, DataTypes) {
   const ApiTracking = sequelize.define('ApiTracking', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     customerId: {
-      type: DataTypes.INTEGER,
-      validate: {
-        isInt: {
-          msg: 'Please provide a valid customer ID.'
-        }
-      }
+      type: DataTypes.INTEGER
     },
     fingerprintId: {
-      type: DataTypes.INTEGER,
-      validate: {
-        isInt: {
-          msg: 'Please provide a valid fingerprint ID.'
-        }
-      }
+      type: DataTypes.INTEGER
     },
     ip: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "IP".'
+        },
         isIP: {
-          msg: 'Please provide a valid IP address.'
+          msg: 'Introduce una IP valida".'
         }
       }
     },
@@ -35,8 +28,8 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       validate: {
-        isBoolean: {
-          msg: 'Please specify if it is a robot using a boolean value.'
+        notNull: {
+          msg: 'Por favor, rellena el campo "isRobot".'
         }
       }
     },
@@ -44,25 +37,20 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: {
-          msg: 'Please provide a resource.'
+        notNull: {
+          msg: 'Por favor, rellena el campo "Resource".'
         }
       }
     },
     resourceElement: {
-      type: DataTypes.INTEGER,
-      validate: {
-        isInt: {
-          msg: 'Please provide a valid resource element ID.'
-        }
-      }
+      type: DataTypes.INTEGER
     },
     method: {
-      allowNull: false,
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
-        notEmpty: {
-          msg: 'Please provide a method.'
+        notNull: {
+          msg: 'Por favor, rellena el campo "method".'
         }
       }
     },
@@ -70,20 +58,21 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        isInt: {
-          msg: 'Please provide a valid HTTP code.'
+        notNull: {
+          msg: 'Por favor, rellena el campo "httpCode".'
         }
       }
     },
     message: {
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
     startTime: {
       type: DataTypes.DOUBLE,
       allowNull: false,
       validate: {
-        isFloat: {
-          msg: 'Please provide a valid start time.'
+        notNull: {
+          msg: 'Por favor, rellena el campo "startTime".'
         }
       }
     },
@@ -91,8 +80,8 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.DOUBLE,
       allowNull: false,
       validate: {
-        isFloat: {
-          msg: 'Please provide a valid end time.'
+        notNull: {
+          msg: 'Por favor, rellena el campo "endTime".'
         }
       }
     },
@@ -100,25 +89,25 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.DOUBLE,
       allowNull: false,
       validate: {
-        isFloat: {
-          msg: 'Please provide a valid latency in milliseconds.'
+        notNull: {
+          msg: 'Por favor, rellena el campo "latency".'
         }
       }
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null;
+          : null
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null;
+          : null
       }
     }
   }, {
@@ -137,7 +126,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'api_trackings_customerId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'customerId' }
@@ -145,7 +133,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'api_trackings_fingerprintId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'fingerprintId' }
@@ -155,8 +142,8 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   ApiTracking.associate = function (models) {
-    ApiTracking.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId'})
-    ApiTracking.belongsTo(models.Fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId'})
+    ApiTracking.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
+    ApiTracking.belongsTo(models.Fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId' })
   }
 
   return ApiTracking

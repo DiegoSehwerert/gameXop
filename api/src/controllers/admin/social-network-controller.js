@@ -1,5 +1,6 @@
 const db = require('../../models')
 const SocialNetwork = db.SocialNetwork
+const Op = db.Sequelize.Op
 
 exports.create = (req, res) => {
   SocialNetwork.create(req.body).then(data => {
@@ -12,6 +13,7 @@ exports.create = (req, res) => {
 }
 
 exports.findAll = (req, res) => {
+
   const page = req.query.page || 1
   const limit = parseInt(req.query.size) || 10
   const offset = (page - 1) * limit
@@ -72,7 +74,7 @@ exports.update = (req, res) => {
     }
   }).catch(_ => {
     res.status(500).send({
-      message: 'Algún error ha surgido al actualizar la id=' + id
+      message: 'Algún error ha surgido al actualiazar la id=' + id
     })
   })
 }

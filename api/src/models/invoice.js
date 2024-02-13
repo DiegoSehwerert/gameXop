@@ -2,70 +2,63 @@ module.exports = function (sequelize, DataTypes) {
   const Invoice = sequelize.define('Invoice', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      primaryKey: true,
+      allowNull: false
     },
     customerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        isInt: { msg: 'Customer ID must be an integer.' },
-        notNull: { msg: 'Please provide the Customer ID.' }
+        notNull: {
+          msg: 'Por favor, rellena el campo "customer".'
+        }
       }
     },
     saleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        isInt: { msg: 'Sale ID must be an integer.' },
-        notNull: { msg: 'Please provide the Sale ID.' }
+        notNull: {
+          msg: 'Por favor, rellena el campo "sale".'
+        }
       }
     },
     returnId: {
       type: DataTypes.INTEGER,
-      validate: {
-        isInt: { msg: 'Return ID must be an integer.' }
-      }
     },
     reference: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { msg: 'Please provide the reference.' }
+        notNull: {
+          msg: 'Por favor, rellena el campo "reference".'
+        }
       }
     },
     path: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { msg: 'Please provide the path.' }
+        notNull: {
+          msg: 'Por favor, rellena el campo "path".'
+        }
       }
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notNull: { msg: 'Please provide the creation date.' },
-        isDate: { msg: 'Invalid date format for createdAt.' }
-      },
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null;
+          : null
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notNull: { msg: 'Please provide the update date.' },
-        isDate: { msg: 'Invalid date format for updatedAt.' }
-      },
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null;
+          : null
       }
     }
   }, {
@@ -84,7 +77,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'invoices_customerId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'customerId' }
@@ -92,7 +84,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'invoices_saleId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'saleId' }
@@ -100,20 +91,19 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'invoices_returnId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'returnId' }
         ]
       }
     ]
-  });
+  })
 
   Invoice.associate = function (models) {
-    Invoice.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' });
-    Invoice.belongsTo(models.Sale, { as: 'sale', foreignKey: 'saleId' });
-    Invoice.belongsTo(models.Return, { as: 'return', foreignKey: 'returnId' });
-  };
+    Invoice.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
+    Invoice.belongsTo(models.Sale, { as: 'sale', foreignKey: 'saleId' })
+    Invoice.belongsTo(models.Return, { as: 'return', foreignKey: 'returnId' })
+  }
 
-  return Invoice;
-};
+  return Invoice
+}

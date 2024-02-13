@@ -2,8 +2,8 @@ module.exports = function (sequelize, DataTypes) {
   const CustomerTracking = sequelize.define('CustomerTracking', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     customerId: {
@@ -29,11 +29,16 @@ module.exports = function (sequelize, DataTypes) {
     },
     event: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "event".'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -41,7 +46,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
@@ -63,7 +68,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'customer_trackings_customerId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'customerId' }
@@ -71,7 +75,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'customer_trackings_fingerprintId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'fingerprintId' }
@@ -79,7 +82,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'customer_trackings_localeSeoId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'localeSeoId' }
@@ -87,7 +89,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'customer_trackings_localeSeoSlugId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'localeSeoSlugId' }
@@ -97,11 +98,11 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   CustomerTracking.associate = function (models) {
-    CustomerTracking.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId'})
-    CustomerTracking.belongsTo(models.Fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId'})
-    CustomerTracking.belongsTo(models.LocaleSeo, { as: 'localeSeo', foreignKey: 'localeSeoId'})
-    CustomerTracking.belongsTo(models.LocaleSeoSlug, { as: 'localeSeoSlug', foreignKey: 'localeSeoSlugId'})
+    CustomerTracking.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
+    CustomerTracking.belongsTo(models.Fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId' })
+    CustomerTracking.belongsTo(models.LocaleSeo, { as: 'localeSeo', foreignKey: 'localeSeoId' })
+    CustomerTracking.belongsTo(models.LocaleSeoSlug, { as: 'localeSeoSlug', foreignKey: 'localeSeoSlugId' })
   }
 
   return CustomerTracking
-};
+}

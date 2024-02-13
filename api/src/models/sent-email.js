@@ -2,17 +2,27 @@ module.exports = function (sequelize, DataTypes) {
   const SentEmail = sequelize.define('SentEmail', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     customerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "customer".'
+        }
+      }
     },
     emailId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "email".'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -46,7 +56,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'sent_emails_customerId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'customerId' }
@@ -54,7 +63,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'sent_emails_emailId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'emailId' }
@@ -64,8 +72,9 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   SentEmail.associate = function (models) {
-    SentEmail.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId'})
-    SentEmail.belongsTo(models.Email, { as: 'email', foreignKey: 'emailId'})
+    SentEmail.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
+    SentEmail.belongsTo(models.Email, { as: 'email', foreignKey: 'emailId' })
+    
   }
 
   return SentEmail

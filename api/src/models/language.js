@@ -2,15 +2,17 @@ module.exports = function (sequelize, DataTypes) {
   const Language = sequelize.define('Language', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      primaryKey: true,
+      allowNull: false
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { msg: 'Please provide the language name.' }
+        notNull: {
+          msg: 'Por favor, rellena el campo "name".'
+        }
       }
     },
     alias: {
@@ -18,33 +20,36 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       unique: true,
       validate: {
-        notNull: { msg: 'Please provide the language alias.' }
+        notNull: {
+          msg: 'Por favor, rellena el campo "alias".'
+        }
+      },
+      isUnique: function (value, next) {
+        const self = this
+        Customer.findOne({ where: { email: value } }).then(function (customer) {
+          if (customer && self.id !== customer.id) {
+            return next('Ya existe un cliente con ese email.')
+          }
+          return next()
+        }).catch(function (err) {
+          return next(err)
+        })
       }
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notNull: { msg: 'Please provide the creation date.' },
-        isDate: { msg: 'Invalid date format for createdAt.' }
-      },
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null;
+          : null
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notNull: { msg: 'Please provide the update date.' },
-        isDate: { msg: 'Invalid date format for updatedAt.' }
-      },
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null;
+          : null
       }
     }
   }, {
@@ -62,11 +67,11 @@ module.exports = function (sequelize, DataTypes) {
         ]
       }
     ]
-  });
+  })
 
   Language.associate = function (models) {
 
-  };
+  }
 
-  return Language;
-};
+  return Language
+}

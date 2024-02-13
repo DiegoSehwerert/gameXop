@@ -1,17 +1,26 @@
 const db = require('../../models')
 const Faq = db.Faq
+const Op = db.Sequelize.Op
 
 exports.create = (req, res) => {
   Faq.create(req.body).then(data => {
     res.status(200).send(data)
   }).catch(err => {
-    res.status(500).send({
-      message: err.errors || 'Algún error ha surgido al insertar el dato.'
-    })
+    console.log(err)
+    if (err.errors) {
+      res.status(422).send({
+        message: err.errors
+      })
+    } else {
+      res.status(500).send({
+        message: 'Algún error ha surgido al insertar el dato.'
+      })
+    }
   })
 }
 
 exports.findAll = (req, res) => {
+
   const page = req.query.page || 1
   const limit = parseInt(req.query.size) || 10
   const offset = (page - 1) * limit
@@ -72,7 +81,7 @@ exports.update = (req, res) => {
     }
   }).catch(_ => {
     res.status(500).send({
-      message: 'Algún error ha surgido al actualizar la id=' + id
+      message: 'Algún error ha surgido al actualiazar la id=' + id
     })
   })
 }

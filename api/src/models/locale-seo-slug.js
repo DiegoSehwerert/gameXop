@@ -2,93 +2,89 @@ module.exports = function (sequelize, DataTypes) {
   const LocaleSeoSlug = sequelize.define('LocaleSeoSlug', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      primaryKey: true,
+      allowNull: false
     },
     localeSeoId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notNull: { msg: 'Please provide the localeSeoId.' },
-        isInt: { msg: 'LocaleSeoId must be an integer.' },
-      },
+        notNull: {
+          msg: 'Por favor, rellena el campo "lacaleSeo".'
+        }
+      }
     },
     languageAlias: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { msg: 'Please provide the languageAlias.' },
-        is: { args: /^[A-Za-z0-9_]+$/, msg: 'Invalid characters in languageAlias.' },
-      },
+        notNull: {
+          msg: 'Por favor, rellena el campo "lenguageAlias".'
+        }
+      }
     },
     relParent: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { msg: 'Please provide the relParent.' },
-      },
+        notNull: {
+          msg: 'Por favor, rellena el campo "relParent".'
+        }
+      }
     },
     slug: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { msg: 'Please provide the slug.' },
-      },
+        notNull: {
+          msg: 'Por favor, rellena el campo "alug".'
+        }
+      }
     },
     key: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notNull: { msg: 'Please provide the key.' },
-        isInt: { msg: 'Key must be an integer.' },
-      },
+        notNull: {
+          msg: 'Por favor, rellena el campo "key".'
+        }
+      }
     },
     parentSlug: {
-      type: DataTypes.STRING,
-      validate: {
-        is: { args: /^(\/[A-Za-z0-9_-]+)+$/, msg: 'Invalid characters in parentSlug.' },
-      },
+      type: DataTypes.STRING
     },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { msg: 'Please provide the title.' },
-      },
+        notNull: {
+          msg: 'Por favor, rellena el campo "title".'
+        }
+      }
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     keywords: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notNull: { msg: 'Please provide the creation date.' },
-        isDate: { msg: 'Invalid date format for createdAt.' },
-      },
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null;
-      },
+          : null
+      }
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notNull: { msg: 'Please provide the update date.' },
-        isDate: { msg: 'Invalid date format for updatedAt.' },
-      },
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null;
-      },
-    },
+          : null
+      }
+    }
   }, {
     sequelize,
     tableName: 'locale_seo_slugs',
@@ -100,28 +96,26 @@ module.exports = function (sequelize, DataTypes) {
         unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'id' },
-        ],
+          { name: 'id' }
+        ]
       },
       {
         name: 'locale_seo_slugs_localeSeoId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'localeSeoId' },
-        ],
-      },
-    ],
-  });
+          { name: 'localeSeoId' }
+        ]
+      }
+    ]
+  })
 
   LocaleSeoSlug.associate = function (models) {
-    LocaleSeoSlug.belongsTo(models.LocaleSeo, { as: 'localeSeo', foreignKey: 'localeSeoId' });
+    LocaleSeoSlug.belongsTo(models.LocaleSeo, { as: 'localeSeo', foreignKey: 'localeSeoId' })
 
-    LocaleSeoSlug.hasMany(models.CustomerTracking, { as: 'CustomerTracking', foreignKey: 'localeSeoSlugId' });
-    LocaleSeoSlug.hasMany(models.LocaleSeoSlugRedirect, { as: 'LocaleSeoSlugRedirect', foreignKey: 'localeSeoSlugId' });
-    LocaleSeoSlug.hasMany(models.MenuItem, { as: 'MenuItem', foreignKey: 'localeSeoSlugId' });
-    LocaleSeoSlug.hasMany(models.PageTracking, { as: 'PageTracking', foreignKey: 'localeSeoSlugId' });
-  };
+    LocaleSeoSlug.hasMany(models.CustomerTracking, { as: 'customerTrackings', foreignKey: 'localeSeoSlugId' })
+    LocaleSeoSlug.hasMany(models.LocaleSeoSlugRedirect, { as: 'localeSeoSlugRedirects', foreignKey: 'localeSeoSlugId' })
+    LocaleSeoSlug.hasMany(models.PageTracking, { as: 'pageTrackings', foreignKey: 'localeSeoSlugId' })
+  }
 
-  return LocaleSeoSlug;
-};
+  return LocaleSeoSlug
+}

@@ -1,30 +1,50 @@
 module.exports = function (sequelize, DataTypes) {
   const SaleError = sequelize.define('SaleError', {
-   id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false
-      },
-      paymentMethodId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      customerId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      cartId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      errorCode: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      errorMessage: {
-        type: DataTypes.STRING
-      },
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false
+    },
+    paymentMethodId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "paymentMethod".'
+        }
+      }
+    },
+    customerId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "customer".'
+        }
+      }
+    },
+    cartId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "cart".'
+        }
+      }
+    },
+    errorCode: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "errorCode".'
+        }
+      }
+    },
+    errorMessage: {
+      type: DataTypes.STRING
+    },
     createdAt: {
       type: DataTypes.DATE,
       get () {
@@ -57,7 +77,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'sale_errors_paymentMethodId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'paymentMethodId' }
@@ -65,7 +84,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'sale_errors_customerId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'customerId' }
@@ -73,7 +91,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'sale_errors_cartId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'cartId' }
@@ -83,9 +100,10 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   SaleError.associate = function (models) {
-    SaleError.belongsTo(models.PaymentMethod, { as: 'paymentMethod', foreignKey: 'paymentMethodId'})
-    SaleError.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId'})
-    SaleError.belongsTo(models.Cart, { as: 'cart', foreignKey: 'cartId'})
+    SaleError.belongsTo(models.PaymentMethod, { as: 'paymentMethod', foreignKey: 'paymentMethodId' })
+    SaleError.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
+    SaleError.belongsTo(models.Cart, { as: 'cart', foreignKey: 'cartId' })
+    
   }
 
   return SaleError

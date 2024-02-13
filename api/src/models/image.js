@@ -2,74 +2,89 @@ module.exports = function (sequelize, DataTypes) {
   const Image = sequelize.define('Image', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      primaryKey: true,
+      allowNull: false
     },
     imageConfigurationId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "imageConfiguartionId".'
+        }
+      }
     },
     entityId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER
     },
     entity: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "entity".'
+        }
+      }
     },
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     originalFilename: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     resizedFilename: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     title: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     alt: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     languageAlias: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "languageAlias".'
+        }
+      }
     },
     mediaQuery: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "mediaQuery".'
+        }
+      }
     },
     latencyMs: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "latencyms".'
+        }
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null;
-      },
+          : null
+      }
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "Fecha de Actualización".',
-        },
-        isDate: {
-          msg: 'El campo "Fecha de Actualización" debe ser una fecha válida.',
-        },
-      },
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null;
-      },
-    },
+          : null
+      }
+    }
   }, {
     sequelize,
     tableName: 'images',
@@ -81,33 +96,31 @@ module.exports = function (sequelize, DataTypes) {
         unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'id' },
-        ],
+          { name: 'id' }
+        ]
       },
       {
         name: 'images_imageConfigurationId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
-          { name: 'imageConfigurationId' },
-        ],
+          { name: 'imageConfigurationId' }
+        ]
       },
       {
         name: 'images_entityId_entity_mediaQuery_index',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'entityId' },
           { name: 'entity' },
-          { name: 'mediaQuery' },
-        ],
-      },
-    ],
-  });
+          { name: 'mediaQuery' }
+        ]
+      }
+    ]
+  })
 
   Image.associate = function (models) {
-    Image.belongsTo(models.ImageConfiguration, { as: 'imageConfiguration', foreignKey: 'imageConfigurationId' });
-  };
+    Image.belongsTo(models.ImageConfiguration, { as: 'imageConfiguration', foreignKey: 'imageConfigurationId' })
+  }
 
-  return Image;
-};
+  return Image
+}

@@ -2,16 +2,16 @@ module.exports = function (sequelize, DataTypes) {
   const City = sequelize.define('City', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      primaryKey: true,
+      allowNull: false
     },
     countryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        isInt: {
-          msg: 'Please provide a valid country ID.'
+        notNull: {
+          msg: 'Por favor, rellena el campo "country".'
         }
       }
     },
@@ -19,25 +19,25 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: {
-          msg: 'Please provide a city name.'
+        notNull: {
+          msg: 'Por favor, rellena el campo "name".'
         }
       }
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null;
+          : null
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null;
+          : null
       }
     }
   }, {
@@ -56,22 +56,21 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'cities_countryId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'countryId' }
         ]
-      }
+      },
     ]
-  });
+  })
 
   City.associate = function (models) {
-    City.belongsTo(models.Country, { as: 'country', foreignKey: 'countryId'});
-
-    City.hasMany(models.Company, { as: 'Company', foreignKey: 'cityId'});
-    City.hasMany(models.Customer, { as: 'Customer', foreignKey: 'cityId'});
-    City.hasMany(models.Fingerprint, { as: 'Fingerprint', foreignKey: 'cityId'});
+    City.belongsTo(models.Country, { as: 'country', foreignKey: 'countryId' })
+    
+    City.hasMany(models.Company, { as: 'companies', foreignKey: 'cityId' })
+    City.hasMany(models.Customer, { as: 'customers', foreignKey: 'cityId' })
+    City.hasMany(models.Fingerprint, { as: 'fingerprints', foreignKey: 'cityId' })
   }
 
-  return City;
-};
+  return City
+}

@@ -2,73 +2,48 @@ module.exports = function (sequelize, DataTypes) {
   const LocaleSeoRedirect = sequelize.define('LocaleSeoRedirect', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      primaryKey: true,
+      allowNull: false
     },
     localeSeoId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: { msg: 'Please provide the localeSeoId.' },
-        isInt: { msg: 'LocaleSeoId must be an integer.' }
-      }
     },
     languageAlias: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { msg: 'Please provide the languageAlias.' }
-      }
+        notNull: {
+          msg: 'Por favor, rellena el campo "languageAlias".'
+        }
+      },
     },
     group: {
-      type: DataTypes.STRING,
-      validate: {
-        is: { args: /^[A-Za-z0-9_]+$/, msg: 'Invalid characters in group.' }
-      }
+      type: DataTypes.STRING
     },
     key: {
-      type: DataTypes.STRING,
-      validate: {
-        is: { args: /^[A-Za-z0-9_]+$/, msg: 'Invalid characters in key.' }
-      }
+      type: DataTypes.STRING
     },
     subdomain: {
-      type: DataTypes.STRING,
-      validate: {
-        is: { args: /^[A-Za-z0-9_-]+$/, msg: 'Invalid characters in subdomain.' }
-      }
+      type: DataTypes.STRING
     },
     oldUrl: {
-      type: DataTypes.STRING,
-      validate: {
-        is: { args: /^(\/[A-Za-z0-9_-]+)+$/, msg: 'Invalid characters in oldUrl.' }
-      }
+      type: DataTypes.STRING
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notNull: { msg: 'Please provide the creation date.' },
-        isDate: { msg: 'Invalid date format for createdAt.' }
-      },
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
-          : null;
+          : null
       }
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notNull: { msg: 'Please provide the update date.' },
-        isDate: { msg: 'Invalid date format for updatedAt.' }
-      },
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
-          : null;
+          : null
       }
     }
   }, {
@@ -87,18 +62,17 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'locale_seo_redirects_localeSeoId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'localeSeoId' }
         ]
       }
     ]
-  });
+  })
 
   LocaleSeoRedirect.associate = function (models) {
-    LocaleSeoRedirect.belongsTo(models.LocaleSeo, { as: 'localeSeo', foreignKey: 'localeSeoId'})
+    LocaleSeoRedirect.belongsTo(models.LocaleSeo, { as: 'localeSeo', foreignKey: 'localeSeoId' })
   }
 
-  return LocaleSeoRedirect;
-};
+  return LocaleSeoRedirect
+}

@@ -2,13 +2,18 @@ module.exports = function (sequelize, DataTypes) {
   const PriceDiscount = sequelize.define('PriceDiscount', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     priceId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "price".'
+        }
+      }
     },
     percentage: {
       type: DataTypes.DECIMAL
@@ -27,7 +32,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     createdAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('createdAt')
           ? this.getDataValue('createdAt').toISOString().split('T')[0]
           : null
@@ -35,7 +40,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     updatedAt: {
       type: DataTypes.DATE,
-      get() {
+      get () {
         return this.getDataValue('updatedAt')
           ? this.getDataValue('updatedAt').toISOString().split('T')[0]
           : null
@@ -57,7 +62,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       {
         name: 'price_discounts_priceId_fk',
-        unique: true,
         using: 'BTREE',
         fields: [
           { name: 'priceId' }
@@ -67,11 +71,11 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   PriceDiscount.associate = function (models) {
-    PriceDiscount.belongsTo(models.Price, { as: 'price', foreignKey: 'priceId'})
+    PriceDiscount.belongsTo(models.Price, { as: 'price', foreignKey: 'priceId' })
 
-    PriceDiscount.hasMany(models.CartDetail, { as: 'CartDetail', foreignKey: 'priceDiscountId'})
-    PriceDiscount.hasMany(models.ReturnDetail, { as: 'ReturnDetail', foreignKey: 'priceDiscountId'})
-    PriceDiscount.hasMany(models.SaleDetail, { as: 'SaleDetail', foreignKey: 'priceDiscountId'})
+    PriceDiscount.hasMany(models.ReturnDetail, { as: 'returnDetails', foreignKey: 'priceDiscountId' })
+    PriceDiscount.hasMany(models.SaleDetail, { as: 'saleDetails', foreignKey: 'priceDiscountId' })
+    PriceDiscount.hasMany(models.CartDetail, { as: 'cartDetails', foreignKey: 'priceDiscountId' })
   }
 
   return PriceDiscount

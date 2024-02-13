@@ -1,5 +1,6 @@
 const db = require('../../models')
 const User = db.User
+const Op = db.Sequelize.Op
 
 exports.create = (req, res) => {
   User.create(req.body).then(data => {
@@ -12,12 +13,13 @@ exports.create = (req, res) => {
 }
 
 exports.findAll = (req, res) => {
+
   const page = req.query.page || 1
   const limit = parseInt(req.query.size) || 10
   const offset = (page - 1) * limit
 
   User.findAndCountAll({
-    attributes: ['id', 'name', 'email', 'password', 'createdAt', 'updatedAt'],
+    attributes: ['id', 'name', 'email', 'createdAt', 'updatedAt'],
     limit,
     offset,
     order: [['createdAt', 'DESC']]
