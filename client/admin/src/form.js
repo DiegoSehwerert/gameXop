@@ -6,6 +6,9 @@ class Form extends HTMLElement {
   }
 
   connectedCallback () {
+    document.addEventListener('message', (event) => {
+      this.render()
+    })
     this.render()
   }
 
@@ -15,183 +18,204 @@ class Form extends HTMLElement {
       `
         <style>
          * {
-  margin: 0;
-  padding: 0;
-}
+            margin: 0;
+            padding: 0;
+          }
 
-section {
-  margin: 0;
-  padding: 0;
-}
+          section {
+            margin: 0;
+            padding: 0;
+          }
 
-.none {
-  display: none;
-}
+          .none {
+            display: none;
+          }
 
-button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
+          button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+          }
 
-a {
-  text-decoration: none;
-}
+          a {
+            text-decoration: none;
+          }
 
-ul {
-  list-style: none;
-}
+          ul {
+            list-style: none;
+          }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: white;
-  font-family: 'Roboto', sans-serif;
-}
+          h1,
+          h2,
+          h3,
+          h4,
+          h5,
+          h6 {
+            color: white;
+            font-family: 'Roboto', sans-serif;
+          }
 
-input,
-label,
-select,
-textarea,
-li,
-span,
-p {
-  color: hsl(0, 0%, 100%);
-  font-family: 'Roboto', sans-serif;
-}
+          input,
+          label,
+          select,
+          textarea,
+          li,
+          span,
+          p {
+            color: hsl(0, 0%, 100%);
+            font-family: 'Roboto', sans-serif;
+          }
 
-.form {
-    flex: 2;
-}
+          .form {
+              flex: 2;
+          }
 
-.form-top-bar{
-    display: flex;
-    justify-content: center;
-    background-color: white;
-    height: 3rem;
-    width: 100%;
-    margin-bottom: 2rem;
+          .form-top-bar{
+              display: flex;
+              justify-content: center;
+              background-color: white;
+              height: 3rem;
+              width: 100%;
+              margin-bottom: 2rem;
 
-}
-.tabs{
-    display: flex;
-    height: 100%;
-    width: 100%;
-}
+          }
+          .error-message{
+            display: none;
+            position: absolute;
+          }
+          .error-message .active{
+            background-color: #f44336;
+            display: block;
+          }
+          .error-message .error-list{
+            background-color: #f44336;
+            padding: 0.5rem;
+          }
+          .error-list li{
+            color: white;
+            width: 100%;
+          }
+          .tabs{
+              display: flex;
+              height: 100%;
+              width: 100%;
+          }
 
-.tab{
-    background-color: none;
-    display: flex;
-    align-items: center;
-    padding: 0.5rem;
-}
+          .tab{
+              background-color: none;
+              display: flex;
+              align-items: center;
+              padding: 0.5rem;
+          }
 
-.tab:hover{
-  background-color: hsl(206.87,84.81%,69.02%);
-  cursor:pointer;
-}
+          .tab:hover{
+            background-color: hsl(206.87,84.81%,69.02%);
+            cursor:pointer;
+          }
 
-.tab button{
-    color: blue;
-}
+          .tab button{
+              color: blue;
+          }
 
-.tab.active button{
-    color: white;
-}
+          .tab.active button{
+              color: white;
+          }
 
-.tab.active{
-    background-color: #e69428;
-    color: white;
-}
+          .tab.active{
+              background-color: #e69428;
+              color: white;
+          }
 
-.tab-contents{
-  width: 100%;
-}
+          .tab-contents{
+            width: 100%;
+          }
 
-.tab-content.active{
-  width: 100%;
-  display: block;
-}
+          .tab-content.active{
+            width: 100%;
+            display: block;
+          }
 
-.tab-content{
-  display: none;
-}
+          .tab-content{
+            display: none;
+          }
 
-.form-buttons {
-  background-color: hsl(0, 0%, 100%);
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  padding-right: 0.5rem;
-}
+          .form-buttons {
+            background-color: hsl(0, 0%, 100%);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            padding-right: 0.5rem;
+          }
 
-.create-button button svg,
-.store-button button svg {
-  width: 2rem;
-    
-}
+          .create-button button svg,
+          .store-button button svg {
+            width: 2rem;
+              
+          }
 
-.create-button button svg path,
-.store-button button svg path {
-  fill: #6db7f3;
-}
+          .create-button button svg path,
+          .store-button button svg path {
+            fill: #6db7f3;
+          }
 
-.create-button button:hover svg path,
-.store-button button:hover svg path {
-  fill: #e69428;
-}
+          .create-button button:hover svg path,
+          .store-button button:hover svg path {
+            fill: #e69428;
+          }
 
-.form-row{
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
+          .form-row{
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+          }
 
-.form-element {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  width: 100%;
-}
+          .form-element {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            width: 100%;
+          }
 
-.form-element-input * {
-  background-color: #718be0;
-  border: none;
-  box-sizing: border-box;
-  font-size: 1rem;
-  outline: transparent;
-  padding: 0.5rem;
-  width: 100%;
-}
+          .form-element-input * {
+            background-color: #718be0;
+            border: none;
+            box-sizing: border-box;
+            font-size: 1rem;
+            outline: transparent;
+            padding: 0.5rem;
+            width: 100%;
+          }
 
 
-textarea{
-  height: 15vh;
-}
+          textarea{
+            height: 15vh;
+          }
 
-.language-contents{
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 5rem;
-}
+          .language-contents{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 5rem;
+          }
 
-.form-language-bar{
-  background-color: white;
-  width: 100%;
-  height: 3rem;
-  margin: 1rem 0;
-}
+          .form-language-bar{
+            background-color: white;
+            width: 100%;
+            height: 3rem;
+            margin: 1rem 0;
+          }
 
 </style>
 <div class="form">
   <div class="form-top-bar">
+    <div class="error-message">
+      <ul class="error-list">
+
+      </ul>
+    </div>
     <div class="tabs">
       <div class="tab active" data-tab="general">
         <button>
@@ -368,7 +392,7 @@ textarea{
         const formDataJson = Object.fromEntries(formData.entries())
         delete formDataJson.id
 
-        const response = await fetch('http://127.0.0.1:8080/api/admin/faqs', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -376,10 +400,20 @@ textarea{
           body: JSON.stringify(formDataJson)
         })
 
+        if (response.status === 200) {
+          document.dispatchEvent(new CustomEvent('message'))
+        }
+
         if (response.status === 422 || response.status === 500) {
           const errorData = await response.json()
           errorData.message.forEach(element => {
-            console.log(element.message)
+            const errorMessage = this.shadow.querySelector('.error-message')
+            errorMessage.classList.add('active')
+
+            const ulElement = this.shadow.querySelector('.error-list')
+            const newLi = document.createElement('li')
+            newLi.textContent = element.message
+            ulElement.appendChild(newLi)
           })
         } else if (response.status === 200) {
           const data = await response.json()
@@ -392,7 +426,7 @@ textarea{
           }))
         }
       } catch (error) {
-        
+        console.error('Error:', error)
       }
       document.dispatchEvent(new CustomEvent('save-notification'))
     })

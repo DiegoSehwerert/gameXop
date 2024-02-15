@@ -11,7 +11,16 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
     },
     entityId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Por favor, rellena el campo "entity".'
+        },
+        notEmpty: {
+          msg: 'Por favor, introduce un valor para el campo "entity".'
+        }
+      }
     },
     entity: {
       type: DataTypes.STRING,
@@ -27,6 +36,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     name: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "name".'
@@ -38,6 +48,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     originalFilename: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "originalFileName".'
@@ -49,6 +60,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     resizedFilename: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "resizedFileName".'
@@ -60,6 +72,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     title: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "title".'
@@ -71,6 +84,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     alt: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "alt".'

@@ -20,6 +20,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     eventTime: {
       type: DataTypes.DOUBLE,
+      allowNull: false,
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "name".'
@@ -31,6 +32,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     eventName: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "name".'
@@ -42,6 +44,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     path: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         notNull: {
           msg: 'Por favor, rellena el campo "name".'
