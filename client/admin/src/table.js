@@ -1,28 +1,33 @@
 class table extends HTMLElement {
-  constructor () {
+  constructor() {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.rows = null
   }
 
-  connectedCallback () {
-    document.addEventListener('message', (event) => {
+  connectedCallback() {
+    document.addEventListener('refresh-table', (event) => {
       this.loadData().then(() => this.render())
     })
+
     this.loadData().then(() => this.render())
   }
 
-  async loadData () {
+  handleDeleteElement(event) {
+    this.deleteElement(event.detail.id)
+    this.loadData().then(() => this.render())
+  }
+
+  async loadData() {
     const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`)
     const data = await response.json()
     this.rows = data.rows
-    console.log(this.rows)
   }
 
-  render () {
+  render() {
     this.shadow.innerHTML =
       /* html */
-    `
+      `
         <style>
         * {
         margin: 0;
@@ -213,13 +218,31 @@ class table extends HTMLElement {
 
     tableSection.addEventListener('click', async (event) => {
       if (event.target.closest('.delete-button')) {
-        document.dispatchEvent(new CustomEvent('showModalDestroy'))
-      }
+        const deleteButton = event.target.closest('.delete-button')
+        const id = deleteButton.dataset.id
+        document.dispatchEvent(new CustomEvent('showModalDestroy', {
+          detail:
+            { endpoint: `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}` }
+        }))
+        document.dispatchEvent(new CustomEvent('deleteElement', { detail: { id } }))
 
-      if (event.target.closest('.filter-button')) {
-        document.dispatchEvent(new CustomEvent('showModalFilter'))
+        if (event.target.closest('.edit-button')) {
+          const editButton = event.target.closest('.edit-button')
+          const id = editButton.dataset.id
+          try {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`)
+            const data = await response.json()
+            document.dispatchEvent(new CustomEvent('showElement', { detail: { data } }))
+          } catch (error) {
+            console.error('Error:', error)
+          }
+        }
       }
     })
+  }
+
+  deleteElement(id) {
+    this.loadData().then(() => this.render())
   }
 }
 customElements.define('table-component', table)

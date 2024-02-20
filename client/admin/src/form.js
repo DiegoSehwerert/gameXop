@@ -1,18 +1,27 @@
 class Form extends HTMLElement {
-  constructor () {
+  constructor() {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.title = this.getAttribute('title')
   }
 
-  connectedCallback () {
+  connectedCallback() {
     document.addEventListener('message', (event) => {
       this.render()
     })
+    document.addEventListener('showElement', this.handleShowElement.bind(this))
     this.render()
   }
 
-  render () {
+  handleShowElement(event) {
+    this.showElement(event.detail.data)
+  }
+
+  handleDeleteElement(event) {
+    this.deleteElement(event.detail.data)
+  }
+
+  render() {
     this.shadow.innerHTML =
       /* html */
       `
@@ -390,10 +399,13 @@ class Form extends HTMLElement {
       try {
         const formData = new FormData(form)
         const formDataJson = Object.fromEntries(formData.entries())
+
+        const endpoint = formDataJson.id ? `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${formDataJson.id}` : `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`
+        const method = formDataJson.id ? 'PUT' : 'POST'
         delete formDataJson.id
 
-        const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`, {
-          method: 'POST',
+        const response = await fetch(endpoint, {
+          method,
           headers: {
             'Content-Type': 'application/json'
           },
@@ -418,7 +430,7 @@ class Form extends HTMLElement {
         } else if (response.status === 200) {
           const data = await response.json()
 
-          document.dispatchEvent(new CustomEvent('message', {
+          document.dispatchEvent(new CustomEvent('refresh-table', {
             detail: {
               text: 'Formulario enviado correctamente',
               type: 'success'
@@ -453,6 +465,18 @@ class Form extends HTMLElement {
 
         this.shadow.querySelector(`.tab-content.active[data-tab="${tabActive.dataset.tab}"]`).classList.remove('active')
         this.shadow.querySelector(`.tab-content[data-tab="${tabClicked.dataset.tab}"]`).classList.add('active')
+      }
+    })
+  }
+
+  showElement(data) {
+    const form = this.shadow.querySelector('.admin-form')
+    const formElements = form.elements
+
+    Object.entries(data).forEach(([key, value]) => {
+      const element = formElements[key]
+      if (element) {
+        element.value = value
       }
     })
   }

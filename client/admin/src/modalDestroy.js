@@ -1,19 +1,24 @@
 class ModalDestroy extends HTMLElement {
-  constructor () {
+  constructor() {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
   }
 
-  connectedCallback () {
+  connectedCallback() {
     document.addEventListener('showModalDestroy', event => {
       this.openModal()
     })
+    document.addEventListener('deleteElement', this.handleDeleteElement.bind(this))
     this.render()
   }
 
-  render () {
+  handleDeleteElement(event) {
+    this.deleteElement(event.detail.endpoint)
+  }
+
+  render() {
     this.shadow.innerHTML =
-        ` <style>
+      ` <style>
                     * {
                     margin: 0;
                     padding: 0;
@@ -132,12 +137,35 @@ class ModalDestroy extends HTMLElement {
     })
   }
 
-  openModal () {
+  deleteElement(endpoint) {
+    console.log('endpoint', endpoint)
+    const modalContent = this.shadow.querySelector('.delete-modal-content')
+    modalContent.addEventListener('click', async (event) => {
+      if (event.target.closest('.submit-button')) {
+        const deleteModal = this.shadow.querySelector('.delete-modal')
+        deleteModal.classList.remove('delete-modal-active')
+        try {
+          // const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`, {
+          const response = await fetch(endpoint, {
+            method: 'DELETE'
+          })
+          if (response.ok) {
+            document.dispatchEvent(new CustomEvent('refresh-table'))
+          }
+          const data = await response.json()
+        } catch (error) {
+          console.error('Error:', error)
+        }
+      }
+    })
+  }
+
+  openModal() {
     const deleteModal = this.shadow.querySelector('.delete-modal')
     deleteModal.classList.add('delete-modal-active')
   }
 
-  closeModal () {
+  closeModal() {
     const deleteModal = this.shadow.querySelector('.delete-modal')
     deleteModal.classList.remove('delete-modal-active')
   }
