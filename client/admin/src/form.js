@@ -1,11 +1,11 @@
 class Form extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.title = this.getAttribute('title')
   }
 
-  connectedCallback() {
+  connectedCallback () {
     document.addEventListener('message', (event) => {
       this.render()
     })
@@ -13,15 +13,15 @@ class Form extends HTMLElement {
     this.render()
   }
 
-  handleShowElement(event) {
+  handleShowElement (event) {
     this.showElement(event.detail.data)
   }
 
-  handleDeleteElement(event) {
+  handleDeleteElement (event) {
     this.deleteElement(event.detail.data)
   }
 
-  render() {
+  render () {
     this.shadow.innerHTML =
       /* html */
       `
@@ -469,7 +469,7 @@ class Form extends HTMLElement {
     })
   }
 
-  showElement(data) {
+  showElement (data) {
     const form = this.shadow.querySelector('.admin-form')
     const formElements = form.elements
 

@@ -1,11 +1,11 @@
 class table extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.rows = null
   }
 
-  connectedCallback() {
+  connectedCallback () {
     document.addEventListener('refresh-table', (event) => {
       this.loadData().then(() => this.render())
     })
@@ -13,18 +13,18 @@ class table extends HTMLElement {
     this.loadData().then(() => this.render())
   }
 
-  handleDeleteElement(event) {
+  handleDeleteElement (event) {
     this.deleteElement(event.detail.id)
     this.loadData().then(() => this.render())
   }
 
-  async loadData() {
+  async loadData () {
     const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`)
     const data = await response.json()
     this.rows = data.rows
   }
 
-  render() {
+  render () {
     this.shadow.innerHTML =
       /* html */
       `
@@ -224,24 +224,23 @@ class table extends HTMLElement {
           detail:
             { endpoint: `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}` }
         }))
-        document.dispatchEvent(new CustomEvent('deleteElement', { detail: { id } }))
-
-        if (event.target.closest('.edit-button')) {
-          const editButton = event.target.closest('.edit-button')
-          const id = editButton.dataset.id
-          try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`)
-            const data = await response.json()
-            document.dispatchEvent(new CustomEvent('showElement', { detail: { data } }))
-          } catch (error) {
-            console.error('Error:', error)
-          }
+      }
+      if (event.target.closest('.edit-button')) {
+        const editButton = event.target.closest('.edit-button')
+        const id = editButton.dataset.id
+        try {
+          const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`)
+          const data = await response.json()
+          console.log('data', data)
+          document.dispatchEvent(new CustomEvent('showElement', { detail: { data } }))
+        } catch (error) {
+          console.error('Error:', error)
         }
       }
     })
   }
 
-  deleteElement(id) {
+  deleteElement (id) {
     this.loadData().then(() => this.render())
   }
 }

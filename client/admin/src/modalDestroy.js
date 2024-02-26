@@ -1,22 +1,28 @@
 class ModalDestroy extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
   }
 
-  connectedCallback() {
-    document.addEventListener('showModalDestroy', event => {
-      this.openModal()
-    })
-    document.addEventListener('deleteElement', this.handleDeleteElement.bind(this))
+  connectedCallback () {
+    // document.addEventListener('showModalDestroy', event => {
+    //   this.openModal()
+    // })
+    document.addEventListener('showModalDestroy', this.handleOpenModal.bind(this))
+    // document.addEventListener('deleteElement', this.handleDeleteElement.bind(this))
     this.render()
   }
 
-  handleDeleteElement(event) {
-    this.deleteElement(event.detail.endpoint)
+  handleOpenModal (event) {
+    this.openModal(event.detail.endpoint)
   }
 
-  render() {
+  // handleDeleteElement (event) {
+  //   this.deleteElement(event.detail.endpoint)
+  //   console.log('event.detail.endpoint', event.detail.endpoint)
+  // }
+
+  render () {
     this.shadow.innerHTML =
       ` <style>
                     * {
@@ -137,15 +143,22 @@ class ModalDestroy extends HTMLElement {
     })
   }
 
-  deleteElement(endpoint) {
+  // deleteElement (endpoint) {
+
+  // }
+
+  openModal (endpoint) {
+    const deleteModal = this.shadow.querySelector('.delete-modal')
+    deleteModal.classList.add('delete-modal-active')
+
     console.log('endpoint', endpoint)
     const modalContent = this.shadow.querySelector('.delete-modal-content')
     modalContent.addEventListener('click', async (event) => {
+      // const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`, {
       if (event.target.closest('.submit-button')) {
         const deleteModal = this.shadow.querySelector('.delete-modal')
         deleteModal.classList.remove('delete-modal-active')
         try {
-          // const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`, {
           const response = await fetch(endpoint, {
             method: 'DELETE'
           })
@@ -160,12 +173,7 @@ class ModalDestroy extends HTMLElement {
     })
   }
 
-  openModal() {
-    const deleteModal = this.shadow.querySelector('.delete-modal')
-    deleteModal.classList.add('delete-modal-active')
-  }
-
-  closeModal() {
+  closeModal () {
     const deleteModal = this.shadow.querySelector('.delete-modal')
     deleteModal.classList.remove('delete-modal-active')
   }
