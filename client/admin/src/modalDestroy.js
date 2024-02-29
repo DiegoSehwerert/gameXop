@@ -6,7 +6,7 @@ class ModalDestroy extends HTMLElement {
 
   connectedCallback () {
     document.addEventListener('showModalDestroy', event => {
-      this.openModal()
+      this.openModal(event.detail.endpoint)
     })
     document.addEventListener('deleteElement', this.handleDeleteElement.bind(this))
     this.render()
@@ -14,6 +14,7 @@ class ModalDestroy extends HTMLElement {
 
   handleDeleteElement (event) {
     this.deleteElement(event.detail.endpoint)
+    console.log('event.detail.endpoint', event.detail.endpoint)
   }
 
   render () {
@@ -142,6 +143,15 @@ class ModalDestroy extends HTMLElement {
     const modalContent = this.shadow.querySelector('.delete-modal-content')
     modalContent.addEventListener('click', async (event) => {
       // const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`, {
+
+    })
+  }
+
+  openModal (endpoint) {
+    const deleteModal = this.shadow.querySelector('.delete-modal')
+    deleteModal.classList.add('delete-modal-active')
+    const modalContent = this.shadow.querySelector('.delete-modal-content')
+    modalContent.addEventListener('click', async (event) => {
       if (event.target.closest('.submit-button')) {
         const deleteModal = this.shadow.querySelector('.delete-modal')
         deleteModal.classList.remove('delete-modal-active')
@@ -149,20 +159,13 @@ class ModalDestroy extends HTMLElement {
           const response = await fetch(endpoint, {
             method: 'DELETE'
           })
-          if (response.ok) {
-            document.dispatchEvent(new CustomEvent('refresh-table'))
-          }
-          const data = await response.json()
+          document.dispatchEvent(new CustomEvent('refresh-table'))
+          await response.json()
         } catch (error) {
           console.error('Error:', error)
         }
       }
     })
-  }
-
-  openModal () {
-    const deleteModal = this.shadow.querySelector('.delete-modal')
-    deleteModal.classList.add('delete-modal-active')
   }
 
   closeModal () {
