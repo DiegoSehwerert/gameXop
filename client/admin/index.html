@@ -33,7 +33,10 @@
         <table-component  endpoint="/api/admin/faqs"></table-component>
       </section>
       <section class="form">
-        <form-component endpoint="/api/admin/faqs"></form-component>
+        <form-component endpoint="/api/admin/faqs">
+          <upload-image-button slot="upload-image-button"></upload-image-button>
+        </form-component>
+        <upload-image-form></upload-image-form>
         <save-modal-component>
         </save-modal-component>
       </section>

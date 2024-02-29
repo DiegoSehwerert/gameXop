@@ -1,11 +1,11 @@
 class table extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.rows = null
   }
 
-  connectedCallback() {
+  connectedCallback () {
     document.addEventListener('refresh-table', (event) => {
       this.loadData().then(() => this.render())
     })
@@ -13,18 +13,18 @@ class table extends HTMLElement {
     this.loadData().then(() => this.render())
   }
 
-  handleDeleteElement(event) {
+  handleDeleteElement (event) {
     this.deleteElement(event.detail.id)
     this.loadData().then(() => this.render())
   }
 
-  async loadData() {
+  async loadData () {
     const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`)
     const data = await response.json()
     this.rows = data.rows
   }
 
-  render() {
+  render () {
     this.shadow.innerHTML =
       /* html */
       `
@@ -241,7 +241,7 @@ class table extends HTMLElement {
     })
   }
 
-  deleteElement(id) {
+  deleteElement (id) {
     this.loadData().then(() => this.render())
   }
 }

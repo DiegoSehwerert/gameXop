@@ -1,11 +1,11 @@
 class Form extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.title = this.getAttribute('title')
   }
 
-  connectedCallback() {
+  connectedCallback () {
     document.addEventListener('message', (event) => {
       this.render()
     })
@@ -13,15 +13,15 @@ class Form extends HTMLElement {
     this.render()
   }
 
-  handleShowElement(event) {
+  handleShowElement (event) {
     this.showElement(event.detail.data)
   }
 
-  handleDeleteElement(event) {
+  handleDeleteElement (event) {
     this.deleteElement(event.detail.data)
   }
 
-  render() {
+  render () {
     this.shadow.innerHTML =
       /* html */
       `
@@ -265,126 +265,140 @@ class Form extends HTMLElement {
               <input type="text" name="name" value="">
             </div>
           </div>
-  
         <div class="form-language-bar">
           <div class="tabs">
-  
               <div class="tab active" data-tab="es">
-                
                   ES
-                
               </div>
               <div class="tab" data-tab="en">
-                
                   EN
-                
               </div>
-  
           </div>
         </div>
-  
-  
-          <div class="tab-contents">
-            <div class="tab-content active" data-tab="es">
-              <div class="form-row">
-                <div class="form-element">
-                  <div class="form-element-label">
-                    <label for="title">
-                      Titulo
-                    </label>
-                  </div>
-                  <div class="form-element-input">
-                    <input type="text" name="" value="">
-                  </div>
+        <div class="tab-contents">
+          <div class="tab-content active" data-tab="es">
+            <div class="form-row">
+              <div class="form-element">
+                <div class="form-element-label">
+                  <label for="title">
+                    Titulo
+                  </label>
                 </div>
-              </div>
-              <div class="form-row">
-                <div class="form-element">
-                  <div class="form-element-label">
-                    <label for="description">
-                      Descripcion
-                    </label>
-                  </div>
-                  <div class="form-element-input">
-                    <textarea name="" type="textarea" class="event-description" data-onlyletters="true"></textarea>
-                  </div>
+                <div class="form-element-input">
+                  <input type="text" name="" value="">
                 </div>
               </div>
             </div>
-            <div class="tab-content" data-tab="en">
-              <div class="form-row">
-                <div class="form-element">
-                  <div class="form-element-label">
-                    <label for="title">
-                      Titulo
-                    </label>
-                  </div>
-                  <div class="form-element-input">
-                    <input type="text" name="" value="">
-                  </div>
+            <div class="form-row">
+              <div class="form-element">
+                <div class="form-element-label">
+                  <label for="description">
+                    Descripcion
+                  </label>
                 </div>
-              </div>
-              <div class="form-row">
-                <div class="form-element">
-                  <div class="form-element-label">
-                    <label for="description">
-                      Descripcion
-                    </label>
-                  </div>
-                  <div class="form-element-input">
-                    <textarea name="" type="textarea" class="event-description" data-onlyletters="true"></textarea>
-                  </div>
+                <div class="form-element-input">
+                  <textarea name="" type="textarea" class="event-description" data-onlyletters="true"></textarea>
                 </div>
               </div>
             </div>
           </div>
-  
+          <div class="tab-content" data-tab="en">
+            <div class="form-row">
+              <div class="form-element">
+                <div class="form-element-label">
+                  <label for="title">
+                    Titulo
+                  </label>
+                </div>
+                <div class="form-element-input">
+                  <input type="text" name="" value="">
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-element">
+                <div class="form-element-label">
+                  <label for="description">
+                    Descripcion
+                  </label>
+                </div>
+                <div class="form-element-input">
+                  <textarea name="" type="textarea" class="event-description" data-onlyletters="true"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="tab-contents">
       <div class="tab-content" data-tab="images">
-        <div class="form-language-bar">
+        <div class="form-row">
+          <slot name="upload-image-button"></slot>
+          <div class="form-language-bar">
             <div class="tabs">
-    
                 <div class="tab active" data-tab="es-image">
-                  
                     ES
-                  
                 </div>
                 <div class="tab" data-tab="en-image">
-                  
                     EN
-                  
                 </div>
-    
             </div>
           </div>
-          <div class="tab-contents">
-            <div class="tab-content active" data-tab="es-image">
-              <div class="form-row">
-                <div class="form-element">
-                  <div class="form-element-label">
-                    <label for="main-image">
-                    </label>
-                  </div>
-                  <div class="form-element-input">
-                    <slot name="upload-es-image-button"></slot>
-                  </div>
+        <div class="tab-contents">
+          <div class="tab-content active" data-tab="es-image">
+            <div class="form-row">
+              <div class="form-element">
+                <div class="form-element-label">
+                  <label for="title">
+                    Titulo
+                  </label>
+                </div>
+                <div class="form-element-input">
+                  <input type="text" name="" value="">
                 </div>
               </div>
             </div>
-            <div class="tab-content" data-tab="en-image">
-              <div class="form-row">
-                <div class="form-element">
-                  <div class="form-element-label">
-                    <label for="main-image">
-                    </label>
-                  </div>
-                  <div class="form-element-input">
-                    <slot name="upload-en-image-button"></slot>
-                  </div>
+            <div class="form-row">
+              <div class="form-element">
+                <div class="form-element-label">
+                  <label for="description">
+                    Descripcion
+                  </label>
+                </div>
+                <div class="form-element-input">
+                  <textarea name="" type="textarea" class="event-description" data-onlyletters="true"></textarea>
                 </div>
               </div>
             </div>
           </div>
+          <div class="tab-content" data-tab="en-image">
+            <div class="form-row">
+              <div class="form-element">
+                <div class="form-element-label">
+                  <label for="title">
+                    Titulo
+                  </label>
+                </div>
+                <div class="form-element-input">
+                  <input type="text" name="" value="">
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-element">
+                <div class="form-element-label">
+                  <label for="description">
+                    Descripcion
+                  </label>
+                </div>
+                <div class="form-element-input">
+                  <textarea name="" type="textarea" class="event-description" data-onlyletters="true"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </form>
@@ -469,7 +483,7 @@ class Form extends HTMLElement {
     })
   }
 
-  showElement(data) {
+  showElement (data) {
     const form = this.shadow.querySelector('.admin-form')
     const formElements = form.elements
 

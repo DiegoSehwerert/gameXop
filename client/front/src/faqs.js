@@ -2,6 +2,7 @@ class Faqs extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
+    this.faqs = []
   }
 
   async connectedCallback () {
@@ -9,32 +10,9 @@ class Faqs extends HTMLElement {
   }
 
   async loadData () {
-    this.faqs = [
-      {
-        title: '¿Qué es GameXop?',
-        description: `
-          GameXop es una tienda de videojuegos online. En ella podrás encontrar los últimos lanzamientos, preventas y juegos en oferta.
-        `
-      },
-      {
-        title: '¿Puedo hacer devoluciones de juegos?',
-        description: `
-          Sí, puedes hacer devoluciones de juegos siempre y cuando no hayan pasado más de 7 días desde la compra.
-        `
-      },
-      {
-        title: '¿Cuánto tarda en llegar mi pedido?',
-        description: `
-          El tiempo de entrega de los pedidos es instantáneo. Una vez realizada la compra, podrás descargar el juego en tu consola o PC.
-        `
-      },
-      {
-        title: '¿Cómo puedo pagar mi pedido?',
-        description: `
-          Puedes pagar tu pedido con tarjeta de crédito o débito, PayPal o MercadoPago.
-        `
-      }
-    ]
+    const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`)
+    const data = await response.json()
+    this.faqs = data.rows
   }
 
   render () {
@@ -72,13 +50,16 @@ class Faqs extends HTMLElement {
     const faqsContainer = this.shadow.querySelector('.faqs-container')
 
     this.faqs.forEach(faq => {
-      const faqElement = document.createElement('details')
-      const faqElementSummary = document.createElement('summary')
-      faqElement.name = 'faq'
-      faqElementSummary.textContent = faq.title
-      faqElement.appendChild(faqElementSummary)
-      faqElement.innerHTML += faq.description
-      faqsContainer.appendChild(faqElement)
+      const details = document.createElement('details')
+      const summary = document.createElement('summary')
+      const title = document.createElement('p')
+      const content = document.createElement('p')
+      title.textContent = faq.name
+      content.textContent = faq.question
+      summary.appendChild(title)
+      details.appendChild(summary)
+      details.appendChild(content)
+      faqsContainer.appendChild(details)
     })
   }
 }

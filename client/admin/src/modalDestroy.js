@@ -1,10 +1,10 @@
 class ModalDestroy extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
   }
 
-  connectedCallback() {
+  connectedCallback () {
     document.addEventListener('showModalDestroy', event => {
       this.openModal()
     })
@@ -12,11 +12,11 @@ class ModalDestroy extends HTMLElement {
     this.render()
   }
 
-  handleDeleteElement(event) {
+  handleDeleteElement (event) {
     this.deleteElement(event.detail.endpoint)
   }
 
-  render() {
+  render () {
     this.shadow.innerHTML =
       ` <style>
                     * {
@@ -137,7 +137,7 @@ class ModalDestroy extends HTMLElement {
     })
   }
 
-  deleteElement(endpoint) {
+  deleteElement (endpoint) {
     console.log('endpoint', endpoint)
     const modalContent = this.shadow.querySelector('.delete-modal-content')
     modalContent.addEventListener('click', async (event) => {
@@ -160,12 +160,12 @@ class ModalDestroy extends HTMLElement {
     })
   }
 
-  openModal() {
+  openModal () {
     const deleteModal = this.shadow.querySelector('.delete-modal')
     deleteModal.classList.add('delete-modal-active')
   }
 
-  closeModal() {
+  closeModal () {
     const deleteModal = this.shadow.querySelector('.delete-modal')
     deleteModal.classList.remove('delete-modal-active')
   }
