@@ -224,18 +224,17 @@ class table extends HTMLElement {
           detail:
             { endpoint: `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}` }
         }))
-        document.dispatchEvent(new CustomEvent('deleteElement', { detail: { id } }))
-
-        if (event.target.closest('.edit-button')) {
-          const editButton = event.target.closest('.edit-button')
-          const id = editButton.dataset.id
-          try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`)
-            const data = await response.json()
-            document.dispatchEvent(new CustomEvent('showElement', { detail: { data } }))
-          } catch (error) {
-            console.error('Error:', error)
-          }
+      }
+      if (event.target.closest('.edit-button')) {
+        const editButton = event.target.closest('.edit-button')
+        const id = editButton.dataset.id
+        try {
+          const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`)
+          const data = await response.json()
+          console.log('data', data)
+          document.dispatchEvent(new CustomEvent('showElement', { detail: { data } }))
+        } catch (error) {
+          console.error('Error:', error)
         }
       }
     })

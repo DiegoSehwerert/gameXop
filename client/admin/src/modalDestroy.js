@@ -141,11 +141,11 @@ class ModalDestroy extends HTMLElement {
     console.log('endpoint', endpoint)
     const modalContent = this.shadow.querySelector('.delete-modal-content')
     modalContent.addEventListener('click', async (event) => {
+      // const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`, {
       if (event.target.closest('.submit-button')) {
         const deleteModal = this.shadow.querySelector('.delete-modal')
         deleteModal.classList.remove('delete-modal-active')
         try {
-          // const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`, {
           const response = await fetch(endpoint, {
             method: 'DELETE'
           })
