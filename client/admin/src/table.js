@@ -171,6 +171,7 @@ class table extends HTMLElement {
         `
 
     this.rows.forEach((row) => {
+      console.log('row', row)
       const tableRecord = document.createElement('article')
       tableRecord.className = 'table-record'
 
@@ -199,12 +200,18 @@ class table extends HTMLElement {
       tableData.className = 'table-data'
 
       const tableDataUl = document.createElement('ul')
-      const tableDataLi = document.createElement('li')
-      const tableDataSpan = document.createElement('span')
-      tableDataSpan.textContent = 'Nombre:'
-      tableDataLi.textContent = row.name
-      tableDataSpan.appendChild(tableDataLi)
-      tableDataUl.appendChild(tableDataSpan)
+      const tableDataLiEs = document.createElement('li')
+      const tableDataLiEn = document.createElement('li')
+      const tableDataSpanEs = document.createElement('span')
+      const tableDataSpanEn = document.createElement('span')
+      tableDataSpanEs.textContent = row.locales.es.question
+      tableDataSpanEn.textContent = row.locales.en.question
+      tableDataLiEs.textContent = row.locales.es.answer
+      tableDataLiEn.textContent = row.locales.en.answer
+      tableDataSpanEs.appendChild(tableDataLiEs)
+      tableDataSpanEn.appendChild(tableDataLiEn)
+      tableDataUl.appendChild(tableDataSpanEs)
+      tableDataUl.appendChild(tableDataSpanEn)
       tableData.appendChild(tableDataUl)
 
       tableRecord.appendChild(tableRecordButtons)

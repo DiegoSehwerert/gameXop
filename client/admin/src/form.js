@@ -323,7 +323,7 @@ class Form extends HTMLElement {
                   </label>
                 </div>
                 <div class="form-element-input">
-                  <textarea name="locales.es.answer" type="textarea" class="event-description" data-onlyletters="true"></textarea>
+                  <textarea name="locales.en.answer" type="textarea" class="event-description" data-onlyletters="true"></textarea>
                 </div>
               </div>
             </div>
