@@ -1,31 +1,24 @@
-const db = require('../../models')
-const Faq = db.Faq
-const Op = db.Sequelize.Op
+const moment = require('moment')
+const mongooseDb = require('../../models/mongoose')
+const Faq = mongooseDb.Faq
 
-exports.findAll = (req, res) => {
+exports.findAll = async (req, res) => {
+  const whereStatement = {}
+  whereStatement.deletedAt = { $exists: false }
 
-  const page = req.query.page || 1
-  const limit = parseInt(req.query.size) || 5
-  const offset = (page - 1) * limit
-
-  Faq.findAndCountAll({
-    attributes: ['id', 'name', 'order', 'createdAt', 'updatedAt'],
-    limit,
-    offset,
-    order: [['createdAt', 'DESC']]
-  })
-    .then(result => {
-      result.meta = {
-        total: result.count,
-        pages: Math.ceil(result.count / limit),
-        currentPage: page
-      }
-
-      res.status(200).send(result)
-    }).catch(err => {
-      res.status(500).send({
-        message: err.errors || 'Algún error ha surgido al recuperar los datos.'
-      })
+  try {
+    const result = await Faq.find(whereStatement)
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec()
+    const response = result.map(doc => ({
+      locales: doc.locales[req.userLanguage]
+    }))
+    
+    res.status(200).send(response)
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || 'Algún error ha surgido al recuperar los datos.'
     })
+  }
 }
-

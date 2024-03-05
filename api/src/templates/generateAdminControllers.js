@@ -19,9 +19,9 @@ try {
     const fileName = `admin-${modelFile.replace('.js', '')}-controller.js`;
 
   const controllerContent = `
-const db = require('../../models');
-const ${modelName} = db.${modelName};
-const Op = db.Sequelize.Op;
+const sequelizeDb = require('../../models/sequelize');
+const ${modelName} = sequelizeDb.${modelName};
+const Op = sequelizeDb.Sequelize.Op;
 
 exports.create = (req, res) => {
   ${modelName}.create(req.body).then(data => {
