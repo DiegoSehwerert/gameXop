@@ -175,6 +175,9 @@ class table extends HTMLElement {
       const tableRecord = document.createElement('article')
       tableRecord.className = 'table-record'
 
+      const tableRecordTitle = document.createElement('h2')
+      tableRecordTitle.textContent = row.name
+
       const tableRecordButtons = document.createElement('div')
       tableRecordButtons.className = 'table-record-buttons'
 
@@ -200,20 +203,52 @@ class table extends HTMLElement {
       tableData.className = 'table-data'
 
       const tableDataUl = document.createElement('ul')
+
       const tableDataLiEs = document.createElement('li')
       const tableDataLiEn = document.createElement('li')
-      const tableDataSpanEs = document.createElement('span')
-      const tableDataSpanEn = document.createElement('span')
-      tableDataSpanEs.textContent = row.locales.es.question
-      tableDataSpanEn.textContent = row.locales.en.question
-      tableDataLiEs.textContent = row.locales.es.answer
-      tableDataLiEn.textContent = row.locales.en.answer
-      tableDataSpanEs.appendChild(tableDataLiEs)
-      tableDataSpanEn.appendChild(tableDataLiEn)
-      tableDataUl.appendChild(tableDataSpanEs)
-      tableDataUl.appendChild(tableDataSpanEn)
+
+      const tableDataLiSpanEs = document.createElement('span')
+      const tableDataLiSpanEn = document.createElement('span')
+
+      const tableDataEsContainer = document.createElement('div')
+      tableDataEsContainer.className = 'table-data-es-container'
+
+      const tableDataEnContainer = document.createElement('div')
+      tableDataEnContainer.className = 'table-data-en-container'
+
+      tableDataLiSpanEs.textContent = 'ES'
+      tableDataLiSpanEn.textContent = 'EN'
+
+      const tableDataEsQuestion = document.createElement('div')
+      tableDataEsQuestion.textContent = `Pregunta: ${row.locales.es.question}`
+
+      const tableDataEsAnswer = document.createElement('div')
+      tableDataEsAnswer.textContent = `Respuesta: ${row.locales.es.answer}`
+
+      const tableDataEnQuestion = document.createElement('div')
+      tableDataEnQuestion.textContent = `Question: ${row.locales.en.question}`
+
+      const tableDataEnAnswer = document.createElement('div')
+      tableDataEnAnswer.textContent = `Answer: ${row.locales.en.answer}`
+
+      tableDataEsContainer.appendChild(tableDataEsQuestion)
+      tableDataEsContainer.appendChild(tableDataEsAnswer)
+
+      tableDataEnContainer.appendChild(tableDataEnQuestion)
+      tableDataEnContainer.appendChild(tableDataEnAnswer)
+
+      tableDataLiEs.appendChild(tableDataLiSpanEs)
+      tableDataLiEs.appendChild(tableDataEsContainer)
+
+      tableDataLiEn.appendChild(tableDataLiSpanEn)
+      tableDataLiEn.appendChild(tableDataEnContainer)
+
+      tableDataUl.appendChild(tableDataLiEs)
+      tableDataUl.appendChild(tableDataLiEn)
+
       tableData.appendChild(tableDataUl)
 
+      tableRecord.appendChild(tableRecordTitle)
       tableRecord.appendChild(tableRecordButtons)
       tableRecord.appendChild(tableData)
       tableRecordButtons.appendChild(editButton)
@@ -235,10 +270,10 @@ class table extends HTMLElement {
       if (event.target.closest('.edit-button')) {
         const editButton = event.target.closest('.edit-button')
         const id = editButton.dataset.id
+        console.log('id', id)
         try {
           const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`)
           const data = await response.json()
-          console.log('data', data)
           document.dispatchEvent(new CustomEvent('showElement', { detail: { data } }))
         } catch (error) {
           console.error('Error:', error)

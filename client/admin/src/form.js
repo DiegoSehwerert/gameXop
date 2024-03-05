@@ -439,7 +439,6 @@ class Form extends HTMLElement {
             formDataJson[key] = value ?? null
           }
         }
-        console.log('formDataJson', formDataJson)
         const endpoint = formDataJson.id ? `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${formDataJson.id}` : `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`
         const method = formDataJson.id ? 'PUT' : 'POST'
         delete formDataJson.id
@@ -514,9 +513,20 @@ class Form extends HTMLElement {
     const formElements = form.elements
 
     Object.entries(data).forEach(([key, value]) => {
-      const element = formElements[key]
-      if (element) {
-        element.value = value
+      if (key === 'locales') {
+        Object.entries(value).forEach(([localeKey, localeData]) => {
+          Object.entries(localeData).forEach(([field, fieldValue]) => {
+            const element = formElements[`locales.${localeKey}.${field}`]
+            if (element) {
+              element.value = fieldValue
+            }
+          })
+        })
+      } else {
+        const element = formElements[key]
+        if (element) {
+          element.value = value
+        }
       }
     })
   }
