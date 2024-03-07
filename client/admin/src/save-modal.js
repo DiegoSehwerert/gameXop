@@ -6,7 +6,6 @@ class SaveModal extends HTMLElement {
 
   connectedCallback () {
     document.addEventListener('save-notification', (event) => {
-      console.log('Save notification received')
     })
     this.render()
   }
@@ -20,7 +19,6 @@ class SaveModal extends HTMLElement {
   }
 
   openModal (event) {
-    console.log('Save successful')
   }
 }
 

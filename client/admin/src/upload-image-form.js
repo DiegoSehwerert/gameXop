@@ -18,170 +18,13 @@ class UploadImageForm extends HTMLElement {
       { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
       { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
       { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'ultima' }
+      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' }
     ]
   }
 
   render () {
     this.shadow.innerHTML = /* html */
-    `
+      `
     <style>
       * {
         box-sizing: border-box;
@@ -293,13 +136,12 @@ class UploadImageForm extends HTMLElement {
         display: flex;
         justify-content: space-between;
       }
-      .container{
-        display: flex;
-        max-width: 60%;
-        max-height: 80vh;
-        margin-bottom: 3rem;
-        position: relative;
-        overflow-y: scroll;
+      .container {
+        height: auto; /* Ajusta la altura automáticamente según el contenido */
+        max-height: 60vh; /* Limita la altura máxima al 100% de la altura de la ventana del navegador */
+        max-width: 65%;
+        overflow-y: scroll; /* Muestra la barra de desplazamiento vertical cuando sea necesario */
+        padding: 1rem;
       }
       .container::-webkit-scrollbar {
         width: 0.5rem;
@@ -325,7 +167,6 @@ class UploadImageForm extends HTMLElement {
       .form-row{
         display: flex;
         gap:1rem;
-        margin: 1rem 0.5rem;
         flex-wrap: wrap;
       }
 
@@ -398,11 +239,6 @@ class UploadImageForm extends HTMLElement {
                           General
                         </button>
                       </div>
-                      <div class="tab" data-tab="images">
-                        <button>
-                          Subir imágenes
-                        </button>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -412,51 +248,22 @@ class UploadImageForm extends HTMLElement {
                     <div class="tab-content active" data-tab="general">
                       <div class="container">
                         <div class="form-row">
+                          <div class="form-element">
+                            <div class="form-element-label">
+                              <label for="upload-images">
+                                Imagenes
+                              </label>
+                            </div>
+                            <div class="form-element-input">
+                              <input type="file" name="images" value="">
+                              <button type="button" class="upload-image-button">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-row">
                         ${this.renderAvatars()}
                         </div>
                       </div>  
-                      <div class="side-panel">
-                        <div class="form-element">
-                          <div class="form-element-label">
-                            <label for="name">
-                              Nombre
-                            </label>
-                          </div>
-                          <div class="form-element-input">
-                            <input type="text" name="name" value="">
-                          </div>
-                        </div>
-                        <div class="form-element">
-                          <div class="form-element-label">
-                            <label for="description">
-                              Descripción
-                            </label>
-                          </div>
-                          <div class="form-element-input">
-                            <textarea name="description" rows="8" cols="80"></textarea>
-                          </div>
-                        </div>
-                        <div class="footer">
-                          <button type="submit">
-                            Guardar
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="tab-content" data-tab="images">
-                      <div class="form-row">
-                        <div class="form-element">
-                          <div class="form-element-label">
-                            <label for="upload-images">
-                              Imagenes
-                            </label>
-                          </div>
-                          <div class="form-element-input">
-                            <input type="file" name="images" value="">
-                            <button type="button" class="upload-image-button">
-                          </div>
-                        </div>
-                      </div>
                       <div class="side-panel">
                         <div class="form-element">
                           <div class="form-element-label">
@@ -491,7 +298,9 @@ class UploadImageForm extends HTMLElement {
             </div>
           </div>
     `
-    this.handleTabs()
+
+    this.sendImage()
+    this.Tabs()
     this.handleCloseButton()
   }
 
@@ -506,7 +315,20 @@ class UploadImageForm extends HTMLElement {
       .join('')
   }
 
-  handleTabs () {
+  async sendImage () {
+    const uploadImage = this.shadow.querySelector('.form-element-input input[name="images"]')
+    uploadImage.addEventListener('change', async (event) => {
+      const formData = new FormData()
+      formData.append('file', event.target.files[0])
+      const result = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/images`, {
+        method: 'POST',
+        body: formData
+      })
+      const data = await result.json()
+    })
+  }
+
+  Tabs () {
     const main = this.shadow.querySelector('.form')
     main?.addEventListener('click', (event) => {
       if (event.target.closest('.tab')) {

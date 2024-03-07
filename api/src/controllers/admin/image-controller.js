@@ -2,27 +2,41 @@ const sequelizeDb = require('../../models/sequelize')
 const Image = sequelizeDb.Image
 const Op = sequelizeDb.Sequelize.Op
 
-exports.create = (req, res) => {
-  Image.create(req.body).then(data => {
-    res.status(200).send(data)
-  }).catch(err => {
-    exports.create = (req, res) => {
-      Faq.create(req.body).then(data => {
-        res.status(200).send(data)
-      }).catch(err => {
-        console.log(err)
-        if (err.errors) {
-          res.status(422).send({
-            message: err.errors
-          })
-        } else {
-          res.status(500).send({
-            message: 'Algún error ha surgido al insertar el dato.'
-          })
-        }
+exports.create = async (req, res) => {
+  try {
+    const result = await req.imageService.uploadImage(req.files)
+    // Image.create(req.body).then(data => {
+    //   res.status(200).send(data)
+    // }).catch(err => {
+    //   exports.create = (req, res) => {
+    //     Faq.create(req.body).then(data => {
+    //       res.status(200).send(data)
+    //     }).catch(err => {
+    //       console.log(err)
+    //       if (err.errors) {
+    //         res.status(422).send({
+    //           message: err.errors
+    //         })
+    //       } else {
+    //         res.status(500).send({
+    //           message: 'Algún error ha surgido al insertar el dato.'
+    //         })
+    //       }
+    //     })
+    //   }
+    // })
+  } catch (err) {
+    console.log(err)
+    if (err.errors) {
+      res.status(422).send({
+        message: err.errors
+      })
+    } else {
+      res.status(500).send({
+        message: 'Algún error ha surgido al insertar el dato.'
       })
     }
-  })
+  }
 }
 
 exports.findAll = (req, res) => {

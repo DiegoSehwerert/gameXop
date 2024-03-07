@@ -14,7 +14,6 @@ class ModalDestroy extends HTMLElement {
 
   handleDeleteElement (event) {
     this.deleteElement(event.detail.endpoint)
-    console.log('event.detail.endpoint', event.detail.endpoint)
   }
 
   render () {
@@ -139,7 +138,6 @@ class ModalDestroy extends HTMLElement {
   }
 
   deleteElement (endpoint) {
-    console.log('endpoint', endpoint)
     const modalContent = this.shadow.querySelector('.delete-modal-content')
     modalContent.addEventListener('click', async (event) => {
       // const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`, {

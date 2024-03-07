@@ -171,7 +171,6 @@ class table extends HTMLElement {
         `
 
     this.rows.forEach((row) => {
-      console.log('row', row)
       const tableRecord = document.createElement('article')
       tableRecord.className = 'table-record'
 
@@ -270,7 +269,6 @@ class table extends HTMLElement {
       if (event.target.closest('.edit-button')) {
         const editButton = event.target.closest('.edit-button')
         const id = editButton.dataset.id
-        console.log('id', id)
         try {
           const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`)
           const data = await response.json()
