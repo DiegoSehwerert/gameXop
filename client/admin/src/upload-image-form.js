@@ -299,14 +299,16 @@ class UploadImageForm extends HTMLElement {
           </div>
     `
 
+    const closeButton = this.shadow.querySelector('.close-button')
+    closeButton.addEventListener('click', () => {
+      const boxElement = this.shadow.querySelector('.box')
+      boxElement.classList.remove('active')
+    })
+
     const uploadImage = this.shadow.querySelector('.form-element-input input[name="images"]')
     uploadImage.addEventListener('change', async (event) => {
       this.sendImage(event)
     })
-
-    this.sendImage()
-    this.Tabs()
-    this.handleCloseButton()
   }
 
   renderAvatars () {
@@ -353,14 +355,6 @@ class UploadImageForm extends HTMLElement {
   //     }
   //   })
   // }
-
-  handleCloseButton () {
-    const closeButton = this.shadow.querySelector('.close-button')
-    closeButton.addEventListener('click', () => {
-      const boxElement = this.shadow.querySelector('.box')
-      boxElement.classList.remove('active')
-    })
-  }
 
   handleUpload (event) {
     const boxElement = this.shadow.querySelector('.box')
