@@ -299,6 +299,11 @@ class UploadImageForm extends HTMLElement {
           </div>
     `
 
+    const uploadImage = this.shadow.querySelector('.form-element-input input[name="images"]')
+    uploadImage.addEventListener('change', async (event) => {
+      this.sendImage(event)
+    })
+
     this.sendImage()
     this.Tabs()
     this.handleCloseButton()
@@ -315,41 +320,39 @@ class UploadImageForm extends HTMLElement {
       .join('')
   }
 
-  async sendImage () {
-    const uploadImage = this.shadow.querySelector('.form-element-input input[name="images"]')
-    uploadImage.addEventListener('change', async (event) => {
-      const formData = new FormData()
-      formData.append('file', event.target.files[0])
-      const result = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/images`, {
-        method: 'POST',
-        body: formData
-      })
-      const data = await result.json()
+  async sendImage (event) {
+    const formData = new FormData()
+    formData.append('file', event.target.files[0])
+    const result = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/images`, {
+      method: 'POST',
+      body: formData
     })
+    const data = await result.json()
+    console.log(data)
   }
 
-  Tabs () {
-    const main = this.shadow.querySelector('.form')
-    main?.addEventListener('click', (event) => {
-      if (event.target.closest('.tab')) {
-        if (event.target.closest('.tab').classList.contains('active')) {
-          return
-        }
+  // Tabs () {
+  //   const main = this.shadow.querySelector('.form')
+  //   main?.addEventListener('click', (event) => {
+  //     if (event.target.closest('.tab')) {
+  //       if (event.target.closest('.tab').classList.contains('active')) {
+  //         return
+  //       }
 
-        const tabClicked = event.target.closest('.tab')
-        const tabActive = tabClicked.parentElement.querySelector('.active')
+  //       const tabClicked = event.target.closest('.tab')
+  //       const tabActive = tabClicked.parentElement.querySelector('.active')
 
-        tabClicked.classList.add('active')
-        tabActive.classList.remove('active')
-        this.shadow
-          .querySelector(`.tab-content.active[data-tab="${tabActive.dataset.tab}"]`)
-          .classList.remove('active')
-        this.shadow
-          .querySelector(`.tab-content[data-tab="${tabClicked.dataset.tab}"]`)
-          .classList.add('active')
-      }
-    })
-  }
+  //       tabClicked.classList.add('active')
+  //       tabActive.classList.remove('active')
+  //       this.shadow
+  //         .querySelector(`.tab-content.active[data-tab="${tabActive.dataset.tab}"]`)
+  //         .classList.remove('active')
+  //       this.shadow
+  //         .querySelector(`.tab-content[data-tab="${tabClicked.dataset.tab}"]`)
+  //         .classList.add('active')
+  //     }
+  //   })
+  // }
 
   handleCloseButton () {
     const closeButton = this.shadow.querySelector('.close-button')

@@ -4,9 +4,11 @@ const sharp = require('sharp')
 
 module.exports = class ImageService {
   uploadImage = async images => {
-   let originalname = images.file[0].originalname
-   originalname = originalname.replace(/\s/g, '-')
-   console.log(originalname)
+    for (let i = 0; i < images.file.length; i++) {
+      let originalname = images.file[i].originalname
+      originalname = originalname.replace(/\s/g, '-')
+      console.log(originalname)
+    }
   }
 
   resizeImages = async (images) => {
