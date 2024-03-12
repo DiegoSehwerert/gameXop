@@ -4,27 +4,16 @@ const Op = sequelizeDb.Sequelize.Op
 
 exports.create = async (req, res) => {
   try {
-    const result = await req.imageService.uploadImage(req.files)
-    // Image.create(req.body).then(data => {
-    //   res.status(200).send(data)
-    // }).catch(err => {
-    //   exports.create = (req, res) => {
-    //     Faq.create(req.body).then(data => {
-    //       res.status(200).send(data)
-    //     }).catch(err => {
-    //       console.log(err)
-    //       if (err.errors) {
-    //         res.status(422).send({
-    //           message: err.errors
-    //         })
-    //       } else {
-    //         res.status(500).send({
-    //           message: 'Algún error ha surgido al insertar el dato.'
-    //         })
-    //       }
-    //     })
-    //   }
-    // })
+    exports.create = async (req, res) => {
+      try {
+        const result = await req.imageService.uploadImage(req.files)
+        res.status(200).send(result)
+      } catch (error) {
+        res.status(500).send({
+          message: err.errors || 'Algún error ha surgido al insertar el dato.'
+        })
+      }
+    }
   } catch (err) {
     console.log(err)
     if (err.errors) {
@@ -67,21 +56,18 @@ exports.findAll = (req, res) => {
 }
 
 exports.findOne = (req, res) => {
-  const id = req.params.id
+  const fileName = req.params.filename
 
-  Image.findByPk(id).then(data => {
-    if (data) {
-      res.status(200).send(data)
-    } else {
-      res.status(404).send({
-        message: `No se puede encontrar el elemento con la id=${id}.`
-      })
+  const options = {
+    root: __dirname + '../../../storage/images/gallery/thumbnail/',
+    dotfiles: 'deny',
+    headers: {
+      'x-timestamp': Date.now(),
+      'x-sent': true
     }
-  }).catch(_ => {
-    res.status(500).send({
-      message: 'Algún error ha surgido al recuperar la id=' + id
-    })
-  })
+  }
+
+  res.sendFile(fileName, options)
 }
 
 exports.update = (req, res) => {
@@ -126,4 +112,7 @@ exports.delete = (req, res) => {
       message: 'Algún error ha surgido al borrar la id=' + id
     })
   })
+}
+
+exports.getImage = (req, res) => {
 }
