@@ -5,39 +5,37 @@ const sharp = require('sharp')
 module.exports = class ImageService {
   uploadImage = async images => {
     const result = []
+    for (const image of images.file) {
+      try{
+        let filename = image.originalname.replace(/[_\s]/g,"-")
+        let filePath = path.join(__dirname, `../storage/images/gallery/original`, path.parse(filename).name + '.webp')
+        const newFilename = await fs.access(filePath).then(async () => {
+          return `${path.parse(filename).name}-${new Date().getTime()}.webp`
+        }).catch(async () => {
+          return `${path.parse(filename).name}.webp`
+        })
+        await sharp(image.buffer)
+          .webp({ lossless: true })
+          .toFile(path.join(__dirname, `../storage/images/gallery/original/${newFilename}`))
   
-    let filename;
-    for (const image in images.file) {
-      filename = images.file[image].originalname;
-      if (filename.includes(' ')) filename = filename.replace(/\s/g, '-');
-      const newFilename = await fs.access(path.join(__dirname, `../storage/images/gallery/original/${path.parse(filename).name}.webp`)).then(async () => {
-        // TODO Dar al usuario la opción de sobreescribir la imagen
-        return `${path.parse(filename).name}-${new Date().getTime()}.webp`
-      }).catch(async () => {
-        return `${path.parse(filename).name}.webp`
-      })
-      console.log(newFilename);
-      await sharp(images.file[image].buffer)
-        .webp({ lossless: true })
-        .toFile(path.join(__dirname, `../storage/images/gallery/original/${newFilename}`))
-  
-      await sharp(images.file[image].buffer)
-        .resize(135, 135)
-        .webp({ lossless: true })
-        .toFile(path.join(__dirname, `../storage/images/gallery/thumbnail/${newFilename}`))
-  
-      result.push(newFilename)
+        await sharp(image.buffer)
+          .resize(135, 135)
+          .webp({ quality: 80 })
+          .toFile(path.join(__dirname, `../storage/images/gallery/thumbnail/${newFilename}`))
+
+        result.push(newFilename)
+      }catch(error){
+        console.log(error)
+      }  
     }
-    console.log(result);
+    return result
   }
 
-    // originalname = originalname.replace(/\s/g, '-');
-
-    resizeImages = async (images) => {
-
-    }
-
-    deleteImages = async filename => {
-
-    }
+  resizeImages = async (images) => {
+    
   }
+
+  deleteImages = async filename => {
+
+  }
+}

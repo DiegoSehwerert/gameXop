@@ -8,7 +8,7 @@ const userAgentMiddleware = require('./src/middlewares/user-agent')
 const exposeServiceMiddleware = require('./src/middlewares/expose-services')
 
 const corsOptions = {
-  origin: ['http://localhost:8081','http://localhost:5173']
+  origin: ['http://localhost:5173']
 }
 
 app.use(cors(corsOptions))

@@ -3,23 +3,30 @@ class UploadImageForm extends HTMLElement {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.avatarLinks = []
+    this.content = ''
   }
 
   connectedCallback () {
     document.addEventListener('upload', (event) => {
       this.handleUpload(event)
     })
-    this.loadData()
-    this.render()
+    this.loadData().then(() => {
+      this.render()
+    })
   }
 
-  loadData () {
-    this.avatarLinks = [
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'A' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'B' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'C' },
-      { imgSrc: 'https://placehold.co/200x200/png', alt: 'D' }
-    ]
+  async loadData () {
+    const result = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/images`)
+    const data = await result.json()
+    this.avatarLinks = data.rows
+    const formattedAvatars = this.avatarLinks.map(avatarLink => {
+      return {
+        imgSrc: '../../../api/storage/images/gallery/thumbnail/' + `${avatarLink.filename}`,
+        alt: avatarLink.filename
+      }
+    })
+    console.log(formattedAvatars)
+    this.content = this.renderAvatars(formattedAvatars)
   }
 
   render () {
@@ -137,10 +144,10 @@ class UploadImageForm extends HTMLElement {
         justify-content: space-between;
       }
       .container {
-        height: auto; /* Ajusta la altura automáticamente según el contenido */
-        max-height: 60vh; /* Limita la altura máxima al 100% de la altura de la ventana del navegador */
+        height: auto; 
+        max-height: 60vh; 
         max-width: 65%;
-        overflow-y: scroll; /* Muestra la barra de desplazamiento vertical cuando sea necesario */
+        overflow-y: scroll; 
         padding: 1rem;
       }
       .container::-webkit-scrollbar {
@@ -260,8 +267,8 @@ class UploadImageForm extends HTMLElement {
                             </div>
                           </div>
                         </div>
-                        <div class="form-row">
-                        ${this.renderAvatars()}
+                        <div class="form-row library">
+                          ${this.content}
                         </div>
                       </div>  
                       <div class="side-panel">
@@ -311,26 +318,25 @@ class UploadImageForm extends HTMLElement {
     })
   }
 
-  renderAvatars () {
-    return this.avatarLinks
-      .map(
-        (avatarLinks) =>
-          `<div class="avatar">
-            <img src="${avatarLinks.imgSrc}" alt="${avatarLinks.alt}">
-          </div>`
-      )
-      .join('')
+  renderAvatars (formattedAvatars) {
+    console.log(formattedAvatars)
+    return formattedAvatars.map(
+      (avatar) =>
+      `<div class="avatar">
+      <img src="${avatar.imgSrc}" alt="${avatar.alt}">
+      </div>`
+    ).join('')
   }
 
   async sendImage (event) {
     const formData = new FormData()
     formData.append('file', event.target.files[0])
+
     const result = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/images`, {
       method: 'POST',
       body: formData
     })
     const data = await result.json()
-    console.log(data)
   }
 
   // Tabs () {
