@@ -1,7 +1,11 @@
+import { store } from '../redux/store.js'
+import { setImageGallery } from '../redux/images-slice.js'
+
 class UploadImageButton extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
+    this.name = this.getAttribute('name')
   }
 
   makeOnlyOneBox () {
@@ -75,6 +79,7 @@ class UploadImageButton extends HTMLElement {
       
     </div>
     `
+    console.log(this.name)
 
     const box = this.shadow.querySelector('.box')
     const title = document.createElement('div')
@@ -91,6 +96,11 @@ class UploadImageButton extends HTMLElement {
     title.appendChild(span)
 
     box.addEventListener('click', () => {
+      const image = {
+        name: this.getAttribute('name')
+      }
+
+      store.dispatch(setImageGallery(image))
       document.dispatchEvent(new CustomEvent('upload'))
     })
   }

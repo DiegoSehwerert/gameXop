@@ -16,17 +16,32 @@ class UploadImageForm extends HTMLElement {
   }
 
   async loadData () {
-    const result = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/images`)
-    const data = await result.json()
-    this.avatarLinks = data.rows
-    const formattedAvatars = this.avatarLinks.map(avatarLink => {
-      return {
-        imgSrc: '../../../api/storage/images/gallery/thumbnail/' + `${avatarLink.filename}`,
-        alt: avatarLink.filename
-      }
-    })
-    console.log(formattedAvatars)
-    this.content = this.renderAvatars(formattedAvatars)
+    try {
+      const result = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/images`)
+      const data = await result.json()
+      this.avatarLinks = data.rows
+
+      await Promise.all(
+        this.avatarLinks.map(async (avatarLink) => {
+          try {
+            const response = await fetch(
+              `${import.meta.env.VITE_API_URL}/api/admin/images/${avatarLink.filename}`
+            )
+            this.formattedAvatars = response.url
+            return {
+              imgSrc: response.url,
+              alt: avatarLink.filename
+            }
+          } catch (error) {
+            console.error('Error:', error)
+          }
+        })
+      ).then((formattedAvatars) => {
+        this.content = this.renderAvatars(formattedAvatars)
+      })
+    } catch (error) {
+      console.error('Error:', error)
+    }
   }
 
   render () {
@@ -62,6 +77,8 @@ class UploadImageForm extends HTMLElement {
         left: 0;
         background-color: rgba(255, 255, 255, 0.8);
         z-index: 3;
+        box-sizing: border-box;
+
       }
       .box.active {
         display: flex;
@@ -77,10 +94,12 @@ class UploadImageForm extends HTMLElement {
         height: 80%;
         overflow: hidden;
         width: 80%;
+        box-sizing: border-box;
       }
       .form {
         border-bottom: 1px solid #ccc;
         flex: 2;
+        box-sizing: border-box;
       }
 
       .form-top-bar{
@@ -92,6 +111,7 @@ class UploadImageForm extends HTMLElement {
       }
 
       .admin-form{
+        box-sizing: border-box;
       }
 
       .tabs{
@@ -144,6 +164,7 @@ class UploadImageForm extends HTMLElement {
         justify-content: space-between;
       }
       .container {
+        box-sizing: border-box;
         height: auto; 
         max-height: 60vh; 
         max-width: 65%;
@@ -175,8 +196,9 @@ class UploadImageForm extends HTMLElement {
         display: flex;
         gap:1rem;
         flex-wrap: wrap;
+        box-sizing: border-box;
       }
-
+      
       .form-element {
         display: flex;
         justify-content: flex-start;
@@ -205,16 +227,34 @@ class UploadImageForm extends HTMLElement {
       }
 
       .avatar{
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+      }
+      .avatar.active{
+        background-color: hsl(206.87,84.81%,69.02%);        
+      }
+      .avatar .close-button{
+        display: flex;
+        justify-content: flex-end;
+      }
+      .avatar .close-button svg{
+        width: 1rem;
+        height: 1rem;
+        box-sizing: border-box;
+      }
+      .avatar img{
         align-items: center;
         border-radius: 50%;
         display: flex;
         justify-content: center;
         height: 4rem;
         width: 4rem;
+        box-sizing: border-box;
       }
-      .avatar img{
-        object-fit: cover;
-        width: 100%;
+      .avatar img:hover{
+        cursor: pointer;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6);
       }
       .footer{
         display: flex;
@@ -316,29 +356,47 @@ class UploadImageForm extends HTMLElement {
     uploadImage.addEventListener('change', async (event) => {
       this.sendImage(event)
     })
+
+    const avatars = this.shadow.querySelectorAll('.avatar')
+    for (const avatar of avatars) {
+      avatar.addEventListener('click', (event) => {
+        if (event.target.closest('.avatar img')) {
+          avatar.classList.toggle('active')
+        }
+      })
+    }
   }
 
   renderAvatars (formattedAvatars) {
-    console.log(formattedAvatars)
     return formattedAvatars.map(
       (avatar) =>
       `<div class="avatar">
-      <img src="${avatar.imgSrc}" alt="${avatar.alt}">
-      </div>`
+          <div class="avatar-head">
+            <div class="avatar-selected">
+              <input type="checkbox" name="avatar" value="${avatar.alt}">
+            </div>
+            <div class = "close-button">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <img src="${avatar.imgSrc}" alt="${avatar.alt}">
+        </div>`
     ).join('')
   }
 
   async sendImage (event) {
     const formData = new FormData()
     formData.append('file', event.target.files[0])
-
     const result = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/images`, {
       method: 'POST',
       body: formData
     })
     const data = await result.json()
+    console.log(data)
   }
-
   // Tabs () {
   //   const main = this.shadow.querySelector('.form')
   //   main?.addEventListener('click', (event) => {

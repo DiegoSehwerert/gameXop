@@ -22,7 +22,7 @@ exports.findAll = async (req, res) => {
 
   try {
     const page = req.query.page || 1
-    const limit = parseInt(req.query.size) || 10
+    const limit = parseInt(req.query.size) || 100
     const offset = (page - 1) * limit
     const whereStatement = {}
     whereStatement.deletedAt = { $exists: false }
@@ -102,7 +102,7 @@ exports.delete = (req, res) => {
 exports.getImage = (req, res) => {
   const fileName = req.params.filename
   const options = {
-    root: __dirname + '../../../storage/images/gallery/original/',
+    root: __dirname + '../../../storage/images/gallery/thumbnail/',
     dotfiles: 'deny',
     headers: {
       'x-timestamp': Date.now(),
