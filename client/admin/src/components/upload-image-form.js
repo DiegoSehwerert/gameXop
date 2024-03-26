@@ -1,3 +1,5 @@
+import store from '../redux/store'
+import { showImage, removeImage } from '../redux/images-slice.js'
 class UploadImageForm extends HTMLElement {
   constructor () {
     super()
@@ -263,6 +265,9 @@ class UploadImageForm extends HTMLElement {
         bottom: 0;
         right: 1rem;
       }
+      .submit{
+       
+      }
       </style>
           <div class="box">
             <div class="gallery">
@@ -333,7 +338,7 @@ class UploadImageForm extends HTMLElement {
                           </div>
                         </div>
                         <div class="footer">
-                          <button type="submit">
+                          <button  >
                             Guardar
                           </button>
                         </div>
@@ -365,16 +370,25 @@ class UploadImageForm extends HTMLElement {
         }
       })
     }
+    const saveButton = this.shadow.querySelector('.footer button')
+    saveButton.addEventListener('click', () => {
+      let image = store.getState().images.imageGallery
+      const filename = this.shadow.querySelector('.avatar.active').dataset.name
+      image = { ...image, filename }
+      store.dispatch(showImage(image))
+    })
+
+    const form = this.shadow.querySelector('.admin-form')
+    form.addEventListener('submit', (event) => {
+      event.preventDefault()
+    })
   }
 
   renderAvatars (formattedAvatars) {
     return formattedAvatars.map(
       (avatar) =>
-      `<div class="avatar">
+      `<div class="avatar" data-name="${avatar.alt}">
           <div class="avatar-head">
-            <div class="avatar-selected">
-              <input type="checkbox" name="avatar" value="${avatar.alt}">
-            </div>
             <div class = "close-button">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -397,28 +411,6 @@ class UploadImageForm extends HTMLElement {
     const data = await result.json()
     console.log(data)
   }
-  // Tabs () {
-  //   const main = this.shadow.querySelector('.form')
-  //   main?.addEventListener('click', (event) => {
-  //     if (event.target.closest('.tab')) {
-  //       if (event.target.closest('.tab').classList.contains('active')) {
-  //         return
-  //       }
-
-  //       const tabClicked = event.target.closest('.tab')
-  //       const tabActive = tabClicked.parentElement.querySelector('.active')
-
-  //       tabClicked.classList.add('active')
-  //       tabActive.classList.remove('active')
-  //       this.shadow
-  //         .querySelector(`.tab-content.active[data-tab="${tabActive.dataset.tab}"]`)
-  //         .classList.remove('active')
-  //       this.shadow
-  //         .querySelector(`.tab-content[data-tab="${tabClicked.dataset.tab}"]`)
-  //         .classList.add('active')
-  //     }
-  //   })
-  // }
 
   handleUpload (event) {
     const boxElement = this.shadow.querySelector('.box')

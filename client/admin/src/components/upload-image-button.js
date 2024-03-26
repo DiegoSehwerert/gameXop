@@ -6,18 +6,7 @@ class UploadImageButton extends HTMLElement {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.name = this.getAttribute('name')
-  }
-
-  makeOnlyOneBox () {
-    // <div class="title">
-    //     <span>
-    //       Upload
-    //     </span>
-    //   </div>
-    //   <div class="icon">
-    //     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Upload image</title><path d="M8 17V15H16V17H8M16 10L12 6L8 10H10.5V14H13.5V10H16M12 2C17.5 2 22 6.5 22 12C22 17.5 17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2M12 4C7.58 4 4 7.58 4 12C4 16.42 7.58 20 12 20C16.42 20 20 16.42 20 12C20 7.58 16.42 4 12 4Z" /></svg>
-    //   </div>
-
+    this.images = []
   }
 
   connectedCallback () {
@@ -27,6 +16,64 @@ class UploadImageButton extends HTMLElement {
     } else if (multplesPhotos === true) {
       this.makeMultipleBox()
     }
+
+    this.name = this.getAttribute('name')
+    this.type = this.getAttribute('type')
+    this.unsubscribe = store.subscribe(() => {
+      const currentState = store.getState()
+      console.log(currentState)
+      try {
+        if (this.type === 'single') {
+          this.getThumbnail(currentState)
+        }
+        if (this.type === 'multiple') {
+          this.getThumbnails(currentState)
+        }
+      } catch (error) {
+      }
+      // console.log('hola' + currentState.images.showedImages)
+    })
+    this.render()
+    // console.log(this.name)
+  }
+
+  getThumbnail (imagesState) {
+    console.log(imagesState)
+    // Accede a la propiedad showedImages del estado de imágenes
+    const images = imagesState.images.showedImages
+    const formElementInput = this.shadow.querySelector('.form-element-input')
+    formElementInput.querySelectorAll('img').forEach(img => img.remove())
+
+    images.forEach((image, index, images) => {
+      if (index === images.length - 1) {
+        // Este bloque de código solo se ejecutará para el último elemento del array
+        if (image.name === this.name) {
+          const img = document.createElement('img')
+          img.src = `${import.meta.env.VITE_API_URL}/api/admin/images/${image.filename}`
+          img.alt = 'x'
+          img.dataset.nombre = image.filename
+          this.shadow.querySelector('.form-element-input').appendChild(img)
+        }
+      }
+    })
+  }
+
+  getThumbnails (imagesState) {
+    console.log(imagesState)
+    // Accede a la propiedad showedImages del estado de imágenes
+    const images = imagesState.images.showedImages
+    const formElementInput = this.shadow.querySelector('.form-element-input')
+    formElementInput.querySelectorAll('img').forEach(img => img.remove())
+    images.forEach(image => {
+      // formElementInput.querySelectorAll('img').forEach(img => img.remove())
+      if (image.name === this.name) {
+        const img = document.createElement('img')
+        img.src = `${import.meta.env.VITE_API_URL}/api/admin/images/${image.filename}`
+        img.alt = 'x'
+        img.dataset.nombre = image.filename
+        this.shadow.querySelector('.form-element-input').appendChild(img)
+      }
+    })
   }
 
   renderOnlyBox () {
@@ -103,10 +150,6 @@ class UploadImageButton extends HTMLElement {
       store.dispatch(setImageGallery(image))
       document.dispatchEvent(new CustomEvent('upload'))
     })
-  }
-
-  makeMultipleBox () {
-
   }
 }
 
