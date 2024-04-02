@@ -1,5 +1,6 @@
 import { store } from '../redux/store.js'
-import { setImageGallery } from '../redux/images-slice.js'
+import { addImage, setImageGallery } from '../redux/images-slice.js'
+import isEqual from 'lodash-es/isEqual'
 
 class UploadImageButton extends HTMLElement {
   constructor () {
@@ -38,10 +39,9 @@ class UploadImageButton extends HTMLElement {
   }
 
   getThumbnail (imagesState) {
-    console.log(imagesState)
     // Accede a la propiedad showedImages del estado de imágenes
     const images = imagesState.images.showedImages
-    const formElementInput = this.shadow.querySelector('.form-element-input')
+    const formElementInput = this.shadow.querySelector('.box')
     formElementInput.querySelectorAll('img').forEach(img => img.remove())
 
     images.forEach((image, index, images) => {
@@ -52,17 +52,20 @@ class UploadImageButton extends HTMLElement {
           img.src = `${import.meta.env.VITE_API_URL}/api/admin/images/${image.filename}`
           img.alt = 'x'
           img.dataset.nombre = image.filename
-          this.shadow.querySelector('.form-element-input').appendChild(img)
+          const box = this.shadow.querySelector('.box')
+          box.innerHTML = ''
+          box.appendChild(img)
         }
       }
     })
   }
 
+  /// /// ///
+
   getThumbnails (imagesState) {
-    console.log(imagesState)
     // Accede a la propiedad showedImages del estado de imágenes
     const images = imagesState.images.showedImages
-    const formElementInput = this.shadow.querySelector('.form-element-input')
+    const formElementInput = this.shadow.querySelector('.box')
     formElementInput.querySelectorAll('img').forEach(img => img.remove())
     images.forEach(image => {
       // formElementInput.querySelectorAll('img').forEach(img => img.remove())
@@ -71,7 +74,7 @@ class UploadImageButton extends HTMLElement {
         img.src = `${import.meta.env.VITE_API_URL}/api/admin/images/${image.filename}`
         img.alt = 'x'
         img.dataset.nombre = image.filename
-        this.shadow.querySelector('.form-element-input').appendChild(img)
+        this.shadow.querySelector('.box').appendChild(img)
       }
     })
   }
@@ -125,8 +128,8 @@ class UploadImageButton extends HTMLElement {
     <div class="box">
       
     </div>
+    
     `
-    console.log(this.name)
 
     const box = this.shadow.querySelector('.box')
     const title = document.createElement('div')
@@ -146,6 +149,8 @@ class UploadImageButton extends HTMLElement {
       const image = {
         name: this.getAttribute('name')
       }
+
+      // console.log(currentState.images.selectedImages)
 
       store.dispatch(setImageGallery(image))
       document.dispatchEvent(new CustomEvent('upload'))

@@ -236,11 +236,16 @@ class UploadImageForm extends HTMLElement {
       .avatar.active{
         background-color: hsl(206.87,84.81%,69.02%);        
       }
-      .avatar .close-button{
+      .avatar .remove-image-button{
         display: flex;
         justify-content: flex-end;
       }
-      .avatar .close-button svg{
+      
+      .avatar .remove-image-button svg:hover{
+        cursor: pointer;
+      }
+
+      .avatar .remove-image-button svg{
         width: 1rem;
         height: 1rem;
         box-sizing: border-box;
@@ -258,15 +263,12 @@ class UploadImageForm extends HTMLElement {
         cursor: pointer;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6);
       }
-      .footer{
+      .save{
         display: flex;
         justify-content: flex-end;
         position: relative;
         bottom: 0;
         right: 1rem;
-      }
-      .submit{
-       
       }
       </style>
           <div class="box">
@@ -337,7 +339,7 @@ class UploadImageForm extends HTMLElement {
                             <textarea name="description" rows="8" cols="80"></textarea>
                           </div>
                         </div>
-                        <div class="footer">
+                        <div class="save">
                           <button  >
                             Guardar
                           </button>
@@ -366,39 +368,29 @@ class UploadImageForm extends HTMLElement {
     for (const avatar of avatars) {
       avatar.addEventListener('click', (event) => {
         if (event.target.closest('.avatar img')) {
-          avatar.classList.toggle('active')
+          avatar.classList.add('active')
+          avatars.forEach((avatar) => {
+            if (avatar !== event.currentTarget) {
+              avatar.classList.remove('active')
+            }
+          })
         }
       })
     }
-    const saveButton = this.shadow.querySelector('.footer button')
+    const saveButton = this.shadow.querySelector('.save button')
     saveButton.addEventListener('click', () => {
       let image = store.getState().images.imageGallery
       const filename = this.shadow.querySelector('.avatar.active').dataset.name
       image = { ...image, filename }
       store.dispatch(showImage(image))
+      const boxElement = this.shadow.querySelector('.box')
+      boxElement.classList.remove('active')
     })
 
     const form = this.shadow.querySelector('.admin-form')
     form.addEventListener('submit', (event) => {
       event.preventDefault()
     })
-  }
-
-  renderAvatars (formattedAvatars) {
-    return formattedAvatars.map(
-      (avatar) =>
-      `<div class="avatar" data-name="${avatar.alt}">
-          <div class="avatar-head">
-            <div class = "close-button">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </div>
-          <img src="${avatar.imgSrc}" alt="${avatar.alt}">
-        </div>`
-    ).join('')
   }
 
   async sendImage (event) {
