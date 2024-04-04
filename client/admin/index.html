@@ -36,7 +36,7 @@
         <form-component endpoint="/api/admin/faqs">
           <upload-image-button slot="upload-image-button" name="featured-image" type="single"></upload-image-button>
         </form-component>
-        <upload-image-form endpoint="/api/admin/images"></upload-image-form>
+        <upload-image-form image-configuration='{"xs":{"widthPx":"60","heightPx":"60"},"sm":{"widthPx":"80","heightPx":"80"},"md":{"widthPx":"1200","heightPx":"1200"},"lg":{"widthPx":"900","heightPx":"600"}}' endpoint="/api/admin/images"></upload-image-form>
         <save-modal-component>
         </save-modal-component>
       </section>

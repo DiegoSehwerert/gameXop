@@ -32,7 +32,7 @@ module.exports = class ImageService {
   }
 
   resizeImages = async (images) => {
-    
+    console.log(images)
   }
 
   deleteImages = async filename => {

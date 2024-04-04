@@ -18,6 +18,7 @@ export const imagesSlice = createSlice({
 
     },
     addImage: (state, action) => {
+      console.log(action.payload)
       if (!state.selectedImages.some(image =>
         image.name === action.payload.name &&
         image.languageAlias === action.payload.languageAlias &&

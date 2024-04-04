@@ -1,3 +1,5 @@
+import store from '../redux/store'
+
 class Form extends HTMLElement {
   constructor () {
     super()
@@ -413,6 +415,7 @@ class Form extends HTMLElement {
       try {
         const formData = new FormData(form)
         const formDataJson = {}
+        formDataJson.images = store.getState().images.selectedImages
 
         for (const [key, value] of formData.entries()) {
           if (key.includes('locales')) {
