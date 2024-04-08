@@ -336,70 +336,7 @@ class Form extends HTMLElement {
     <div class="tab-contents">
       <div class="tab-content" data-tab="images">
         <div class="form-row">
-          <slot name="upload-image-button"></slot>
-          <div class="form-language-bar">
-            <div class="tabs">
-                <div class="tab active" data-tab="es-image">
-                    ES
-                </div>
-                <div class="tab" data-tab="en-image">
-                    EN
-                </div>
-            </div>
-          </div>
-        <div class="tab-contents">
-          <div class="tab-content active" data-tab="es-image">
-            <div class="form-row">
-              <div class="form-element">
-                <div class="form-element-label">
-                  <label for="title">
-                    Titulo
-                  </label>
-                </div>
-                <div class="form-element-input">
-                  <input type="text" name="" value="">
-                </div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-element">
-                <div class="form-element-label">
-                  <label for="description">
-                    Descripcion
-                  </label>
-                </div>
-                <div class="form-element-input">
-                  <textarea name="" type="textarea" class="event-description" data-onlyletters="true"></textarea>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="tab-content" data-tab="en-image">
-            <div class="form-row">
-              <div class="form-element">
-                <div class="form-element-label">
-                  <label for="title">
-                    Titulo
-                  </label>
-                </div>
-                <div class="form-element-input">
-                  <input type="text" name="" value="">
-                </div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-element">
-                <div class="form-element-label">
-                  <label for="description">
-                    Descripcion
-                  </label>
-                </div>
-                <div class="form-element-input">
-                  <textarea name="" type="textarea" class="event-description" data-onlyletters="true"></textarea>
-                </div>
-              </div>
-            </div>
-          </div>
+          <slot name="upload-image-button" image-configuration='{"xs":{"widthPx":"60","heightPx":"60"},"sm":{"widthPx":"80","heightPx":"80"},"md":{"widthPx":"120","heightPx":"120"},"lg":{"widthPx":"300","heightPx":"300"}}'></slot>
         </div>
       </div>
     </div>
@@ -407,7 +344,7 @@ class Form extends HTMLElement {
 </div>
 
         `
-
+    const slotElement = this.shadow.querySelector('slot[name="upload-image-button"]')
     const buttonSave = this.shadow.querySelector('.store-button')
     const form = this.shadow.querySelector('.admin-form')
 
@@ -442,6 +379,7 @@ class Form extends HTMLElement {
             formDataJson[key] = value ?? null
           }
         }
+
         const endpoint = formDataJson.id ? `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${formDataJson.id}` : `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`
         const method = formDataJson.id ? 'PUT' : 'POST'
         delete formDataJson.id
