@@ -32,7 +32,9 @@ module.exports = class ImageService {
   }
 
   resizeImages = async (images) => {
+    let resizedImages = {}
     for (const image of images) {
+      // console.log(image.imageConfiguration.xs)
       for (const size in image.imageConfiguration) {
         try {
           let newFilename = image.filename.split('.')
@@ -44,13 +46,24 @@ module.exports = class ImageService {
             await sharp(path.join(__dirname, `../storage/images/gallery/original`, image.filename))
               .resize(parseInt(image.imageConfiguration[size].widthPx), parseInt(image.imageConfiguration[size].heightPx))
               .webp({ quality: 80 })
-              .toFile(path.join(__dirname, `../storage/images/resize/${newFilename}`))
+              .toFile(path.join(__dirname, `../storage/images/resized/${newFilename}`))
+
+            resizedImages[size] = resizedImages[size] || {}
+            resizedImages[size][image.name] = {
+              originalFilename: image.filename,
+              filename: newFilename,
+              title: image.title,
+              alt: image.alt,
+              widthPx: image.imageConfiguration[size].widthPx,
+              heightPx: image.imageConfiguration[size].heightPx,
+            }
           })
         } catch (error) {
           console.log(error)
         }
       }
     }
+    return resizedImages
   }
 
   deleteImages = async filename => {

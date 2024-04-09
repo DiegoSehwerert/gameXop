@@ -6,8 +6,9 @@ exports.create = async (req, res) => {
 
   try {
     const result = await req.imageService.resizeImages(req.body.images)
-    console.log(result)
+    
     const data = await Faq.create(req.body)
+
     res.status(200).send(data)
   } catch (err) {
     res.status(500).send({

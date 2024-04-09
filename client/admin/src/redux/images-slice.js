@@ -12,15 +12,23 @@ export const imagesSlice = createSlice({
       state.imageGallery = action.payload
     },
     showImage: (state, action) => {
-      state.showedImages.push(action.payload)
+      if (!state.showedImages.some(image =>
+        image.name === action.payload.name &&
+        image.filename === action.payload.filename)) {
+        state.showedImages.push(action.payload)
+      }
     },
     showImages: (state, action) => {
-
+      state.showedImages = Object.entries(action.payload.xs).map(([key, value]) => ({
+        name: key,
+        filename: value.originalFilename,
+        title: value.title,
+        alt: value.alt
+      }))
     },
     addImage: (state, action) => {
       if (!state.selectedImages.some(image =>
         image.name === action.payload.name &&
-        image.languageAlias === action.payload.languageAlias &&
         image.filename === action.payload.filename)) {
         state.selectedImages.push(action.payload)
       }

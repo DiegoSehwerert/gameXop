@@ -219,6 +219,7 @@ class table extends HTMLElement {
       tableDataLiSpanEn.textContent = 'EN'
 
       const tableDataEsQuestion = document.createElement('div')
+      console.log(row.locales.es.question)
       tableDataEsQuestion.textContent = `Pregunta: ${row.locales.es.question}`
 
       const tableDataEsAnswer = document.createElement('div')

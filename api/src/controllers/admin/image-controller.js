@@ -96,7 +96,6 @@ exports.update = (req, res) => {
 }
 
 exports.delete = (req, res) => {
-  console.log(req.params.filename)
 }
 
 exports.getImage = (req, res) => {

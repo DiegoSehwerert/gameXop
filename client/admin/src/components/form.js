@@ -344,7 +344,6 @@ class Form extends HTMLElement {
 </div>
 
         `
-    const slotElement = this.shadow.querySelector('slot[name="upload-image-button"]')
     const buttonSave = this.shadow.querySelector('.store-button')
     const form = this.shadow.querySelector('.admin-form')
 
@@ -384,7 +383,8 @@ class Form extends HTMLElement {
         const method = formDataJson.id ? 'PUT' : 'POST'
         delete formDataJson.id
 
-        const response = await fetch(endpoint, {
+        const response =
+        await fetch(endpoint, {
           method,
           headers: {
             'Content-Type': 'application/json'
