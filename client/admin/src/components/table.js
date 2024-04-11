@@ -1,3 +1,6 @@
+import { showImages } from '../redux/images-slice.js'
+import { store } from '../redux/store.js'
+
 class table extends HTMLElement {
   constructor () {
     super()
@@ -21,6 +24,7 @@ class table extends HTMLElement {
   async loadData () {
     const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`)
     const data = await response.json()
+    console.log(data)
     this.rows = data.rows
   }
 
@@ -219,7 +223,6 @@ class table extends HTMLElement {
       tableDataLiSpanEn.textContent = 'EN'
 
       const tableDataEsQuestion = document.createElement('div')
-      console.log(row.locales.es.question)
       tableDataEsQuestion.textContent = `Pregunta: ${row.locales.es.question}`
 
       const tableDataEsAnswer = document.createElement('div')
@@ -274,6 +277,7 @@ class table extends HTMLElement {
           const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${id}`)
           const data = await response.json()
           document.dispatchEvent(new CustomEvent('showElement', { detail: { data } }))
+          store.dispatch(showImages(data.images))
         } catch (error) {
           console.error('Error:', error)
         }

@@ -34,7 +34,6 @@ module.exports = class ImageService {
   resizeImages = async (images) => {
     let resizedImages = {}
     for (const image of images) {
-      // console.log(image.imageConfiguration.xs)
       for (const size in image.imageConfiguration) {
         try {
           let newFilename = image.filename.split('.')
