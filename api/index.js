@@ -8,7 +8,7 @@ const userAgentMiddleware = require('./src/middlewares/user-agent')
 const exposeServiceMiddleware = require('./src/middlewares/expose-services')
 
 const corsOptions = {
-  origin: ['http://localhost:5173','http://localhost:5174'],
+  origin: ['dev-pedidos.com'],
 }
 
 app.use(cors(corsOptions))
