@@ -78,7 +78,6 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   SentEmail.associate = function (models) {
-    SentEmail.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
     SentEmail.belongsTo(models.Email, { as: 'email', foreignKey: 'emailId' })
     
   }

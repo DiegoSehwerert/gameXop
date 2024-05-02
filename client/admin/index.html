@@ -22,18 +22,18 @@
 
 <body>
   <header>
-    <title-component title="FAQS"></title-component>
+    <title-component title="Clientes"></title-component>
     <title-menu></title-menu>
   </header>
   <main>
     <filter-component></filter-component>
-    <modal-destroy-component endpoint="/api/admin/faqs"></modal-destroy-component>
+    <modal-destroy-component endpoint="/api/admin/customers"></modal-destroy-component>
     <div class="crud">
       <section class="table">
-        <table-component endpoint="/api/admin/faqs"></table-component>
+        <table-component endpoint="/api/admin/customers"></table-component>
       </section>
       <section class="form">
-        <form-component endpoint="/api/admin/faqs">
+        <form-component endpoint="/api/admin/customers">
           <upload-image-button slot="upload-image-button" name="featured-image" type="single" image-configuration='
             {
               "xs":{"widthPx":"60",

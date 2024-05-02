@@ -24,7 +24,7 @@ class table extends HTMLElement {
   async loadData () {
     const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`)
     const data = await response.json()
-    console.log(data)
+    console.log('table', data)
     this.rows = data.rows
   }
 
@@ -173,13 +173,9 @@ class table extends HTMLElement {
         </section>
 
         `
-
     this.rows.forEach((row) => {
       const tableRecord = document.createElement('article')
       tableRecord.className = 'table-record'
-
-      const tableRecordTitle = document.createElement('h2')
-      tableRecordTitle.textContent = row.name
 
       const tableRecordButtons = document.createElement('div')
       tableRecordButtons.className = 'table-record-buttons'
@@ -219,20 +215,18 @@ class table extends HTMLElement {
       const tableDataEnContainer = document.createElement('div')
       tableDataEnContainer.className = 'table-data-en-container'
 
-      tableDataLiSpanEs.textContent = 'ES'
-      tableDataLiSpanEn.textContent = 'EN'
-
       const tableDataEsQuestion = document.createElement('div')
-      tableDataEsQuestion.textContent = `Pregunta: ${row.locales.es.question}`
+
+      tableDataEsQuestion.textContent = `Nombre: ${row.name}`
 
       const tableDataEsAnswer = document.createElement('div')
-      tableDataEsAnswer.textContent = `Respuesta: ${row.locales.es.answer}`
+      tableDataEsAnswer.textContent = `Apellidos: ${row.surname}`
 
       const tableDataEnQuestion = document.createElement('div')
-      tableDataEnQuestion.textContent = `Question: ${row.locales.en.question}`
+      tableDataEnQuestion.textContent = `Email: ${row.email}`
 
       const tableDataEnAnswer = document.createElement('div')
-      tableDataEnAnswer.textContent = `Answer: ${row.locales.en.answer}`
+      tableDataEnAnswer.textContent = `Telefono: ${row.telephone}`
 
       tableDataEsContainer.appendChild(tableDataEsQuestion)
       tableDataEsContainer.appendChild(tableDataEsAnswer)
@@ -251,7 +245,6 @@ class table extends HTMLElement {
 
       tableData.appendChild(tableDataUl)
 
-      tableRecord.appendChild(tableRecordTitle)
       tableRecord.appendChild(tableRecordButtons)
       tableRecord.appendChild(tableData)
       tableRecordButtons.appendChild(editButton)

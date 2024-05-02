@@ -166,7 +166,6 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   ApiTracking.associate = function (models) {
-    ApiTracking.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
     ApiTracking.belongsTo(models.Fingerprint, { as: 'fingerprint', foreignKey: 'fingerprintId' })
   }
 

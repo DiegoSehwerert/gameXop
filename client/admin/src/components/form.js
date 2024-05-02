@@ -267,76 +267,43 @@ class Form extends HTMLElement {
               <input type="text" name="name" value="">
             </div>
           </div>
-        <div class="form-language-bar">
-          <div class="tabs">
-              <div class="tab active" data-tab="es">
-                  ES
-              </div>
-              <div class="tab" data-tab="en">
-                  EN
-              </div>
-          </div>
-        </div>
-        <div class="tab-contents">
-          <div class="tab-content active" data-tab="es">
-            <div class="form-row">
-              <div class="form-element">
-                <div class="form-element-label">
-                  <label for="title">
-                    Titulo
-                  </label>
-                </div>
-                <div class="form-element-input">
-                  <input type="text" name="locales.es.question" value="">
-                </div>
-              </div>
+          <div class="form-element">
+            <div class="form-element-label">
+              <label for="question">
+                apellidos
+              </label>
             </div>
-            <div class="form-row">
-              <div class="form-element">
-                <div class="form-element-label">
-                  <label for="description">
-                    Descripcion
-                  </label>
-                </div>
-                <div class="form-element-input">
-                  <textarea name="locales.es.answer" type="textarea" class="event-description" data-onlyletters="true"></textarea>
-                </div>
-              </div>
+            <div class="form-element-input">
+              <input type="text" name="surname" value="">
             </div>
           </div>
-          <div class="tab-content" data-tab="en">
-            <div class="form-row">
-              <div class="form-element">
-                <div class="form-element-label">
-                  <label for="title">
-                    Titulo
-                  </label>
-                </div>
-                <div class="form-element-input">
-                  <input type="text" name="locales.en.question" value="">
-                </div>
-              </div>
+          <div class="form-element">
+            <div class="form-element-label">
+              <label for="question">
+                email
+              </label>
             </div>
-            <div class="form-row">
-              <div class="form-element">
-                <div class="form-element-label">
-                  <label for="description">
-                    Descripcion
-                  </label>
-                </div>
-                <div class="form-element-input">
-                  <textarea name="locales.en.answer" type="textarea" class="event-description" data-onlyletters="true"></textarea>
-                </div>
-              </div>
+            <div class="form-element-input">
+              <input type="text" name="email" value="">
+            </div>
+          </div>
+          <div class="form-element">
+            <div class="form-element-label">
+              <label for="question">
+                telefono
+              </label>
+            </div>
+            <div class="form-element-input">
+              <input type="text" name="telephone" value="">
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="tab-contents">
-      <div class="tab-content" data-tab="images">
-        <div class="form-row">
-          <slot name="upload-image-button" image-configuration='{"xs":{"widthPx":"60","heightPx":"60"},"sm":{"widthPx":"80","heightPx":"80"},"md":{"widthPx":"120","heightPx":"120"},"lg":{"widthPx":"300","heightPx":"300"}}'></slot>
+      <div class="tab-contents">
+        <div class="tab-content" data-tab="images">
+          <div class="form-row">
+            <slot name="upload-image-button" image-configuration='{"xs":{"widthPx":"60","heightPx":"60"},"sm":{"widthPx":"80","heightPx":"80"},"md":{"widthPx":"120","heightPx":"120"},"lg":{"widthPx":"300","heightPx":"300"}}'></slot>
+          </div>
         </div>
       </div>
     </div>
@@ -354,18 +321,18 @@ class Form extends HTMLElement {
         formDataJson.images = store.getState().images.selectedImages
 
         for (const [key, value] of formData.entries()) {
-          if (key.includes('locales')) {
-            const [prefix, locales, field] = key.split('.')
+          if (key.includes('customer')) {
+            const [prefix, customer, field] = key.split('.')
 
             if (!(prefix in formDataJson)) {
               formDataJson[prefix] = {}
             }
 
-            if (!(locales in formDataJson[prefix])) {
-              formDataJson[prefix][locales] = {}
+            if (!(customer in formDataJson[prefix])) {
+              formDataJson[prefix][customer] = {}
             }
 
-            formDataJson[prefix][locales][field] = value ?? null
+            formDataJson[prefix][customer][field] = value ?? null
           } else if (key.includes('.')) {
             const [prefix, field] = key.split('.')
 
@@ -377,6 +344,7 @@ class Form extends HTMLElement {
           } else {
             formDataJson[key] = value ?? null
           }
+          console.log('formData', formDataJson)
         }
 
         const endpoint = formDataJson.id ? `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}/${formDataJson.id}` : `${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`
@@ -398,18 +366,10 @@ class Form extends HTMLElement {
 
         if (response.status === 422 || response.status === 500) {
           const errorData = await response.json()
-          errorData.message.forEach(element => {
-            const errorMessage = this.shadow.querySelector('.error-message')
-            errorMessage.classList.add('active')
-
-            const ulElement = this.shadow.querySelector('.error-list')
-            const newLi = document.createElement('li')
-            newLi.textContent = element.message
-            ulElement.appendChild(newLi)
-          })
+          console.log(errorData)
         } else if (response.status === 200) {
           const data = await response.json()
-
+          console.log(data)
           document.dispatchEvent(new CustomEvent('refresh-table', {
             detail: {
               text: 'Formulario enviado correctamente',
@@ -454,10 +414,10 @@ class Form extends HTMLElement {
     const formElements = form.elements
 
     Object.entries(data).forEach(([key, value]) => {
-      if (key === 'locales') {
+      if (key === 'customer') {
         Object.entries(value).forEach(([localeKey, localeData]) => {
           Object.entries(localeData).forEach(([field, fieldValue]) => {
-            const element = formElements[`locales.${localeKey}.${field}`]
+            const element = formElements[`customer.${localeKey}.${field}`]
             if (element) {
               element.value = fieldValue
             }

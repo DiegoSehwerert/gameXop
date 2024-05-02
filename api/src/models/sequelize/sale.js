@@ -156,7 +156,6 @@ module.exports = function (sequelize, DataTypes) {
 
   Sale.associate = function (models) {
     Sale.belongsTo(models.Cart, { as: 'cart', foreignKey: 'cartId' })
-    Sale.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
     Sale.belongsTo(models.PaymentMethod, { as: 'paymentMethod', foreignKey: 'paymentMethodId' })
     Sale.belongsTo(models.Coupon, { as: 'coupon', foreignKey: 'couponId' })
     Sale.belongsToMany(models.Product, { through: models.SaleDetail, as: 'products', foreignKey: 'saleId' })
