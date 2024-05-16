@@ -15,9 +15,12 @@ const options = {
 app.use('/api', createProxyMiddleware(options));
 
 options.target = 'http://localhost:5170';
-app.use('/admin', createProxyMiddleware(options));
+app.use('/admin/login', createProxyMiddleware(options));
 
 options.target = 'http://localhost:5171';
+app.use('/admin', createProxyMiddleware(options));
+
+options.target = 'http://localhost:5172';
 app.use('/', createProxyMiddleware(options));
 
 app.listen(80, '127.0.0.1');
