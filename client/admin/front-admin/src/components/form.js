@@ -270,31 +270,11 @@ class Form extends HTMLElement {
           <div class="form-element">
             <div class="form-element-label">
               <label for="question">
-                apellidos
-              </label>
-            </div>
-            <div class="form-element-input">
-              <input type="text" name="surname" value="">
-            </div>
-          </div>
-          <div class="form-element">
-            <div class="form-element-label">
-              <label for="question">
                 email
               </label>
             </div>
             <div class="form-element-input">
               <input type="text" name="email" value="">
-            </div>
-          </div>
-          <div class="form-element">
-            <div class="form-element-label">
-              <label for="question">
-                telefono
-              </label>
-            </div>
-            <div class="form-element-input">
-              <input type="text" name="telephone" value="">
             </div>
           </div>
         </div>

@@ -3,24 +3,27 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('user_activation_tokens', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
       },
-      name: {
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      token: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
+      expirationDate: {
+        type: Sequelize.DATE,
+        allowNull: false
       },
-      password: {
-        type: Sequelize.STRING,
+      used: {
+        type: Sequelize.BOOLEAN,
         allowNull: false
       },
       createdAt: {
@@ -36,12 +39,12 @@ module.exports = {
       }
     })
 
-    await queryInterface.addIndex('users', ['email'], {
-      name: 'users_email_index'
+    await queryInterface.addIndex('user_activation_tokens', ['userId'], {
+      name: 'user_activation_tokens_userId'
     })
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('users')
+    await queryInterface.dropTable('user_activation_tokens')
   }
 }

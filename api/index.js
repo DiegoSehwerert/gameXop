@@ -6,6 +6,21 @@ const fs = require('fs')
 const app = express()
 const userAgentMiddleware = require('./src/middlewares/user-agent')
 const exposeServiceMiddleware = require('./src/middlewares/expose-services')
+const IORedis = require('ioredis')
+const RedisStore = require('connect-redis').default
+
+const subscriberClient = new IORedis(process.env.REDIS_URL)
+const redisClient = new IORedis(process.env.REDIS_URL)
+
+const eventsPath = './src/events/'
+fs.readdirSync(eventsPath).forEach(function (file) {
+  require(eventsPath + file).handleEvent(redisClient, subscriberClient)
+})
+
+app.use((req, res, next) => {
+  req.redisClient = redisClient
+  next()
+})
 
 const corsOptions = {
   origin: ['dev-pedidos.com'],

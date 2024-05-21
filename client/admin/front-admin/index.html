@@ -27,13 +27,13 @@
   </header>
   <main>
     <filter-component></filter-component>
-    <modal-destroy-component endpoint="/api/admin/customers"></modal-destroy-component>
+    <modal-destroy-component endpoint="/api/admin/users"></modal-destroy-component>
     <div class="crud">
       <section class="table">
-        <table-component endpoint="/api/admin/customers"></table-component>
+        <table-component endpoint="/api/admin/users"></table-component>
       </section>
       <section class="form">
-        <form-component endpoint="/api/admin/customers">
+        <form-component endpoint="/api/admin/users">
           <upload-image-button slot="upload-image-button" name="featured-image" type="single" image-configuration='
             {
               "xs":{"widthPx":"60",
