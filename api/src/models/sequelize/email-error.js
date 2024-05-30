@@ -8,39 +8,15 @@ module.exports = function (sequelize, DataTypes) {
     },
     customerId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "customer".'
-        },
-        notEmpty: {
-          msg: 'Por favor, introduce un valor para el campo "customer".'
-        }
-      }
+      allowNull: false
     },
     emailId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "email".'
-        },
-        notEmpty: {
-          msg: 'Por favor, introduce un valor para el campo "email".'
-        }
-      }
+      allowNull: false
     },
     error: {
       type: DataTypes.TEXT,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Por favor, rellena el campo "error".'
-        },
-        notEmpty: {
-          msg: 'Por favor, introduce un valor para el campo "error".'
-        }
-      }
+      allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,

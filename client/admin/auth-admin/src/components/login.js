@@ -63,17 +63,49 @@ class LoginComponent extends HTMLElement {
             color: #333;
           }
         </style>
-        <div class="box">
+        <form class="box">
           <div class="login-container">
             <h2>Iniciar sesión</h2>
-            <input type="text" placeholder="Usuario" required>
-            <input type="password" placeholder="Contraseña" required>
-            <button type="submit">Iniciar sesión</button>
+            <input name="email" type="text" placeholder="Email" required>
+            <input name="password" type="password" placeholder="Contraseña" required>
+            <button>Iniciar sesión</button>
             <a href="/admin/login/reset">¿Has olvidado tu contraseña?</a>
             <span>¿No tienes cuenta?<a href="/admin/login/register"> Regístrate ahora</a></span>
           </div>
-        </div>
+        </form>
       `
+    const form = this.shadowRoot.querySelector('form')
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault()
+      await this.submitForm(form)
+    })
+  }
+
+  async submitForm (form) {
+    const endpoint = import.meta.env.VITE_API_URL
+    const formData = new FormData(form)
+    const formDataJson = Object.fromEntries(formData.entries())
+
+    try {
+      const result = await fetch(`${endpoint}/api/auth/user/signin`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formDataJson)
+      })
+
+      if (result.ok) {
+        const data = await result.json()
+        window.location.href = data.redirection
+      } else {
+        const error = await result.json()
+        console.log(error.message)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

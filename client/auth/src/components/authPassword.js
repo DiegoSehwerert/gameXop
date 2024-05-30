@@ -5,6 +5,13 @@ class AuthPasswordComponent extends HTMLElement {
   }
 
   connectedCallback () {
+    const urlParams = new URLSearchParams(window.location.search)
+    const token = urlParams.get('token')
+
+    if (!token) {
+      window.location.href = '/'
+    }
+
     this.render()
   }
 
@@ -47,15 +54,42 @@ class AuthPasswordComponent extends HTMLElement {
             background-color: #0056b3;
           }
         </style>
-        <div class="box">
+        <form class=box>
           <div class="register-container">
             <h2>Registro</h2>
             <input type="password" placeholder="Contraseña" required>
             <input type="password" placeholder="Repetir contraseña" required>
-            <button type="submit">Enviar</button>
+            <button>Enviar</button>
           </div>
-        </div>
+        </form>
       `
+
+    const submit = this.shadowRoot.querySelector('button')
+    const inputs = this.shadowRoot.querySelectorAll('input')
+
+    submit.addEventListener('click', async (e) => {
+      e.preventDefault()
+      if (inputs[0].value !== inputs[1].value) {
+        alert('Las contraseñas no coinciden')
+        return
+      }
+      this.dispatchEvent(new CustomEvent('submit', {
+        detail: {
+          password: inputs[0].value
+        }
+      }))
+
+      const urlParams = new URLSearchParams(window.location.search)
+      const token = urlParams.get('token')
+
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/activate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ token, password: inputs[0].value })
+      })
+    })
   }
 }
 

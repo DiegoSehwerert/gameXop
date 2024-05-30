@@ -1,6 +1,6 @@
 const services = {
   imageService: new (require('../services/image-service'))(),
-  emailService: new (require('../services/emailService'))()
+  authorizationService: new (require('../services/authorization-service'))()
 }
 
 function createServiceMiddleware (serviceName) {

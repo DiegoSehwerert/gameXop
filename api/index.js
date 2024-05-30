@@ -8,6 +8,7 @@ const userAgentMiddleware = require('./src/middlewares/user-agent')
 const exposeServiceMiddleware = require('./src/middlewares/expose-services')
 const IORedis = require('ioredis')
 const RedisStore = require('connect-redis').default
+const session = require('express-session')
 
 const subscriberClient = new IORedis(process.env.REDIS_URL)
 const redisClient = new IORedis(process.env.REDIS_URL)
@@ -21,6 +22,21 @@ app.use((req, res, next) => {
   req.redisClient = redisClient
   next()
 })
+
+app.use(session({
+  store: new RedisStore({ client: redisClient }),
+  secret: process.env.JWT_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    domain: new URL(process.env.API_URL).hostname,
+    path: '/',
+    sameSite: 'Lax',
+    maxAge: 1000 * 60 * 3600
+  }
+}))
 
 const corsOptions = {
   origin: ['dev-pedidos.com'],

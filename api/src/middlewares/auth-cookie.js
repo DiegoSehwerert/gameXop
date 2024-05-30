@@ -1,5 +1,15 @@
-const userAuthCookieMiddleware = (req, res, next) => {
-  next()
+const verifyUserCookie = (req, res, next) => {
+  if (req.session.user) {
+    next()
+  } else {
+    res.status(401).send({
+      redirection: '/admin/login'
+    })
+  }
 }
 
-module.exports = userAuthCookieMiddleware
+const authCookie = {
+  verifyUserCookie
+}
+
+module.exports = authCookie

@@ -1,5 +1,5 @@
 export default {
-  base: '/auth-password',
+  base: '/cuenta',
   server: {
     port: 5173
   }
